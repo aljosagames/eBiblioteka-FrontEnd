@@ -1,0 +1,163 @@
+.main-header {
+  background-color: $secondary;
+  color: $white;
+
+  .logo {
+    font-size: 2.25rem;
+    padding: 0.3em;
+
+    @media (min-width: 800px) {
+      font-size: 2.5rem;
+      padding: 0;
+    }
+  }
+
+  .container {
+    align-items: center;
+  }
+
+  .main-nav {
+    background-color: $secondary;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 100%;
+    overflow: hidden;
+    font-size: 1.5rem;
+    transition: all ease-in-out 250ms;
+
+    @media (min-width: 800px) {
+      display: inline-block;
+      position: relative;
+      flex: auto;
+      left: 0;
+      overflow: visible;
+    }
+
+    &.is-open {
+      left: 0;
+    }
+
+    .first-ul {
+      flex-direction: column;
+      justify-content: space-around;
+      flex-wrap: wrap;
+
+      @media (min-width: 800px) {
+        flex-direction: row;
+        justify-content: end;
+      }
+
+      li {
+        @media (min-width: 800px) {
+          flex: 0;
+          display: inline-block;
+          border: none;
+          position: relative;
+
+          &:hover {
+            background: rgb(80, 79, 79);
+          }
+
+          &:hover > .second-ul {
+            display: block;
+          }
+        }
+        a {
+          flex: 1 1 auto;
+          border-bottom: 5px solid grey;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 1.25em;
+
+          @media (min-width: 800px) {
+            flex: 0;
+            display: inline-block;
+            padding: 1em 1.5em;
+            display: inline-block;
+            border: none;
+
+            i {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .second-ul {
+      background-color: grey;
+      @media (min-width: 800px) {
+        background-color: $secondary;
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+      }
+      li {
+        border-bottom: 5px solid $secondary;
+        @media (min-width: 800px) {
+          border: none;
+          display: block;
+          width: 100%;
+        }
+
+        &:hover {
+          background-color: grey;
+        }
+
+        a {
+          width: 100%;
+          padding: 1em;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  a {
+    color: $white;
+  }
+}
+
+.nav-toggle {
+  display: block;
+  padding: 1em;
+  position: absolute;
+  right: 1em;
+  top: 1.5em;
+  cursor: pointer;
+}
+
+.hamburger,
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  display: block;
+  width: 2em;
+  height: 4px;
+  background: $white;
+  transition: all ease-in-out 250ms;
+  @media (min-width: 800px) {
+    display: none;
+  }
+}
+
+.hamburger::before {
+  transform: translateY(-9px);
+}
+
+.hamburger::after {
+  transform: translateY(5px);
+}
+
+.hamburger.is-open {
+  transform: rotate(45deg);
+  &::after {
+    transform: rotate(-90deg) translateX(3px);
+  }
+  &::before {
+    opacity: 0;
+  }
+}
