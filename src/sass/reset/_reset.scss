@@ -68,11 +68,13 @@ h6 {
   isolation: isolate;
 }
 
+// Html
 html {
   font-family: $font-stack;
   font-weight: $fw-normal;
 }
 
+// Body
 body {
   background: $primary;
 }

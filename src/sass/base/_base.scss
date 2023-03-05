@@ -5,26 +5,37 @@
 }
 
 .form {
+  max-width: 700px;
   margin: 0 auto;
-  padding: 5.5em 2.5em;
+  padding: 4em 2em;
   display: flex;
   gap: 2em;
   flex-direction: column;
   background: $secondary;
   color: #fff;
+  @media (min-width: 700px) {
+    padding: 5em 3em;
+    gap: 3em;
+  }
 
   h2 {
     font-size: 2rem;
+    @media (min-width: 700px) {
+      font-size: 2.25rem;
+    }
   }
 
   input {
-    font-size: 1.5rem;
+    font-size: 1rem;
     outline: transparent;
     padding: 0.5em;
     background: $secondary;
     border: none;
     border-bottom: 5px solid $primary;
     color: $white;
+    @media (min-width: 700px) {
+      font-size: 1.25rem;
+    }
 
     &:focus {
       border-bottom: 5px solid lighten($color: $primary, $amount: 15%);
@@ -34,4 +45,8 @@
   a {
     margin: 1em auto 0;
   }
+}
+
+.hidden {
+  display: none;
 }

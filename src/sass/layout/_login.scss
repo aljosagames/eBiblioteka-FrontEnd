@@ -1,0 +1,39 @@
+.login {
+  .login-form {
+    margin-bottom: 0.5em;
+  }
+
+  .register-btn {
+    text-align: center;
+    padding-bottom: 0.5em;
+  }
+
+  p {
+    font-size: 1.25rem;
+    @media (min-width: 700px) {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.register {
+  position: absolute;
+  top: 2em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .register-form {
+    position: relative;
+
+    .close-btn {
+      cursor: pointer;
+      position: absolute;
+      font-size: 2rem;
+      top: 1em;
+      right: 2em;
+      @media (min-width: 700px) {
+        font-size: 2.25rem;
+      }
+    }
+  }
+}

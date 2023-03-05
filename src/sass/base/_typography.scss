@@ -1,9 +1,17 @@
 .big-tittle-wrapper {
   text-align: center;
-  padding: 3em 0;
+  padding: 2em 0;
+
+  @media (min-width: 700px) {
+    padding: 3em 0;
+  }
 
   .big-tittle {
-    font-size: 3rem;
+    font-size: 2.5rem;
     line-height: 1.2;
+
+    @media (min-width: 700px) {
+      font-size: 3.5rem;
+    }
   }
 }

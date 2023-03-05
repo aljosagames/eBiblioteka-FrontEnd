@@ -1,8 +1,12 @@
 .btn {
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0.5em 1.5em;
   font-weight: $fw-bold;
+  transition: all ease-in-out 250ms;
+  @media (min-width: 700px) {
+    font-size: 1.25rem;
+  }
 }
 
 .btn-primary {
@@ -12,7 +16,17 @@
   &:hover,
   &:focus {
     background: $primary;
-    border: 5px solid $primary;
     color: $secondary;
+  }
+}
+
+.btn-secondary {
+  background: $primary;
+  border: 5px solid $secondary;
+
+  &:hover,
+  &:focus {
+    background: $secondary;
+    color: $white;
   }
 }
