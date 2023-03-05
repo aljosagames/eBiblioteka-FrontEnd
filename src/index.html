@@ -16,12 +16,16 @@
         <h1 class="big-tittle">eBiblioteka Bora Stankovic</h1>
       </div>
 
-      <div class="form login-form">
+      <form action="/" class="form login-form" id="login-form">
         <h2>Login</h2>
-        <input type="text" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <a class="btn btn-primary">Login</a>
-      </div>
+        <div class="input-control">
+          <input type="text" placeholder="Email" id="login-email" />
+        </div>
+        <div class="input-control">
+          <input type="password" placeholder="Password" id="login-password" />
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+      </form>
 
       <div class="register-btn">
         <p>Registrujte se <a href="" class="open-btn">ovde</a></p>
@@ -31,15 +35,35 @@
     <!-- Register-section 
     ==================== -->
     <section class="register hidden">
-      <div class="form register-form">
+      <form action="/" class="form register-form" id="register-form">
         <h2>Register</h2>
         <a class="close-btn">X</a>
-        <input type="text" placeholder="Ime i Prezime" />
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <input type="password" placeholder="Repeat password" />
-        <a class="btn btn-primary">Register</a>
-      </div>
+        <div class="input-control">
+          <input type="text" placeholder="Ime i Prezime" id="register-name" />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Email" id="register-email" />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Password"
+            id="register-password"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Repeat password"
+            id="register-repeat-password"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Register</button>
+      </form>
     </section>
 
     <!-- jQuery 

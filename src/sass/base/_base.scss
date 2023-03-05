@@ -26,6 +26,7 @@
   }
 
   input {
+    width: 100%;
     font-size: 1rem;
     outline: transparent;
     padding: 0.5em;
@@ -42,11 +43,27 @@
     }
   }
 
-  a {
+  button {
+    color: $white;
     margin: 1em auto 0;
   }
 }
 
 .hidden {
   display: none;
+}
+
+.input-control {
+  &.error input {
+    border-bottom: 5px solid rgb(206, 26, 26);
+  }
+
+  & .error {
+    color: red;
+    font-size: 0.8rem;
+    height: 0;
+    @media (min-width: 700px) {
+      font-size: 1.05rem;
+    }
+  }
 }
