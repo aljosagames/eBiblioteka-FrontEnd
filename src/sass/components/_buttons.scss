@@ -30,3 +30,18 @@
     color: $white;
   }
 }
+
+.btn-ghost {
+  background: $white;
+  border: 5px solid $dark;
+
+  &:hover,
+  &:focus {
+    background: $dark;
+    color: $white;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 1rem;
+  }
+}

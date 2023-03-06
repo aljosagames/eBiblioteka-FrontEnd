@@ -1,0 +1,31 @@
+.cards {
+  padding-bottom: 1em;
+
+  @media (min-width: 700px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  }
+  .card {
+    background: $white;
+    padding: 1em 1em 1.5em;
+    margin: 1em auto;
+    width: 90%;
+    max-width: 500px;
+
+    h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.25em;
+    }
+
+    h4 {
+      font-size: 1.25rem;
+      font-weight: $fw-bold;
+      color: grey;
+      margin-bottom: 1em;
+    }
+
+    button {
+      margin-bottom: 1em;
+    }
+  }
+}

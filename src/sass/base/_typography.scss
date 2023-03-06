@@ -15,3 +15,14 @@
     }
   }
 }
+
+.main-title {
+  text-align: center;
+  font-size: 1.75rem;
+  margin: 1em 0;
+  line-height: 1;
+
+  @media (min-width: 700px) {
+    font-size: 2rem;
+  }
+}

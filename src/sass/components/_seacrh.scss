@@ -1,0 +1,37 @@
+.search {
+  text-align: center;
+
+  input {
+    font-size: 1rem;
+    padding: 0.5em 1.5em 0.5em 0.5em;
+    border: 2px solid $dark;
+    outline: transparent;
+    margin-bottom: 0.5em;
+    width: 80%;
+    max-width: 500px;
+  }
+
+  .filterBtn {
+    cursor: pointer;
+    background-color: $dark;
+    color: $white;
+    font-size: 1.25rem;
+    padding: 0.5em;
+  }
+
+  .filterList {
+    background-color: $white;
+    font-size: 1.25rem;
+    font-weight: $fw-bold;
+    max-width: 500px;
+    margin: 0.5em auto;
+    width: 90%;
+
+    li {
+      cursor: pointer;
+      border-bottom: 2px solid $dark;
+      padding: 0.5em;
+      margin: 0 auto;
+    }
+  }
+}
