@@ -27,7 +27,7 @@
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
               ></a>
               <ul class="unstyled-list second-ul ulBooks hidden">
-                <li><a href="">Dodaj</a></li>
+                <li><a href="" id="addBookOpen">Dodaj</a></li>
                 <li><a href="">Lista</a></li>
               </ul>
             </li>
@@ -50,6 +50,9 @@
       </div>
     </header>
 
+    <!-- User section 
+    ==================== -->
+
     <section class="acc-list">
       <div class="container">
         <div class="acc-list-title main-title">
@@ -60,7 +63,7 @@
           <input type="text" />
           <i class="fa-solid fa-filter filter filterBtn" id="filterBtn"></i>
 
-          <div class="filterList">
+          <div class="filterList hidden">
             <ul class="unstyled-list">
               <li>
                 <i class="fa-solid fa-check hide" id="reservedL"></i>Rezervisane
@@ -118,6 +121,34 @@
           <a class="btn btn-ghost">Pregled</a>
         </div>
       </div>
+    </section>
+
+    <!-- Add book section 
+    ==================== -->
+    <section class="add-book-section form-section hidden">
+      <form action="/" class="form add-book-form" id="add-book-form">
+        <div class="header-close">
+          <h2>Dodaj knjigu</h2>
+          <a class="close-btn" id="addBookClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Ime knjige" id="addBook-BookName" />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Ime i prezime autora"
+            id="addBook-AutorName"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Bar kod" id="addBook-BarKod" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Dodaj</button>
+      </form>
     </section>
 
     <!-- jQuery 

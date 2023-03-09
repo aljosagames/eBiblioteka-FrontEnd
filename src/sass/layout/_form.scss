@@ -61,3 +61,34 @@
     }
   }
 }
+
+.register {
+  position: absolute;
+  top: 2em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.header-close {
+  h2 {
+    float: left;
+  }
+
+  a {
+    float: right;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+}
+
+.add-book-section {
+  position: absolute;
+  top: 10em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  form {
+    box-shadow: rgba(0, 0, 0, 0.8) 0 0 0 10000px;
+  }
+}
