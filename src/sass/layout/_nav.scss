@@ -6,6 +6,10 @@
     font-size: 2.25rem;
     padding: 0.3em;
 
+    a {
+      text-decoration: none;
+    }
+
     @media (min-width: 800px) {
       font-size: 2.5rem;
       padding: 0;
