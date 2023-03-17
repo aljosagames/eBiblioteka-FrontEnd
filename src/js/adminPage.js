@@ -36,25 +36,61 @@ $(document).ready(function () {
     $(".add-book-section").addClass("hidden");
   });
 
-  //Validator
-  const form = document.querySelector("#add-book-form");
+  // Change password section toggle
+  //========================
+  $("#changePasswordOpen").click(function () {
+    event.preventDefault();
+    $(".change-password-section").removeClass("hidden");
+  });
+
+  $("#changePasswordClose").click(function () {
+    $(".change-password-section").addClass("hidden");
+  });
+
+  //Validators
+  //========================
+  //Const Add Book
+  //========================
+  const formAddBook = document.querySelector("#add-book-form");
   const bookName = document.querySelector("#addBook-BookName");
   const bookAutor = document.querySelector("#addBook-AutorName");
   const barKod = document.querySelector("#addBook-BarKod");
-  let formTest = [false, false, false];
+  let validatorAddBook = [false, false, false];
 
-  form.addEventListener("submit", (e) => {
+  //Validator Add Book
+  //========================
+  formAddBook.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    validateInputs();
-    if (request() === true) {
+    validateInputsAddBook();
+    if (request(validatorAddBook) === true) {
       location.reload();
     }
   });
 
-  function request() {
+  //Const Change Password
+  //========================
+  const formChangePassord = document.querySelector("#change-password-form");
+  const changePassword = document.querySelector("#changePassword-password");
+  const changePasswordRepeat = document.querySelector(
+    "#changePassword-repeat-password"
+  );
+  let validatorChangePassword = [false, false];
+
+  //Validator Change Password
+  //========================
+  formChangePassord.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    validateInputsChangePassword();
+    if (request(validatorChangePassword) === true) {
+      location.reload();
+    }
+  });
+
+  function request(validator) {
     let result = true;
-    formTest.forEach((test) => {
+    validator.forEach((test) => {
       if (test === false) {
         result = false;
       }
@@ -62,45 +98,85 @@ $(document).ready(function () {
     return result;
   }
 
-  const setError = (el, msg, name) => {
+  const setError = (el, msg, validator, name) => {
     const inputControl = el.parentElement;
     const errorDisplay = inputControl.querySelector(".error");
 
     errorDisplay.innerText = msg;
     inputControl.classList.add("error");
-    formTest[name] = false;
+    validator[name] = false;
   };
 
-  const setSucces = (el, name) => {
+  const setSucces = (el, validator, name) => {
     const inputControl = el.parentElement;
     const errorDisplay = inputControl.querySelector(".error");
 
     errorDisplay.innerText = "";
     inputControl.classList.remove("error");
-    formTest[name] = true;
+    validator[name] = true;
   };
 
-  const validateInputs = () => {
+  //Inputs Add Book
+  //========================
+  const validateInputsAddBook = () => {
     const nameValue = bookName.value.trim();
     const autorValue = bookAutor.value.trim();
     const barKodValue = barKod.value.trim();
 
     if (nameValue === "") {
-      setError(bookName, "Unesite ime knjige", 0);
+      setError(bookName, "Unesite ime knjige", validatorAddBook, 0);
     } else {
-      setSucces(bookName, 0);
+      setSucces(bookName, validatorAddBook, 0);
     }
 
     if (autorValue === "") {
-      setError(bookAutor, "Unesite ime i prezime autora", 1);
+      setError(bookAutor, "Unesite ime i prezime autora", validatorAddBook, 1);
     } else {
-      setSucces(bookAutor, 1);
+      setSucces(bookAutor, validatorAddBook, 1);
     }
 
     if (barKodValue === "") {
-      setError(barKod, "Unesite barKod", 2);
+      setError(barKod, "Unesite barKod", validatorAddBook, 2);
     } else {
-      setSucces(barKod, 2);
+      setSucces(barKod, validatorAddBook, 2);
+    }
+  };
+
+  //Inputs Change Password
+  //========================
+  const validateInputsChangePassword = () => {
+    const passwordValue = changePassword.value.trim();
+    const passwordRepeatValue = changePasswordRepeat.value.trim();
+
+    if (passwordValue === "") {
+      setError(changePassword, "Unesite sifru", validatorChangePassword, 0);
+    } else if (passwordValue.length < 8) {
+      setError(
+        changePassword,
+        "Sifra mora da imam minimum 8 karaktera",
+        validatorChangePassword,
+        0
+      );
+    } else {
+      setSucces(changePassword, validatorChangePassword, 0);
+    }
+
+    if (passwordRepeatValue === "") {
+      setError(
+        changePasswordRepeat,
+        "Molim vas potvrdite sifru",
+        validatorChangePassword,
+        1
+      );
+    } else if (passwordRepeatValue !== passwordValue) {
+      setError(
+        changePasswordRepeat,
+        "Sifre se ne poklapaju",
+        validatorChangePassword,
+        1
+      );
+    } else {
+      setSucces(changePasswordRepeat, validatorChangePassword, 1);
     }
   };
 });
