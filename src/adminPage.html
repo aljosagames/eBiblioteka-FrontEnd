@@ -85,44 +85,34 @@
           <h3>Covek1</h3>
           <h4>mail</h4>
           <a class="btn btn-ghost">Pregled</a>
+          <a class="btn btn-ghost giveBookOpen" data-user-id="123">Dodaj</a>
         </div>
 
         <div class="acc-card card">
-          <h3>Covek2</h3>
+          <h3>Covek1</h3>
           <h4>mail</h4>
           <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek3</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek4</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek5</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek5</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
+          <a class="btn btn-ghost giveBookOpen" data-user-id="321">Dodaj</a>
         </div>
       </div>
+    </section>
+
+    <!-- Give book section 
+    ==================== -->
+    <section class="give-book-section form-section-main hidden">
+      <form action="/" class="form give-book-form" id="give-book-form">
+        <div class="header-close">
+          <h2>Daj knjigu</h2>
+          <a class="close-btn" id="giveBookClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Bar kod" id="giveBook-barCode" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary" data-user-id="" id="giveBook">
+          Daj
+        </button>
+      </form>
     </section>
 
     <!-- Add book section 
