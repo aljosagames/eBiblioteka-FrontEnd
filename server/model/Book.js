@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const postSchema = mongoose.Schema({
+const bookSchema = mongoose.Schema({
     name:{
         type: String,
         required: true
@@ -15,5 +15,5 @@ const postSchema = mongoose.Schema({
     }
 })
 
-const Post = mongoose.model('Post', postSchema)
-export default Post
+const Book = mongoose.model('Book', bookSchema)
+export default Book

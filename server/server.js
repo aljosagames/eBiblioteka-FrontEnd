@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import userRoute from './api/user.js'
-import postRoute from './api/post.js'
+import bookRoute from './api/book.js'
 import dotenv from 'dotenv'
 import cors from "cors"
 dotenv.config()
@@ -17,7 +17,7 @@ app.use(cors())
 // Route for user API
 app.use('/api/user', userRoute)
 // Route for posts API
-app.use('/api/post', postRoute)
+app.use('/api/book', bookRoute)
 
 // Mongodb warning
 mongoose.set('strictQuery', true)
