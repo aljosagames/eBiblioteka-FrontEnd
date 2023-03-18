@@ -39,7 +39,7 @@
                 >Nalog<i class="fa-solid fa-angle-down iAcc"></i
               ></a>
               <ul class="unstyled-list second-ul ulAcc hidden">
-                <li><a href="">Pregled</a></li>
+                <li><a href="" id="changePasswordOpen">Pregled</a></li>
                 <li><a href="">Odjava</a></li>
               </ul>
             </li>
@@ -85,49 +85,39 @@
           <h3>Covek1</h3>
           <h4>mail</h4>
           <a class="btn btn-ghost">Pregled</a>
+          <a class="btn btn-ghost giveBookOpen" data-user-id="123">Dodaj</a>
         </div>
 
         <div class="acc-card card">
-          <h3>Covek2</h3>
+          <h3>Covek1</h3>
           <h4>mail</h4>
           <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek3</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek4</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek5</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek5</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
+          <a class="btn btn-ghost giveBookOpen" data-user-id="321">Dodaj</a>
         </div>
       </div>
     </section>
 
+    <!-- Give book section 
+    ==================== -->
+    <section class="give-book-section form-section-main hidden">
+      <form action="/" class="form give-book-form" id="give-book-form">
+        <div class="header-close">
+          <h2>Daj knjigu</h2>
+          <a class="close-btn" id="giveBookClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Bar kod" id="giveBook-barCode" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary" data-user-id="" id="giveBook">
+          Daj
+        </button>
+      </form>
+    </section>
+
     <!-- Add book section 
     ==================== -->
-    <section class="add-book-section form-section hidden">
+    <section class="add-book-section form-section-main hidden">
       <form action="/" class="form add-book-form" id="add-book-form">
         <div class="header-close">
           <h2>Dodaj knjigu</h2>
@@ -150,6 +140,38 @@
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Dodaj</button>
+      </form>
+    </section>
+
+    <!-- Change password 
+    ==================== -->
+    <section class="change-password-section form-section-main hidden">
+      <form
+        action="/"
+        class="form change-password-form"
+        id="change-password-form"
+      >
+        <div class="header-close">
+          <h2>Promeni sifru</h2>
+          <a class="close-btn" id="changePasswordClose">X</a>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Sifra"
+            id="changePassword-password"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Ponovi sifru"
+            id="changePassword-repeat-password"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Promeni</button>
       </form>
     </section>
 
