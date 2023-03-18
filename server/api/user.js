@@ -1,10 +1,11 @@
 import express from "express"
+import { loginUser, registerUser } from "../controller/userController.js"
 
 const router = express.Router()
 
-// ! ZAVRSI OVO MAJMUNE(user login)
-router.post('/', (req, res) => {
-    res.redirect('/site')
-})
+// AUTHENTICATE user
+router.get('/login', loginUser)
+// CREATE user
+router.post('/register', registerUser)
 
 export default router
