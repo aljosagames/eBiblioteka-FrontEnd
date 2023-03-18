@@ -1,4 +1,9 @@
 $(document).ready(function () {
+  let cookie = new Cookies();
+  cookie = cookie.getCookie();
+  if (cookie === "") {
+    window.location.href = "index.html";
+  }
   // hamburger menu toggle
   //========================
   $(".nav-toggle").click(function () {

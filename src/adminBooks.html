@@ -65,14 +65,15 @@
         </div>
       </div>
 
-      <div class="books-cards cards">
+      <div class="books-cards cards" data-books-cards></div>
+      <template data-books-template>
         <div class="books-card card">
-          <h3>Knjiga</h3>
-          <h4>Autor</h4>
-          <h4>BarKod</h4>
-          <a class="btn btn-red">Izbrisi</a>
+          <h3 data-BookName></h3>
+          <h4 data-AutorName></h4>
+          <h4 data-BarCode></h4>
+          <a class="btn btn-red" data-button></a>
         </div>
-      </div>
+      </template>
     </section>
 
     <!-- Add book section 
@@ -145,6 +146,7 @@
 
     <!-- JavaScript 
     ==================== -->
+    <script src="js/Cookies.js"></script>
     <script src="js/adminBooks.js"></script>
   </body>
 </html>

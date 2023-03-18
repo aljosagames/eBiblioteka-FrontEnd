@@ -1,4 +1,9 @@
 $(document).ready(function () {
+  let cookie = new Cookies();
+  cookie = cookie.getCookie();
+  if (cookie === "") {
+    window.location.href = "index.html";
+  }
   // hamburger menu toggle
   //========================
   $(".nav-toggle").click(function () {
@@ -173,4 +178,18 @@ $(document).ready(function () {
       setSucces(changePasswordRepeat, validatorChangePassword, 1);
     }
   };
+
+  // *Books list and Search
+  // *========================
+  console.log(cookie);
+  fetch("http://localhost:8080/api/book/", {
+    method: "post",
+    headers: {
+      authorization: cookie,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
 });
