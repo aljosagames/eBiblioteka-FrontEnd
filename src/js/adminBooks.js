@@ -181,7 +181,22 @@ $(document).ready(function () {
 
   // *Books list and Search
   // *========================
-  console.log(cookie);
+  const bookCardTemplate = document.querySelector("[data-books-template]");
+  const bookCardContainer = document.querySelector("[data-books-cards]");
+  const searchInput = document.querySelector("[data-search]");
+  let books = [];
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    books.forEach((book) => {
+      const isVisible =
+        book.name.toLowerCase().includes(value) ||
+        book.autor.toLowerCase().includes(value) ||
+        book.barCode.toLowerCase().includes(value);
+      book.element.classList.toggle("hidden", !isVisible);
+    });
+  });
+
   fetch("http://localhost:8080/api/book/", {
     method: "post",
     headers: {
@@ -190,6 +205,21 @@ $(document).ready(function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      books = data.map((book) => {
+        const card = bookCardTemplate.content.cloneNode(true).children[0];
+        const bookName = card.querySelector("[data-BookName]");
+        const autorName = card.querySelector("[data-AutorName]");
+        const barCode = card.querySelector("[data-BarCode]");
+        bookName.textContent = book.content;
+        autorName.textContent = book.name;
+        barCode.textContent = 123;
+        bookCardContainer.append(card);
+        return {
+          name: book.content,
+          autor: book.name,
+          barCode: "123",
+          element: card,
+        };
+      });
     });
 });
