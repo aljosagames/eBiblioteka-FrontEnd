@@ -12,7 +12,8 @@ $(document).ready(function () {
     $(".register").addClass("hidden");
   });
 
-  // Validator
+  // Validator Register
+  // =====================
   const form = document.querySelector("#register-form");
   const username = document.querySelector("#register-name");
   const email = document.querySelector("#register-email");
@@ -24,14 +25,14 @@ $(document).ready(function () {
     e.preventDefault();
 
     validateInputs();
-    if (request() === true) {
+    if (request(formTest) === true) {
       location.reload();
     }
   });
 
-  function request() {
+  function request(validator) {
     let result = true;
-    formTest.forEach((test) => {
+    validator.forEach((test) => {
       if (test === false) {
         result = false;
       }
@@ -39,22 +40,22 @@ $(document).ready(function () {
     return result;
   }
 
-  const setError = (el, msg, name) => {
+  const setError = (el, msg, validator, name) => {
     const inputControl = el.parentElement;
     const errorDisplay = inputControl.querySelector(".error");
 
     errorDisplay.innerText = msg;
     inputControl.classList.add("error");
-    formTest[name] = false;
+    validator[name] = false;
   };
 
-  const setSucces = (el, name) => {
+  const setSucces = (el, validator, name) => {
     const inputControl = el.parentElement;
     const errorDisplay = inputControl.querySelector(".error");
 
     errorDisplay.innerText = "";
     inputControl.classList.remove("error");
-    formTest[name] = true;
+    validator[name] = true;
   };
 
   const isValidEmail = (email) => {
@@ -70,33 +71,71 @@ $(document).ready(function () {
     const password2Value = password2.value.trim();
 
     if (usernameValue === "") {
-      setError(username, "Unesite ime i prezime", 0);
+      setError(username, "Unesite ime i prezime", formTest, 0);
     } else {
-      setSucces(username, 0);
+      setSucces(username, formTest, 0);
     }
 
     if (emailValue === "") {
-      setError(email, "Email je potreban", 1);
+      setError(email, "Email je potreban", formTest, 1);
     } else if (!isValidEmail(emailValue)) {
-      setError(email, "Unesite validnu email adresu", 1);
+      setError(email, "Unesite validnu email adresu", formTest, 1);
     } else {
-      setSucces(email, 1);
+      setSucces(email, formTest, 1);
     }
 
     if (passwordValue === "") {
-      setError(password, "Unesite sifru", 2);
+      setError(password, "Unesite sifru", formTest, 2);
     } else if (passwordValue.length < 8) {
-      setError(password, "Sifra mora da imam minimum 8 karaktera", 2);
+      setError(password, "Sifra mora da imam minimum 8 karaktera", formTest, 2);
     } else {
-      setSucces(password, 2);
+      setSucces(password, formTest, 2);
     }
 
     if (password2Value === "") {
-      setError(password2, "Molim vas potvrdite sifru", 3);
+      setError(password2, "Molim vas potvrdite sifru", formTest, 3);
     } else if (password2Value !== passwordValue) {
-      setError(password2, "Sifre se ne poklapaju", 3);
+      setError(password2, "Sifre se ne poklapaju", formTest, 3);
     } else {
-      setSucces(password2, 3);
+      setSucces(password2, formTest, 3);
+    }
+  };
+
+  // Validator Login
+  // =====================
+  const formLogin = document.querySelector("#login-form");
+  const emailLogin = document.querySelector("#login-email");
+  const passwordLogin = document.querySelector("#login-password");
+  let users = new Users();
+  let validatorLogin = [false, false];
+
+  formLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    inputsLogin();
+    if (request(validatorLogin) === true) {
+      users.email = emailLogin.value;
+      users.password = passwordLogin.value;
+      users.login();
+    }
+  });
+
+  const inputsLogin = () => {
+    const emailLoginValue = emailLogin.value.trim();
+    const passwordLoginValue = passwordLogin.value.trim();
+
+    if (emailLoginValue === "") {
+      setError(emailLogin, "Unesite email adresu", validatorLogin, 0);
+    } else if (!isValidEmail(emailLoginValue)) {
+      setError(emailLogin, "Unesite validnu email adresu", validatorLogin, 0);
+    } else {
+      setSucces(emailLogin, validatorLogin, 0);
+    }
+
+    if (passwordLoginValue === "") {
+      setError(passwordLogin, "Unesite sifru", validatorLogin, 1);
+    } else {
+      setSucces(passwordLogin, validatorLogin, 1);
     }
   };
 });
