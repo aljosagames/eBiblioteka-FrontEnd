@@ -3,12 +3,16 @@ import mongoose from 'mongoose'
 import userRoute from './api/user.js'
 import postRoute from './api/post.js'
 import dotenv from 'dotenv'
+import cors from "cors"
 dotenv.config()
 const app = express()
 
 // Middleware for parsing body
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+// CORS
+app.use(cors())
 
 // Route for user API
 app.use('/api/user', userRoute)
