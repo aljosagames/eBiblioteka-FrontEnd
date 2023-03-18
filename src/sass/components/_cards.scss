@@ -21,7 +21,10 @@
       font-size: 1.25rem;
       font-weight: $fw-bold;
       color: grey;
-      margin-bottom: 1em;
+
+      &:last-of-type {
+        margin-bottom: 1em;
+      }
     }
 
     button {

@@ -23,7 +23,7 @@
 
         <nav class="main-nav">
           <ul class="unstyled-list flex first-ul">
-            <li><a href="">Korisnici</a></li>
+            <li><a href="adminPage.html">Korisnici</a></li>
             <li>
               <a href="" class="btn-books"
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
@@ -52,67 +52,27 @@
       </div>
     </header>
 
-    <!-- User section 
+    <!-- Books section 
     ==================== -->
-
-    <section class="acc-list">
+    <section class="books-list">
       <div class="container">
-        <div class="acc-list-title main-title">
-          <h2>Lista ucenika</h2>
+        <div class="books-list-title main-title">
+          <h2>Lista knjiga</h2>
         </div>
 
         <div class="search">
           <input type="text" />
-          <i class="fa-solid fa-filter filter filterBtn" id="filterBtn"></i>
-
-          <div class="filterList hidden">
-            <ul class="unstyled-list">
-              <li>
-                <i class="fa-solid fa-check hide" id="reservedL"></i>Rezervisane
-                <i class="fa-solid fa-book"></i>
-              </li>
-              <li>
-                <i class="fa-solid fa-check hide" id="haveL"></i>Uzete
-                <i class="fa-solid fa-book-open"></i>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
-      <div class="acc-cards cards">
-        <div class="acc-card card">
-          <h3>Covek1</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-          <a class="btn btn-ghost giveBookOpen" data-user-id="123">Dodaj</a>
-        </div>
-
-        <div class="acc-card card">
-          <h3>Covek1</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-          <a class="btn btn-ghost giveBookOpen" data-user-id="321">Dodaj</a>
+      <div class="books-cards cards">
+        <div class="books-card card">
+          <h3>Knjiga</h3>
+          <h4>Autor</h4>
+          <h4>BarKod</h4>
+          <a class="btn btn-red">Izbrisi</a>
         </div>
       </div>
-    </section>
-
-    <!-- Give book section 
-    ==================== -->
-    <section class="give-book-section form-section-main hidden">
-      <form action="/" class="form give-book-form" id="give-book-form">
-        <div class="header-close">
-          <h2>Daj knjigu</h2>
-          <a class="close-btn" id="giveBookClose">X</a>
-        </div>
-        <div class="input-control">
-          <input type="text" placeholder="Bar kod" id="giveBook-barCode" />
-          <div class="error"></div>
-        </div>
-        <button class="btn btn-primary" data-user-id="" id="giveBook">
-          Daj
-        </button>
-      </form>
     </section>
 
     <!-- Add book section 
@@ -144,7 +104,7 @@
     </section>
 
     <!-- Change password 
-    ==================== -->
+      ==================== -->
     <section class="change-password-section form-section-main hidden">
       <form
         action="/"
@@ -176,7 +136,7 @@
     </section>
 
     <!-- jQuery 
-    ==================== -->
+      ==================== -->
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -185,6 +145,6 @@
 
     <!-- JavaScript 
     ==================== -->
-    <script src="js/adminPage.js"></script>
+    <script src="js/adminBooks.js"></script>
   </body>
 </html>

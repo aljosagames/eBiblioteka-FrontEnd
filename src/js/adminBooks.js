@@ -20,11 +20,6 @@ $(document).ready(function () {
     $(".ulAcc").toggleClass("hidden");
   });
 
-  // Filter toggle
-  //========================
-  $("#filterBtn").click(function () {
-    $(".filterList").toggleClass("hidden");
-  });
   // Add book section toggle
   //========================
   $("#addBookOpen").click(function () {
@@ -45,22 +40,6 @@ $(document).ready(function () {
 
   $("#changePasswordClose").click(function () {
     $(".change-password-section").addClass("hidden");
-  });
-
-  // Give book section toggle
-  //========================
-  $(".giveBookOpen").click(function (el) {
-    event.preventDefault();
-    $(".give-book-section").removeClass("hidden");
-    let userId = el.target.getAttribute("data-user-id");
-    let giveBtn = document.querySelector("#giveBook");
-    giveBtn.setAttribute("data-user-id", userId);
-  });
-
-  $("#giveBookClose").click(function () {
-    $(".give-book-section").addClass("hidden");
-    let giveBtn = document.querySelector("#giveBook");
-    giveBtn.setAttribute("data-user-id", "");
   });
 
   //Validators
@@ -131,23 +110,6 @@ $(document).ready(function () {
     }
   });
 
-  //Const Give Book
-  //========================
-  const formGiveBook = document.querySelector("#give-book-form");
-  const barCode = document.querySelector("#giveBook-barCode");
-  let validatorGiveBook = [false];
-
-  //Validator Give Book
-  //========================
-  formGiveBook.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    validateInputsGiveBook();
-    if (request(validatorGiveBook) === true) {
-      location.reload();
-    }
-  });
-
   //Inputs Add Book
   //========================
   const validateInputsAddBook = () => {
@@ -209,18 +171,6 @@ $(document).ready(function () {
       );
     } else {
       setSucces(changePasswordRepeat, validatorChangePassword, 1);
-    }
-  };
-
-  //Inputs Give Book
-  //========================
-  const validateInputsGiveBook = () => {
-    const barCodeValue = barCode.value.trim();
-
-    if (barCodeValue === "") {
-      setError(barCode, "Unesite bar kod knjige", validatorGiveBook, 0);
-    } else {
-      setSucces(barCode, validatorGiveBook, 0);
     }
   };
 });

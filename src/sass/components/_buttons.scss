@@ -44,4 +44,26 @@
   @media (min-width: 700px) {
     font-size: 1rem;
   }
+
+  @media (max-width: 300px) {
+    display: inline-block;
+    &:first-of-type {
+      margin-bottom: 0.5em;
+    }
+  }
+}
+
+.btn-red {
+  background-color: $white;
+  border: 5px solid red;
+
+  &:hover,
+  &:focus {
+    background: red;
+    color: $white;
+  }
+
+  @media (min-width: 700px) {
+    font-size: 1rem;
+  }
 }
