@@ -26,7 +26,11 @@ $(document).ready(function () {
 
     validateInputs();
     if (request(formTest) === true) {
-      location.reload();
+      let user = new Users();
+      user.username = username.value;
+      user.email = email.value;
+      user.password = password.value;
+      user.create();
     }
   });
 
@@ -86,7 +90,7 @@ $(document).ready(function () {
 
     if (passwordValue === "") {
       setError(password, "Unesite sifru", formTest, 2);
-    } else if (passwordValue.length < 8) {
+    } else if (passwordValue.length < 3) {
       setError(password, "Sifra mora da imam minimum 8 karaktera", formTest, 2);
     } else {
       setSucces(password, formTest, 2);

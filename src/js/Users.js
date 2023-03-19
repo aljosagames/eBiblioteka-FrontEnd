@@ -20,11 +20,13 @@ class Users {
         "Content-Type": "application/json",
       },
       body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+    }).then((response) => {
+      if (response.status === 201) {
+        alert("radi");
+      } else {
+        alert("mail je vec iskoriscen");
+      }
+    });
   }
 
   login() {
@@ -42,11 +44,11 @@ class Users {
       },
       body: data,
     })
-      .then((response) => response.json())
+      .then((response) => console.log(response))
       .then((data) => {
-        let cookie = new Cookies();
-        cookie.create(data);
-        window.location.href = "adminPage.html";
+        // let cookie = new Cookies();
+        // cookie.create(data);
+        // window.location.href = "adminPage.html";
       });
   }
 }
