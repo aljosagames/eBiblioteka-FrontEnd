@@ -5,9 +5,13 @@ const bookSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    content:{
+    author:{
         type: String,
         requierd: true
+    },
+    bookCount:{
+        type: Number,
+        required: true
     },
     _id:{
         type: String,

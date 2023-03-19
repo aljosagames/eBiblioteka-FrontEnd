@@ -1,6 +1,6 @@
 class Cookies {
   create(data) {
-    document.cookie = "token=" + JSON.stringify(data.accessToken);
+    document.cookie = "token=" + data.accessToken;
   }
 
   getCookie() {
