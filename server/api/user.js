@@ -5,9 +5,9 @@ import { authenticateToken } from "../middleware.js"
 const router = express.Router()
 
 // GET all users
-router.get('/', getUsers)
+router.post('/',  authenticateToken, getUsers)
 // GET user
-router.post('/getOne', getUser)
+router.post('/getOne',  authenticateToken, getUser)
 // AUTHENTICATE user
 router.post('/login', loginUser)
 // CREATE user
