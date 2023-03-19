@@ -62,7 +62,7 @@
         </div>
 
         <div class="search">
-          <input type="text" />
+          <input type="text" data-search />
           <i class="fa-solid fa-filter filter filterBtn" id="filterBtn"></i>
 
           <div class="filterList hidden">
@@ -80,21 +80,15 @@
         </div>
       </div>
 
-      <div class="acc-cards cards">
+      <div class="acc-cards cards" data-users-cards></div>
+      <template data-users-template>
         <div class="acc-card card">
-          <h3>Covek1</h3>
-          <h4>mail</h4>
+          <h3 data-UserName></h3>
+          <h4 data-UserEmail></h4>
           <a class="btn btn-ghost">Pregled</a>
-          <a class="btn btn-ghost giveBookOpen" data-user-id="123">Dodaj</a>
+          <a class="btn btn-ghost giveBookOpen" data-user-id="">Dodaj</a>
         </div>
-
-        <div class="acc-card card">
-          <h3>Covek1</h3>
-          <h4>mail</h4>
-          <a class="btn btn-ghost">Pregled</a>
-          <a class="btn btn-ghost giveBookOpen" data-user-id="321">Dodaj</a>
-        </div>
-      </div>
+      </template>
     </section>
 
     <!-- Give book section 

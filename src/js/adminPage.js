@@ -228,4 +228,48 @@ $(document).ready(function () {
       setSucces(barCode, validatorGiveBook, 0);
     }
   };
+
+  // *Users list and search
+  // *========================
+  const userCardTemplate = document.querySelector("[data-users-template]");
+  const userCardContainer = document.querySelector("[data-users-cards]");
+  const searchInput = document.querySelector("[data-search]");
+  let users = [];
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    users.forEach((user) => {
+      const isVisible =
+        user.name.toLowerCase().includes(value) ||
+        user.email.toLowerCase().includes(value) ||
+        user.id.toLowerCase().includes(value);
+      user.element.classList.toggle("hidden", !isVisible);
+    });
+  });
+
+  fetch("http://localhost:8080/api/user/", {
+    method: "post",
+    headers: {
+      authorization: cookie,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      users = data.map((user) => {
+        const card = userCardTemplate.content.cloneNode(true).children[0];
+        const userName = card.querySelector("[data-UserName]");
+        const userEmail = card.querySelector("[data-UserEmail]");
+        const btnId = card.querySelector("[data-user-id]");
+        userName.textContent = user.name;
+        userEmail.textContent = user.email;
+        btnId.setAttribute("data-user-id", user._id);
+        userCardContainer.append(card);
+        return {
+          name: user.name,
+          email: user.email,
+          id: user._id,
+          element: card,
+        };
+      });
+    });
 });
