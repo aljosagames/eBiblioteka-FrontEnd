@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser } from "../controller/userController.js"
+import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser } from "../controller/userController.js"
 import { authenticateToken } from "../middleware.js"
 
 const router = express.Router()
@@ -12,6 +12,8 @@ router.post('/getOne',  authenticateToken, getUser)
 router.post('/login', loginUser)
 // CREATE user
 router.post('/register', registerUser)
+// VERIFY user mail
+router.post('/verify', verifyUser)
 // DELETE user
 router.delete('/delete', authenticateToken, deleteUser)
 // MODIFY user

@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import Book from "../model/Book.js"
 import { addBook, removeBook } from "./bookController.js"
 import { emailVerif } from "../emailVerification.js"
+import Code from "../model/Code.js"
 dotenv.config()
 
 export const getUsers = async (req, res) => {
@@ -42,13 +43,25 @@ export const registerUser = async (req, res) => {
         if((await User.find({code:code})).length!=0)
         {
             code = Math.floor((Math.random() * 999999) + 100000);
+            const newCode = new Code({code:code})
+            await newCode.save()
+
+            emailVerif(code, req.body.email)
         }
-        emailVerif(code, req.body.email)
         return res.sendStatus(201)
     }
 }
 
-export const verifyCode = async (req, res) => {
+export const verifyUser = async (req, res) => {
+    try {
+        const code = await Code.findOneAndDelete({"code": req.body.code})
+        if(!code){
+            throw Error
+        }
+    } catch (error) {
+        return res.sendStatus(403)        
+    }
+
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 
     const user = {
         name: req.body.name,
@@ -57,6 +70,8 @@ export const verifyCode = async (req, res) => {
     }
     const newUser = new User(user)
     await newUser.save()
+    
+    loginUser(req, res)
 }
 
 export const deleteUser = async (req, res) => {
@@ -125,6 +140,5 @@ export const removeBookFromUser = async (req, res) => {
     }
     
     user = await User.findOneAndUpdate({"_id": req.body.id}, {$pull: {books: book.name}})
-    console.log(1);
     return addBook(req, res)
 }
