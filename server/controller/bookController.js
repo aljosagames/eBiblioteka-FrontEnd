@@ -7,17 +7,20 @@ export const getBooks = async (req, res) => {
 }
 
 export const getBook = async (req, res) => {
-    const book = await Book.find({"_id": req.body.id})
-    if(book.length != 0){
-        return res.status(200).json(book)
+    try {
+        const book = await Book.findOne({"name": req.body.name})
+        if(book.length != 0){
+            return res.status(200).json(book)
+        }
+    } catch (error) {
+        return res.sendStatus(404)
     }
-    return res.sendStatus(404)
 }
 
 export const createBook = async (req, res) => {
     let book = await Book.findOne({"name": req.body.name})
     if(book){
-        await Book.findOneAndUpdate({"name": req.body.name}, {$inc: {bookCount: book.bookCount}})
+        await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount+req.body.bookCount}})
         return res.sendStatus(201)
     }
 
@@ -54,7 +57,7 @@ export const removeBook = async (req, res) => {
     let book = await Book.findOne({"name": req.body.name})
     if(book){
         book = await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount-1}})
-        if(book.bookCount <= 0){
+        if(book.bookCount <= 1){
             deleteBook(req, res)
             return
         }

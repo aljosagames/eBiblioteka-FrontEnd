@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 
 const userSchema = mongoose.Schema({
     name:{
@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
     admin:{
         type: Boolean,
         default: false
+    },
+    books:{
+        type: [String],
+        default: []
     },
     createdAt: {
         type: Date,

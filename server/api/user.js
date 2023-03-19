@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, registerUser, getUsers } from "../controller/userController.js"
+import { loginUser, deleteUser, updateUser, registerUser, getUsers, addBookToUser, removeBookFromUser } from "../controller/userController.js"
 
 const router = express.Router()
 
@@ -13,5 +13,9 @@ router.post('/register', registerUser)
 router.delete('/delete', deleteUser)
 // MODIFY user
 router.patch('/update', updateUser)
+// ADD book to user
+router.patch('/addBook', addBookToUser)
+// ADD book to user
+router.patch('/removeBook', removeBookFromUser)
 
 export default router

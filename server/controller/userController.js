@@ -2,6 +2,8 @@ import bcrypt from "bcrypt"
 import User from "../model/User.js"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
+import Book from "../model/Book.js"
+import { addBook, removeBook } from "./bookController.js"
 dotenv.config()
 
 export const getUsers = async (req, res) => {
@@ -50,18 +52,62 @@ export const deleteUser = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     let user;
-    if(req.body.email != null){
-        user = await User.findByIdAndUpdate({"_id": req.body.id}, {$set: {"email": req.body.email}})
-    }else if(req.body.name != null){
-        user = await User.findByIdAndUpdate({"_id": req.body.id}, {$set: {"name": req.body.name}})
-    }else if(req.body.password != null){
-        user = await User.findByIdAndUpdate({"_id": req.body.id}, {$set: {"password": req.body.password}})
-    }else{
-        return req.sendStatus(400)
+    try {
+        if(req.body.email != null){
+            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"email": req.body.email}})
+        }else if(req.body.name != null){
+            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"name": req.body.name}})
+        }else if(req.body.password != null){
+            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"password": req.body.password}})
+        }else{
+            return req.sendStatus(400)
+        }
+    } catch (error) {
+        return res.status(404)        
     }
 
     if(user){
         return res.sendStatus(200)
     }
     return res.sendStatus(404)
+}
+
+export const addBookToUser = async (req, res) => {
+    const book = await Book.findOne({"name": req.body.name})
+    if(!book){
+        return res.sendStatus(404)
+    }
+    let user
+    try {
+        user = await User.findOne({"_id": req.body.id})
+    } catch (error) {
+        return res.sendStatus(404)
+    }
+
+    if(user.books.includes(book.name)){
+        return res.sendStatus(403)
+    }
+
+    user = await User.findOneAndUpdate({"_id": req.body.id}, {$push: {books: book.name}})
+    return removeBook(req, res)
+}
+
+export const removeBookFromUser = async (req, res) => {
+    const book = await Book.findOne({"name": req.body.name})
+    if(!book){
+        return res.sendStatus(404)
+    }
+    let user
+    try {
+        user = await User.findOne({"_id": req.body.id})
+    } catch (error) {
+        return res.sendStatus(404)
+    }
+    if(!user.books.includes(book.name)){
+        return res.sendStatus(403)
+    }
+    
+    user = await User.findOneAndUpdate({"_id": req.body.id}, {$pull: {books: book.name}})
+    console.log(1);
+    return addBook(req, res)
 }
