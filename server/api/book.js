@@ -5,18 +5,18 @@ import { authenticateToken } from "../middleware.js"
 const router = express.Router()
 
 // GET all books
-router.post('/', authenticateToken, getBooks)
+router.post('/', getBooks)
 // GET one book
 router.post('/getOne', getBook)
 // CREATE book
-router.post('/create', createBook)
+router.post('/create', authenticateToken, createBook)
 // DELETE book
-router.delete('/delete', deleteBook)
+router.delete('/delete', authenticateToken, deleteBook)
 // REMOVE one book
-router.patch('/remove', removeBook)
+router.patch('/remove', authenticateToken, removeBook)
 // ADD one book
-router.patch('/add', addBook)
+router.patch('/add', authenticateToken, addBook)
 // UPDATE book
-router.patch('/update', updateBook)
+router.patch('/update', authenticateToken, updateBook)
 
 export default router

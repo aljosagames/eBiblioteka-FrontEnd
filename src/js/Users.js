@@ -44,11 +44,11 @@ class Users {
       },
       body: data,
     })
-      .then((response) => console.log(response))
+      .then((response) => response.json())
       .then((data) => {
-        // let cookie = new Cookies();
-        // cookie.create(data);
-        // window.location.href = "adminPage.html";
+        let cookie = new Cookies();
+        cookie.create(data);
+        window.location.href = "adminPage.html";
       });
   }
 }
