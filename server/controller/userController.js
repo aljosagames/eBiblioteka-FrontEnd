@@ -4,11 +4,21 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import Book from "../model/Book.js"
 import { addBook, removeBook } from "./bookController.js"
+import { emailVerif } from "../emailVerification.js"
 dotenv.config()
 
 export const getUsers = async (req, res) => {
     const users = await User.find({})
     return res.json(users)
+}
+
+export const getUser = async (req, res) => {
+    try {
+        const user = await User.findOne({"_id": req.body.id})
+        return res.status(200).json(user)
+    } catch (error) {
+        return res.sendStatus(404)
+    }
 }
 
 export const loginUser = async (req, res) => {
@@ -27,8 +37,18 @@ export const loginUser = async (req, res) => {
 export const registerUser = async (req, res) => {
     if(await User.findOne({email: req.body.email})){
         return res.sendStatus(406)
+    }else{
+        let code = Math.floor((Math.random() * 999999) + 100000);
+        if((await User.find({code:code})).length!=0)
+        {
+            code = Math.floor((Math.random() * 999999) + 100000);
+        }
+        emailVerif(code, req.body.email)
+        return res.sendStatus(201)
     }
+}
 
+export const verifyCode = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 
     const user = {
         name: req.body.name,
@@ -37,8 +57,6 @@ export const registerUser = async (req, res) => {
     }
     const newUser = new User(user)
     await newUser.save()
-
-    return res.sendStatus(201)
 }
 
 export const deleteUser = async (req, res) => {
