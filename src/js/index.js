@@ -19,6 +19,9 @@ $(document).ready(function () {
   const email = document.querySelector("#register-email");
   const password = document.querySelector("#register-password");
   const password2 = document.querySelector("#register-repeat-password");
+  const verForm = document.querySelector("#verification-form");
+  const verCode = document.querySelector("#verificationCode");
+  let verTest = [false];
   let formTest = [false, false, false, false];
 
   form.addEventListener("submit", (e) => {
@@ -26,11 +29,18 @@ $(document).ready(function () {
 
     validateInputs();
     if (request(formTest) === true) {
-      let user = new Users();
-      user.username = username.value;
-      user.email = email.value;
-      user.password = password.value;
-      user.create();
+      $(".verification").removeClass("hidden");
+      $(".register").addClass("hidden");
+
+      verForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        inputsVer();
+        if (request(verTest) === true) {
+          // !Popuni da se doda user
+          // !=======================
+        }
+      });
     }
   });
 
@@ -102,6 +112,15 @@ $(document).ready(function () {
       setError(password2, "Sifre se ne poklapaju", formTest, 3);
     } else {
       setSucces(password2, formTest, 3);
+    }
+  };
+
+  const inputsVer = () => {
+    const verCodeValue = verCode.value.trim();
+    if (verCodeValue === "") {
+      setError(verCode, "Unesite verifikacioni kod", verTest, 0);
+    } else {
+      setSucces(verCode, verTest, 0);
     }
   };
 
