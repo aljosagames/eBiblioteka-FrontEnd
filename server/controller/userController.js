@@ -25,7 +25,7 @@ export const getUser = async (req, res) => {
 export const loginUser = async (req, res) => {
     const user = await User.findOne({email: req.body.email})
     if(user == null){
-        return res.status(404)
+        return res.sendStatus(404)
     }
     if(!await bcrypt.compare(req.body.password, user.password)){
         return res.sendStatus(401)
@@ -115,12 +115,16 @@ export const addBookToUser = async (req, res) => {
     } catch (error) {
         return res.sendStatus(404)
     }
-
-    if(user.books.includes(book.name)){
-        return res.sendStatus(403)
+    
+    for(let i = 0;i < user.books.length;i++){
+        if(user.books[i].includes(book.name)){
+            return res.sendStatus(403)
+        }
     }
 
-    user = await User.findOneAndUpdate({"_id": req.body.id}, {$push: {books: book.name}})
+    const time = new Date()
+    time.setDate(time.getDate())
+    user = await User.findOneAndUpdate({"_id": req.body.id}, {$push: {books: [book.name, time]}})
     return removeBook(req, res)
 }
 
@@ -135,10 +139,19 @@ export const removeBookFromUser = async (req, res) => {
     } catch (error) {
         return res.sendStatus(404)
     }
-    if(!user.books.includes(book.name)){
-        return res.sendStatus(403)
+
+    let flag = true;
+    let toRemove = []
+    for(let i = 0;i < user.books.length;i++){
+        if(user.books[i].includes(book.name)){
+            flag = false
+            toRemove = user.books[i]
+        }
     }
-    
-    user = await User.findOneAndUpdate({"_id": req.body.id}, {$pull: {books: book.name}})
+    if(flag){
+        return res.sendStatus(404)
+    }
+
+    user = await User.findOneAndUpdate({"_id": req.body.id}, {$pull: {books: toRemove}})
     return addBook(req, res)
 }
