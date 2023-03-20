@@ -1,11 +1,22 @@
 $(document).ready(function () {
+  // ?Cookie
+  //?========================
   let cookie = new Cookies();
   cookie = cookie.getCookie();
   if (cookie === "") {
-    window.location.href = "index.html";
+    window.location.href = "/";
   }
-  // hamburger menu toggle
-  //========================
+  function preventBack() {
+    if (cookie === "") {
+      window.history.forward();
+    }
+  }
+  setTimeout(preventBack(), 0);
+  window.onunload = function () {
+    null;
+  };
+  // ?hamburger menu toggle
+  //?========================
   $(".nav-toggle").click(function () {
     $(".main-nav").toggleClass("is-open");
     $(".hamburger").toggleClass("is-open");
@@ -25,13 +36,13 @@ $(document).ready(function () {
     $(".ulAcc").toggleClass("hidden");
   });
 
-  // Filter toggle
-  //========================
+  // ?Filter toggle
+  //?========================
   $("#filterBtn").click(function () {
     $(".filterList").toggleClass("hidden");
   });
-  // Add book section toggle
-  //========================
+  // ?Add book section toggle
+  //?========================
   $("#addBookOpen").click(function () {
     event.preventDefault();
     $(".add-book-section").removeClass("hidden");
@@ -41,8 +52,8 @@ $(document).ready(function () {
     $(".add-book-section").addClass("hidden");
   });
 
-  // Change password section toggle
-  //========================
+  // ?Change password section toggle
+  //?========================
   $("#changePasswordOpen").click(function () {
     event.preventDefault();
     $(".change-password-section").removeClass("hidden");
@@ -52,8 +63,8 @@ $(document).ready(function () {
     $(".change-password-section").addClass("hidden");
   });
 
-  // Give book section toggle
-  //========================
+  // ?Give book section toggle
+  //?========================
   $(".giveBookOpen").click(function (el) {
     event.preventDefault();
     $(".give-book-section").removeClass("hidden");
@@ -66,6 +77,15 @@ $(document).ready(function () {
     $(".give-book-section").addClass("hidden");
     let giveBtn = document.querySelector("#giveBook");
     giveBtn.setAttribute("data-user-id", "");
+  });
+
+  // ?Loug out
+  //?========================
+  $("#logOut").click(function (el) {
+    event.preventDefault();
+    let cookie = new Cookies();
+    cookie.deleteCookie();
+    window.location.href = "index.html";
   });
 
   //Validators

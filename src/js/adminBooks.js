@@ -1,11 +1,22 @@
 $(document).ready(function () {
+  // ?Cookie
+  //?========================
   let cookie = new Cookies();
   cookie = cookie.getCookie();
   if (cookie === "") {
-    window.location.href = "index.html";
+    window.location.href = "/";
   }
-  // hamburger menu toggle
-  //========================
+  function preventBack() {
+    if (cookie === "") {
+      window.history.forward();
+    }
+  }
+  setTimeout(preventBack(), 0);
+  window.onunload = function () {
+    null;
+  };
+  // ?hamburger menu toggle
+  //?========================
   $(".nav-toggle").click(function () {
     $(".main-nav").toggleClass("is-open");
     $(".hamburger").toggleClass("is-open");
@@ -45,6 +56,15 @@ $(document).ready(function () {
 
   $("#changePasswordClose").click(function () {
     $(".change-password-section").addClass("hidden");
+  });
+
+  // ?Loug out
+  //?========================
+  $("#logOut").click(function (el) {
+    event.preventDefault();
+    let cookie = new Cookies();
+    cookie.deleteCookie();
+    window.location.href = "index.html";
   });
 
   //Validators

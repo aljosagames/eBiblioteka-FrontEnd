@@ -1,5 +1,19 @@
 $(document).ready(function () {
-  //Form open close
+  // ?Cookie
+  //?========================
+  let cookie = new Cookies();
+  cookie = cookie.getCookie();
+  if (cookie !== "") {
+    window.location.href = "adminPage.html";
+  }
+  function preventBack() {
+    window.history.forward();
+  }
+  setTimeout(preventBack(), 0);
+  window.onunload = function () {
+    null;
+  };
+  // ?Form open close
   $(".open-btn").click(function () {
     event.preventDefault();
     $(".login").addClass("hidden");
@@ -12,8 +26,8 @@ $(document).ready(function () {
     $(".register").addClass("hidden");
   });
 
-  // Validator Register
-  // =====================
+  // *Validator Register
+  // *=====================
   const form = document.querySelector("#register-form");
   const username = document.querySelector("#register-name");
   const email = document.querySelector("#register-email");
@@ -29,16 +43,18 @@ $(document).ready(function () {
 
     validateInputs();
     if (request(formTest) === true) {
-      $(".verification").removeClass("hidden");
-      $(".register").addClass("hidden");
+      let user = new Users();
+      user.username = username.value;
+      user.email = email.value;
+      user.password = password.value;
+      user.create();
 
       verForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
         inputsVer();
         if (request(verTest) === true) {
-          // !Popuni da se doda user
-          // !=======================
+          user.verify(verCode.value);
         }
       });
     }
@@ -124,8 +140,8 @@ $(document).ready(function () {
     }
   };
 
-  // Validator Login
-  // =====================
+  // *Validator Login
+  // *=====================
   const formLogin = document.querySelector("#login-form");
   const emailLogin = document.querySelector("#login-email");
   const passwordLogin = document.querySelector("#login-password");
