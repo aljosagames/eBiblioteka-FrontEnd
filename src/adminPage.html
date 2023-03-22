@@ -85,8 +85,13 @@
         <div class="acc-card card">
           <h3 data-UserName></h3>
           <h4 data-UserEmail></h4>
-          <a class="btn btn-ghost">Pregled</a>
-          <a class="btn btn-ghost giveBookOpen" data-user-id="">Dodaj</a>
+          <a class="btn btn-ghost" data-user-id-see="">Pregled</a>
+          <a
+            class="btn btn-ghost giveBookOpen"
+            data-user-id-give=""
+            onclick="giveBookOpen(this)"
+            >Dodaj</a
+          >
         </div>
       </template>
     </section>
@@ -130,7 +135,7 @@
           <div class="error"></div>
         </div>
         <div class="input-control">
-          <input type="text" placeholder="Bar kod" id="addBook-BarKod" />
+          <input type="text" placeholder="Kolicina" id="addBook-Count" />
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Dodaj</button>
@@ -180,6 +185,7 @@
     <!-- JavaScript 
     ==================== -->
     <script src="js/Cookies.js"></script>
+    <script src="js/Books.js"></script>
     <script src="js/adminPage.js"></script>
   </body>
 </html>

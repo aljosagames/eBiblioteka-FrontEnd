@@ -230,13 +230,13 @@ $(document).ready(function () {
         const bookName = card.querySelector("[data-BookName]");
         const autorName = card.querySelector("[data-AutorName]");
         const barCode = card.querySelector("[data-BarCode]");
-        bookName.textContent = book.content;
-        autorName.textContent = book.name;
+        bookName.textContent = book.name;
+        autorName.textContent = book.author;
         barCode.textContent = 123;
         bookCardContainer.append(card);
         return {
-          name: book.content,
-          autor: book.name,
+          name: book.name,
+          autor: book.author,
           barCode: "123",
           element: card,
         };

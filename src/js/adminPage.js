@@ -63,23 +63,7 @@ $(document).ready(function () {
     $(".change-password-section").addClass("hidden");
   });
 
-  // ?Give book section toggle
-  //?========================
-  $(".giveBookOpen").click(function (el) {
-    event.preventDefault();
-    $(".give-book-section").removeClass("hidden");
-    let userId = el.target.getAttribute("data-user-id");
-    let giveBtn = document.querySelector("#giveBook");
-    giveBtn.setAttribute("data-user-id", userId);
-  });
-
-  $("#giveBookClose").click(function () {
-    $(".give-book-section").addClass("hidden");
-    let giveBtn = document.querySelector("#giveBook");
-    giveBtn.setAttribute("data-user-id", "");
-  });
-
-  // ?Loug out
+  // ?Log out
   //?========================
   $("#logOut").click(function (el) {
     event.preventDefault();
@@ -122,7 +106,7 @@ $(document).ready(function () {
   const formAddBook = document.querySelector("#add-book-form");
   const bookName = document.querySelector("#addBook-BookName");
   const bookAutor = document.querySelector("#addBook-AutorName");
-  const barKod = document.querySelector("#addBook-BarKod");
+  const count = document.querySelector("#addBook-Count");
   let validatorAddBook = [false, false, false];
 
   //Validator Add Book
@@ -132,7 +116,12 @@ $(document).ready(function () {
 
     validateInputsAddBook();
     if (request(validatorAddBook) === true) {
-      location.reload();
+      let book = new Books();
+      book.name = bookName;
+      book.author = bookAutor;
+      book.count = count;
+      book.cookie = cookie;
+      book.create();
     }
   });
 
@@ -178,7 +167,7 @@ $(document).ready(function () {
   const validateInputsAddBook = () => {
     const nameValue = bookName.value.trim();
     const autorValue = bookAutor.value.trim();
-    const barKodValue = barKod.value.trim();
+    const countValue = count.value.trim();
 
     if (nameValue === "") {
       setError(bookName, "Unesite ime knjige", validatorAddBook, 0);
@@ -192,10 +181,10 @@ $(document).ready(function () {
       setSucces(bookAutor, validatorAddBook, 1);
     }
 
-    if (barKodValue === "") {
-      setError(barKod, "Unesite barKod", validatorAddBook, 2);
+    if (countValue === "") {
+      setError(count, "Unesite barKod", validatorAddBook, 2);
     } else {
-      setSucces(barKod, validatorAddBook, 2);
+      setSucces(count, validatorAddBook, 2);
     }
   };
 
@@ -279,10 +268,12 @@ $(document).ready(function () {
         const card = userCardTemplate.content.cloneNode(true).children[0];
         const userName = card.querySelector("[data-UserName]");
         const userEmail = card.querySelector("[data-UserEmail]");
-        const btnId = card.querySelector("[data-user-id]");
+        const btnIdSee = card.querySelector("[data-user-id-see]");
+        const btnIdGive = card.querySelector("[data-user-id-give]");
         userName.textContent = user.name;
         userEmail.textContent = user.email;
-        btnId.setAttribute("data-user-id", user._id);
+        btnIdSee.setAttribute("data-user-id-see", user._id);
+        btnIdGive.setAttribute("data-user-id-give", user._id);
         userCardContainer.append(card);
         return {
           name: user.name,
@@ -292,4 +283,19 @@ $(document).ready(function () {
         };
       });
     });
+});
+
+// ?Give book section toggle
+//?========================
+function giveBookOpen(el) {
+  $(".give-book-section").removeClass("hidden");
+  let userId = el.getAttribute("data-user-id-give");
+  let giveBtn = document.querySelector("#giveBook");
+  giveBtn.setAttribute("data-user-id", userId);
+}
+
+$("#giveBookClose").click(function () {
+  $(".give-book-section").addClass("hidden");
+  let giveBtn = document.querySelector("#giveBook");
+  giveBtn.setAttribute("data-user-id", "");
 });
