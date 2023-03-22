@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser } from "../controller/userController.js"
+import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin } from "../controller/userController.js"
 import { authenticateToken } from "../middleware.js"
 
 const router = express.Router()
@@ -17,10 +17,12 @@ router.post('/verify', verifyUser)
 // DELETE user
 router.delete('/delete', authenticateToken, deleteUser)
 // MODIFY user
-router.patch('/update', updateUser)
+router.patch('/update', authenticateToken, updateUser)
 // ADD book to user
 router.patch('/addBook', authenticateToken, addBookToUser)
 // ADD book to user
 router.patch('/removeBook', authenticateToken, removeBookFromUser)
+// MAKE user admin
+router.patch('/makeAdmin', authenticateToken, makeAdmin)
 
 export default router
