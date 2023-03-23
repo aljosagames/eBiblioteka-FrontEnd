@@ -26,7 +26,7 @@ class Books {
       headers: headers,
       body: data,
     })
-      .then((response) => console.log(response.json()))
+      .then((response) => response.json())
       .then((data) => {
         console.log(data);
       });

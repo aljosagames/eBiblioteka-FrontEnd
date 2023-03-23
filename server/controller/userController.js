@@ -30,9 +30,6 @@ export const loginUser = async (req, res) => {
     if(!await bcrypt.compare(req.body.password, user.password)){
         return res.sendStatus(401)
     }
-    if(!user.admin){
-        return res.sendStatus(407)
-    }
     const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"})
     return res.status(201).json({accessToken: accessToken})
 }
@@ -109,6 +106,15 @@ export const updateUser = async (req, res) => {
 export const makeAdmin = async (req, res) => {
     try {
         await User.findOneAndUpdate({"_id": req.body.id}, {$set: {admin: true}})
+        return res.sendStatus(201)
+    } catch (error) {
+        return res.sendStatus(404)
+    }
+}
+
+export const removeAdmin = async (req, res) => {
+    try {
+        await User.findOneAndUpdate({"_id": req.body.id}, {$set: {admin: false}})
         return res.sendStatus(201)
     } catch (error) {
         return res.sendStatus(404)

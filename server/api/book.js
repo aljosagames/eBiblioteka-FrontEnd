@@ -1,22 +1,22 @@
 import express from "express"
 import { getBooks, getBook, addBook, updateBook, createBook, deleteBook, removeBook } from "../controller/bookController.js"
-import { authenticateToken } from "../middleware.js"
+import { authenticateToken, authenticateAdmin } from "../middleware.js"
 
 const router = express.Router()
 
 // GET all books
-router.post('/', getBooks)
+router.post('/', authenticateToken, getBooks)
 // GET one book
-router.post('/getOne', getBook)
+router.post('/getOne', authenticateToken, getBook)
 // CREATE book
-router.post('/create', authenticateToken, createBook)
+router.post('/create', authenticateAdmin, createBook)
 // DELETE book
-router.delete('/delete', authenticateToken, deleteBook)
+router.delete('/delete', authenticateAdmin, deleteBook)
 // REMOVE one book
-router.patch('/remove', authenticateToken, removeBook)
+router.patch('/remove', authenticateAdmin, removeBook)
 // ADD one book
-router.patch('/add', authenticateToken, addBook)
+router.patch('/add', authenticateAdmin, addBook)
 // UPDATE book
-router.patch('/update', authenticateToken, updateBook)
+router.patch('/update', authenticateAdmin, updateBook)
 
 export default router

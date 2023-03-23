@@ -1,13 +1,13 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin } from "../controller/userController.js"
-import { authenticateToken } from "../middleware.js"
+import { loginUser, deleteUser, updateUser, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin, removeAdmin } from "../controller/userController.js"
+import { authenticateAdmin } from "../middleware.js"
 
 const router = express.Router()
 
 // GET all users
-router.post('/',  authenticateToken, getUsers)
+router.post('/',  authenticateAdmin, getUsers)
 // GET user
-router.post('/getOne',  authenticateToken, getUser)
+router.post('/getOne',  authenticateAdmin, getUser)
 // AUTHENTICATE user
 router.post('/login', loginUser)
 // CREATE user
@@ -15,14 +15,16 @@ router.post('/register', registerUser)
 // VERIFY user mail
 router.post('/verify', verifyUser)
 // DELETE user
-router.delete('/delete', authenticateToken, deleteUser)
+router.delete('/delete', authenticateAdmin, deleteUser)
 // MODIFY user
-router.patch('/update', authenticateToken, updateUser)
+router.patch('/update', authenticateAdmin, updateUser)
 // ADD book to user
-router.patch('/addBook', authenticateToken, addBookToUser)
+router.patch('/addBook', authenticateAdmin, addBookToUser)
 // ADD book to user
-router.patch('/removeBook', authenticateToken, removeBookFromUser)
+router.patch('/removeBook', authenticateAdmin, removeBookFromUser)
 // MAKE user admin
-router.patch('/makeAdmin', authenticateToken, makeAdmin)
+router.patch('/makeAdmin', authenticateAdmin, makeAdmin)
+// REMOVE user admin
+router.patch('/removeAdmin', authenticateAdmin, removeAdmin)
 
 export default router

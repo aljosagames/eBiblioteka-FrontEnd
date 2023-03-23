@@ -18,7 +18,12 @@ export const getBook = async (req, res) => {
 }
 
 export const createBook = async (req, res) => {
-    let book = await Book.findOne({"name": req.body.name})
+    let book
+    try {
+        book = await Book.findOne({"name": req.body.name})
+    } catch (error) {
+        return res.sendStatus(404)
+    }
     if(book){
         await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount+req.body.bookCount}})
         return res.sendStatus(201)
