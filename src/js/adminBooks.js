@@ -101,7 +101,7 @@ $(document).ready(function () {
   const formAddBook = document.querySelector("#add-book-form");
   const bookName = document.querySelector("#addBook-BookName");
   const bookAutor = document.querySelector("#addBook-AutorName");
-  const barKod = document.querySelector("#addBook-BarKod");
+  const count = document.querySelector("#addBook-Count");
   let validatorAddBook = [false, false, false];
 
   //Validator Add Book
@@ -111,7 +111,12 @@ $(document).ready(function () {
 
     validateInputsAddBook();
     if (request(validatorAddBook) === true) {
-      location.reload();
+      let book = new Books();
+      book.name = bookName.value;
+      book.author = bookAutor.value;
+      book.count = count.value;
+      book.cookie = cookie;
+      book.create();
     }
   });
 
@@ -140,7 +145,7 @@ $(document).ready(function () {
   const validateInputsAddBook = () => {
     const nameValue = bookName.value.trim();
     const autorValue = bookAutor.value.trim();
-    const barKodValue = barKod.value.trim();
+    const countValue = count.value.trim();
 
     if (nameValue === "") {
       setError(bookName, "Unesite ime knjige", validatorAddBook, 0);
@@ -154,10 +159,10 @@ $(document).ready(function () {
       setSucces(bookAutor, validatorAddBook, 1);
     }
 
-    if (barKodValue === "") {
-      setError(barKod, "Unesite barKod", validatorAddBook, 2);
+    if (countValue === "") {
+      setError(count, "Unesite barKod", validatorAddBook, 2);
     } else {
-      setSucces(barKod, validatorAddBook, 2);
+      setSucces(count, validatorAddBook, 2);
     }
   };
 

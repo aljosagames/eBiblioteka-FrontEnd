@@ -26,9 +26,13 @@ class Books {
       headers: headers,
       body: data,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+      .then((response) => {
+        if (response.status != 201) {
+          alert("Greska pri unosu");
+        } else {
+          location.reload();
+        }
+      })
+      .then((data) => {});
   }
 }

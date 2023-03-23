@@ -117,9 +117,9 @@ $(document).ready(function () {
     validateInputsAddBook();
     if (request(validatorAddBook) === true) {
       let book = new Books();
-      book.name = bookName;
-      book.author = bookAutor;
-      book.count = count;
+      book.name = bookName.value;
+      book.author = bookAutor.value;
+      book.count = count.value;
       book.cookie = cookie;
       book.create();
     }
