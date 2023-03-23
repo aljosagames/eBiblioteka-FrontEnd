@@ -122,7 +122,7 @@ export const removeAdmin = async (req, res) => {
 }
 
 export const addBookToUser = async (req, res) => {
-    const book = await Book.findOne({"name": req.body.name})
+    const book = await Book.findOne({"id": req.body.id})
     if(!book){
         return res.sendStatus(404)
     }
@@ -146,7 +146,7 @@ export const addBookToUser = async (req, res) => {
 }
 
 export const removeBookFromUser = async (req, res) => {
-    const book = await Book.findOne({"name": req.body.name})
+    const book = await Book.findOne({"id": req.body.id})
     if(!book){
         return res.sendStatus(404)
     }

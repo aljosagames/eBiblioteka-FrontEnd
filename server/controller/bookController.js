@@ -8,7 +8,7 @@ export const getBooks = async (req, res) => {
 
 export const getBook = async (req, res) => {
     try {
-        const book = await Book.findOne({"name": req.body.name})
+        const book = await Book.findOne({"id": req.body.id})
         if(book.length != 0){
             return res.status(200).json(book)
         }
@@ -18,31 +18,23 @@ export const getBook = async (req, res) => {
 }
 
 export const createBook = async (req, res) => {
-    let book
     try {
-        book = await Book.findOne({"name": req.body.name})
+        const newBook = {
+            name: req.body.name,
+            author: req.body.author,
+            bookCount: req.body.bookCount,
+            _id: new ObjectId().toHexString()
+        }
+        const book = new Book(newBook)
+        await book.save()
+        return res.sendStatus(201)
     } catch (error) {
         return res.sendStatus(404)
     }
-    if(book){
-        await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount+req.body.bookCount}})
-        return res.sendStatus(201)
-    }
-
-    const newBook = {
-        name: req.body.name,
-        author: req.body.author,
-        bookCount: req.body.bookCount,
-        _id: new ObjectId().toHexString()
-    }
-    book = new Book(newBook)
-    await book.save()
-
-    res.sendStatus(201)
 }
 
 export const deleteBook = async (req, res) => {
-    const book = await Book.findOneAndDelete({"name": req.body.name})
+    const book = await Book.findOneAndDelete({"id": req.body.id})
     if(book){
         return res.sendStatus(201) 
     }
@@ -50,18 +42,18 @@ export const deleteBook = async (req, res) => {
 }
 
 export const addBook = async (req, res) => {
-    const book = await Book.findOne({"name": req.body.name})
+    const book = await Book.findOne({"id": req.body.id})
     if(book){
-        await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount+1}})
+        await Book.findOneAndUpdate({"id": req.body.id}, {$set: {bookCount: book.bookCount+1}})
         return res.sendStatus(201)
     }
     return res.sendStatus(404)
 }
 
 export const removeBook = async (req, res) => {
-    let book = await Book.findOne({"name": req.body.name})
+    let book = await Book.findOne({"id": req.body.id})
     if(book){
-        book = await Book.findOneAndUpdate({"name": req.body.name}, {$set: {bookCount: book.bookCount-1}})
+        book = await Book.findOneAndUpdate({"id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
         if(book.bookCount <= 1){
             deleteBook(req, res)
             return
@@ -74,9 +66,9 @@ export const removeBook = async (req, res) => {
 export const updateBook = async (req, res) => {
     let book;
     if(req.body.name != null){
-        book = await Book.findOneAndUpdate({"name": req.body.nameProslo}, {$set: {"name": req.body.name}})
+        book = await Book.findOneAndUpdate({"id": req.body.id}, {$set: {"name": req.body.name}})
     }else if(req.body.author != null){
-        book = await Book.findOneAndUpdate({"name": req.body.nameProslo}, {$set: {"author": req.body.author}})
+        book = await Book.findOneAndUpdate({"id": req.body.id}, {$set: {"author": req.body.author}})
     }else{
         return req.sendStatus(400)
     }
