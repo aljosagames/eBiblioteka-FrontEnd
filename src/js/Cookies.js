@@ -3,6 +3,10 @@ class Cookies {
     document.cookie = "token=" + data.accessToken;
   }
 
+  createUsers(data) {
+    document.cookie = "user=" + data;
+  }
+
   getCookie() {
     let name = "token=";
     let ca = document.cookie.split(";");

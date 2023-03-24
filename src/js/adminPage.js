@@ -299,3 +299,10 @@ $("#giveBookClose").click(function () {
   let giveBtn = document.querySelector("#giveBook");
   giveBtn.setAttribute("data-user-id", "");
 });
+
+function openUser(el) {
+  let userId = el.getAttribute("data-user-id-see");
+  let cookie = new Cookies();
+  cookie.createUsers(userId);
+  window.location.href = "adminUsers.html";
+}
