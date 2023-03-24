@@ -39,33 +39,31 @@ export const registerUser = async (req, res) => {
         return res.sendStatus(406)
     }else{
         let code = Math.floor((Math.random() * 999999) + 100000);
-        if((await User.find({code:code})).length!=0)
-        {
-            code = Math.floor((Math.random() * 999999) + 100000);
-            const newCode = new Code({code:code})
-            await newCode.save()
-
-            emailVerif(code, req.body.email)
-        }
+        const newCode = new Code({code:code, email:req.body.email})
+        await newCode.save()
+        emailVerif(code, req.body.email)
         return res.sendStatus(201)
     }
 }
 
 export const verifyUser = async (req, res) => {
     try {
-        const code = await Code.findOneAndDelete({"code": req.body.code})
+        let code = await Code.findOne({"code": req.body.code})
+        if(code.email != req.body.email){
+            throw Error
+        }
+        code = await Code.findOneAndDelete({"code": req.body.code})
         if(!code){
             throw Error
         }
     } catch (error) {
         return res.sendStatus(403)        
     }
-
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 
     const user = {
         name: req.body.name,
         email: req.body.email,
-        password: hashedPassword 
+        password: hashedPassword
     }
     const newUser = new User(user)
     await newUser.save()
