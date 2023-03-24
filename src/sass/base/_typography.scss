@@ -22,7 +22,15 @@
   margin: 1em 0;
   line-height: 1;
 
+  h3 {
+    color: rgb(70, 69, 69);
+  }
+
   @media (min-width: 700px) {
     font-size: 2rem;
   }
+}
+
+.text-align-center {
+  text-align: center;
 }

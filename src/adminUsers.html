@@ -13,6 +13,71 @@
   </head>
 
   <body>
+    <!-- Header 
+    ==================== -->
+    <header class="main-header">
+      <div class="container flex">
+        <div class="logo">
+          <a href="adminPage.html">eBiblioteka</a>
+        </div>
+
+        <nav class="main-nav">
+          <ul class="unstyled-list flex first-ul">
+            <li><a href="">Korisnici</a></li>
+            <li>
+              <a href="" class="btn-books"
+                >Knjige<i class="fa-solid fa-angle-down iBooks"></i
+              ></a>
+              <ul class="unstyled-list second-ul ulBooks hidden">
+                <li><a href="" id="addBookOpen">Dodaj</a></li>
+                <li><a href="adminBooks.html">Lista</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="" class="btn-acc"
+                >Nalog<i class="fa-solid fa-angle-down iAcc"></i
+              ></a>
+              <ul class="unstyled-list second-ul ulAcc hidden">
+                <li><a href="" id="changePasswordOpen">Pregled</a></li>
+                <li><a href="" id="logOut">Odjava</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="nav-toggle">
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Users section 
+    ==================== -->
+    <section class="user-section">
+      <div class="container">
+        <div class="user-title main-title">
+          <h2 class="userName"></h2>
+          <h3 class="userEmail"></h3>
+        </div>
+      </div>
+
+      <div class="books-cards cards" data-books-cards>
+        <div class="books-card card">
+          <h3 data-BookName>Test</h3>
+          <h4 data-AutorName>Test</h4>
+          <a class="btn btn-red" data-button>Izbrisi</a>
+        </div>
+      </div>
+
+      <div class="container text-align-center">
+        <a class="btn btn-secondary">Dodaj</a>
+        <a class="btn btn-red classic" id="deleteUser" data-user-id=""
+          >Izbrisi</a
+        >
+      </div>
+    </section>
+
     <!-- jQuery 
     ==================== -->
     <script

@@ -79,4 +79,24 @@ class Users {
         window.location.href = "adminPage.html";
       });
   }
+
+  delete(verCode) {
+    let data = {
+      id: this.userId,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", verCode);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/delete", {
+      method: "delete",
+      headers: headers,
+      body: data,
+    }).then((response) => console.log(response.status));
+
+    // !DODAJ DA SE COOKIE BRISE I PROVERA DA LI GA IMA
+  }
 }
