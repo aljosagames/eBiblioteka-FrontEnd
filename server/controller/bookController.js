@@ -38,6 +38,7 @@ export const deleteBook = async (req, res) => {
     if(book){
         return res.sendStatus(201) 
     }
+    console.log(book);
     return res.sendStatus(404)
 }
 

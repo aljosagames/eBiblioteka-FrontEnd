@@ -13,10 +13,10 @@ router.post('/create', authenticateAdmin, createBook)
 // DELETE book
 router.delete('/delete', authenticateAdmin, deleteBook)
 // REMOVE one book
-router.patch('/remove', authenticateAdmin, removeBook)
+router.put('/remove', authenticateAdmin, removeBook)
 // ADD one book
-router.patch('/add', authenticateAdmin, addBook)
+router.put('/add', authenticateAdmin, addBook)
 // UPDATE book
-router.patch('/update', authenticateAdmin, updateBook)
+router.put('/update', authenticateAdmin, updateBook)
 
 export default router

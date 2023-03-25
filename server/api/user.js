@@ -17,14 +17,14 @@ router.post('/verify', verifyUser)
 // DELETE user
 router.delete('/delete', authenticateAdmin, deleteUser)
 // MODIFY user
-router.patch('/update', authenticateAdmin, updateUser)
+router.put('/update', authenticateAdmin, updateUser)
 // ADD book to user
-router.patch('/addBook', authenticateAdmin, addBookToUser)
+router.put('/addBook', authenticateAdmin, addBookToUser)
 // ADD book to user
-router.patch('/removeBook', authenticateAdmin, removeBookFromUser)
+router.put('/removeBook', authenticateAdmin, removeBookFromUser)
 // MAKE user admin
-router.patch('/makeAdmin', authenticateAdmin, makeAdmin)
+router.put('/makeAdmin', authenticateAdmin, makeAdmin)
 // REMOVE user admin
-router.patch('/removeAdmin', authenticateAdmin, removeAdmin)
+router.put('/removeAdmin', authenticateAdmin, removeAdmin)
 
 export default router
