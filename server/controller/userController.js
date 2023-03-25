@@ -151,9 +151,6 @@ export const addBookToUser = async (req, res) => {
 
 export const removeBookFromUser = async (req, res) => {
     const book = await Book.findOne({"_id": req.body.id})
-    if(!book){
-        return res.sendStatus(404)
-    }
     let user
     try {
         user = await User.findOne({"_id": req.body.userId})
@@ -163,22 +160,17 @@ export const removeBookFromUser = async (req, res) => {
     } catch (error) {
         return res.sendStatus(404)
     }
-
-    let flag = true;
+    
     let toRemove = []
     try {
         for(let i = 0;i < user.books.length;i++){
-            if(user.books[i][0]._id == book._id){
-                flag = false
+            if(user.books[i][0]._id == req.body.id){
                 toRemove = user.books[i]
             }
         }
-        if(flag){
-            throw Error
-        }
-    } catch (error) {
+    } catch (error) {   
         return res.sendStatus(404)
     }
+    await addBook(req, res)
     user = await User.findOneAndUpdate({"_id": req.body.userId}, {$pull: {books: toRemove}})
-    return addBook(req, res)
 }

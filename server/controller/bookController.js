@@ -1,5 +1,6 @@
 import Book from "../model/Book.js"
 import { ObjectId } from "bson"
+import User from "../model/User.js"
 
 export const getBooks = async (req, res) => {
     const books = await Book.find({})
@@ -35,17 +36,30 @@ export const createBook = async (req, res) => {
 
 export const deleteBook = async (req, res) => {
     const book = await Book.findOneAndDelete({"_id": req.body.id})
-    if(book){
-        return res.sendStatus(201) 
-    }
-    console.log(book);
-    return res.sendStatus(404)
+    return res.sendStatus(201) 
 }
 
 export const addBook = async (req, res) => {
     const book = await Book.findOne({"_id": req.body.id})
+    const user = await User.findOne({"_id": req.body.userId})
     if(book){
         await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+1}})
+        return res.sendStatus(201)
+    }else if(user){
+        let toAdd
+        for(let i = 0;i < user.books.length;i++){
+            if(user.books[i][0]._id == req.body.id){
+                toAdd = user.books[i][0]
+            }
+        }
+        const newBook = {
+            name: toAdd.name,
+            author: toAdd.author,
+            bookCount: 1,
+            _id: toAdd._id
+        }
+        const book = new Book(newBook)
+        await book.save()
         return res.sendStatus(201)
     }
     return res.sendStatus(404)
@@ -55,9 +69,14 @@ export const removeBook = async (req, res) => {
     let book = await Book.findOne({"_id": req.body.id})
     if(book){
         book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
-        return res.sendStatus(201)
+        if(book.bookCount <= 1){
+            deleteBook(req, res)
+        }else{
+            return res.sendStatus(201)
+        }
+    }else{
+        return res.sendStatus(404)
     }
-    return res.sendStatus(404)
 }
 
 export const updateBook = async (req, res) => {
