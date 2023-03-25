@@ -31,7 +31,7 @@ export const loginUser = async (req, res) => {
         return res.sendStatus(401)
     }
     const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"})
-    return res.status(201).json({accessToken: accessToken})
+    return res.status(201).json({accessToken: accessToken, admin: user.admin})
 }
 
 export const registerUser = async (req, res) => {
@@ -150,7 +150,6 @@ export const addBookToUser = async (req, res) => {
 }
 
 export const removeBookFromUser = async (req, res) => {
-    const book = await Book.findOne({"_id": req.body.id})
     let user
     try {
         user = await User.findOne({"_id": req.body.userId})

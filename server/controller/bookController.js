@@ -78,19 +78,3 @@ export const removeBook = async (req, res) => {
         return res.sendStatus(404)
     }
 }
-
-export const updateBook = async (req, res) => {
-    let book;
-    if(req.body.name != null){
-        book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {"name": req.body.name}})
-    }else if(req.body.author != null){
-        book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {"author": req.body.author}})
-    }else{
-        return req.sendStatus(400)
-    }
-
-    if(book){
-        return res.sendStatus(200)
-    }
-    return res.sendStatus(404)
-}
