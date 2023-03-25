@@ -27,10 +27,12 @@ class Books {
       body: data,
     })
       .then((response) => {
-        if (response.status != 201) {
-          alert("Greska pri unosu");
-        } else {
+        if (response.status === 201) {
           location.reload();
+        } else if (response.status === 410) {
+          let cookie = new Cookies();
+          cookie.deleteCookie();
+          window.location.href = "index.html";
         }
       })
       .then((data) => {});
@@ -55,7 +57,32 @@ class Books {
     }).then((response) => {
       if (response.status === 201) {
         location.reload();
+      } else if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
       }
     });
+  }
+
+  //*Get book
+  async get() {
+    let data = {
+      id: this.barCode,
+    };
+
+    let headers = new Headers();
+    headers.append("Authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    const response = await fetch(this.apiUrl + "/book/getOne", {
+      method: "post",
+      headers: headers,
+      body: data,
+    });
+    const data_1 = await response.json();
+    return data_1;
   }
 }

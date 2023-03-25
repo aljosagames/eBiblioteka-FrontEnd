@@ -63,11 +63,18 @@
       </div>
 
       <div class="books-cards cards" data-books-cards></div>
-      <template data-book-template>
+      <template data-books-template>
         <div class="books-card card">
           <h3 data-BookName></h3>
           <h4 data-AutorName></h4>
-          <a class="btn btn-red" data-button>Izbrisi</a>
+          <h4 data-expire></h4>
+          <a
+            class="btn btn-red"
+            data-button
+            data-book-id=""
+            onclick="deleteBookFromUser(this)"
+            >Izbrisi
+          </a>
         </div>
       </template>
 

@@ -102,10 +102,12 @@ class Users {
         let cookie = new Cookies();
         cookie.deleteCookieUser();
         window.location.href = "adminPage.html";
+      } else if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
       }
     });
-
-    //!PROVERA DA LI GA IMA
   }
 
   addBookToUser() {
@@ -121,9 +123,42 @@ class Users {
     data = JSON.stringify(data);
 
     fetch(this.apiUrl + "/user/addBook", {
-      method: "patch",
+      method: "put",
       headers: headers,
       body: data,
-    }).then((response) => console.log(response));
+    }).then((response) => {
+      if (response.status === 201) {
+        window.location.href = "adminUsers.html";
+      } else if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
+      } else if (response.status === 403) {
+        alert("Korisnik vec ima tu knjigu");
+      }
+    });
+  }
+
+  deleteBookFromUser() {
+    let data = {
+      id: this.barCode,
+      userId: this.userId,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/removeBook", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
   }
 }
