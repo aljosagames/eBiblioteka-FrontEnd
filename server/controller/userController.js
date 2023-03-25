@@ -120,53 +120,66 @@ export const removeAdmin = async (req, res) => {
 }
 
 export const addBookToUser = async (req, res) => {
-    const book = await Book.findOne({"id": req.body.id})
+    const book = await Book.findOne({"_id": req.body.id})
     if(!book){
         return res.sendStatus(404)
     }
     let user
     try {
-        user = await User.findOne({"_id": req.body.id})
+        user = await User.findOne({"_id": req.body.userId})
+        if(!user){
+            throw Error
+        }
     } catch (error) {
         return res.sendStatus(404)
     }
-    
-    for(let i = 0;i < user.books.length;i++){
-        if(user.books[i].includes(book.name)){
-            return res.sendStatus(403)
+    try {
+        for(let i = 0;i < user.books.length;i++){
+            if(user.books[i].includes(book._id)){
+                return res.sendStatus(403)
+            }
         }
+    } catch (error) {
+        
     }
 
     const time = new Date()
     time.setDate(time.getDate())
-    user = await User.findOneAndUpdate({"_id": req.body.id}, {$push: {books: [book.name, time]}})
+    user = await User.findOneAndUpdate({"_id": req.body.userId}, {$push: {books: [book._id, time]}})
     return removeBook(req, res)
 }
 
 export const removeBookFromUser = async (req, res) => {
-    const book = await Book.findOne({"id": req.body.id})
+    const book = await Book.findOne({"_id": req.body.id})
     if(!book){
         return res.sendStatus(404)
     }
     let user
     try {
-        user = await User.findOne({"_id": req.body.id})
+        user = await User.findOne({"_id": req.body.userId})
+        if(!user){
+            throw Error
+        }
     } catch (error) {
         return res.sendStatus(404)
     }
 
     let flag = true;
     let toRemove = []
-    for(let i = 0;i < user.books.length;i++){
-        if(user.books[i].includes(book.name)){
-            flag = false
-            toRemove = user.books[i]
+    try {
+        for(let i = 0;i < user.books.length;i++){
+            if(user.books[i].includes(book._id)){
+                flag = false
+                toRemove = user.books[i]
+            }
         }
-    }
-    if(flag){
-        return res.sendStatus(404)
+        if(flag){
+            return res.sendStatus(404)
+        }
+    } catch (error) {
+        
     }
 
-    user = await User.findOneAndUpdate({"_id": req.body.id}, {$pull: {books: toRemove}})
+    user = await User.findOneAndUpdate({"_id": req.body.userId}, {$pull: {books: toRemove}})
     return addBook(req, res)
 }
