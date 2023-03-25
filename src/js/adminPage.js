@@ -145,23 +145,6 @@ $(document).ready(function () {
     }
   });
 
-  //Const Give Book
-  //========================
-  const formGiveBook = document.querySelector("#give-book-form");
-  const barCode = document.querySelector("#giveBook-barCode");
-  let validatorGiveBook = [false];
-
-  //Validator Give Book
-  //========================
-  formGiveBook.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    validateInputsGiveBook();
-    if (request(validatorGiveBook) === true) {
-      location.reload();
-    }
-  });
-
   //Inputs Add Book
   //========================
   const validateInputsAddBook = () => {
@@ -226,18 +209,6 @@ $(document).ready(function () {
     }
   };
 
-  //Inputs Give Book
-  //========================
-  const validateInputsGiveBook = () => {
-    const barCodeValue = barCode.value.trim();
-
-    if (barCodeValue === "") {
-      setError(barCode, "Unesite bar kod knjige", validatorGiveBook, 0);
-    } else {
-      setSucces(barCode, validatorGiveBook, 0);
-    }
-  };
-
   // *Users list and search
   // *========================
   const userCardTemplate = document.querySelector("[data-users-template]");
@@ -283,21 +254,6 @@ $(document).ready(function () {
         };
       });
     });
-});
-
-// ?Give book section toggle
-//?========================
-function giveBookOpen(el) {
-  $(".give-book-section").removeClass("hidden");
-  let userId = el.getAttribute("data-user-id-give");
-  let giveBtn = document.querySelector("#giveBook");
-  giveBtn.setAttribute("data-user-id", userId);
-}
-
-$("#giveBookClose").click(function () {
-  $(".give-book-section").addClass("hidden");
-  let giveBtn = document.querySelector("#giveBook");
-  giveBtn.setAttribute("data-user-id", "");
 });
 
 function openUser(el) {
