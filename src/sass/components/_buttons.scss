@@ -67,3 +67,16 @@
     font-size: 1rem;
   }
 }
+
+.btn-red.classic {
+  background: $primary;
+  font-size: 1rem;
+
+  &:hover,
+  &:focus {
+    background: red;
+  }
+  @media (min-width: 700px) {
+    font-size: 1.25rem;
+  }
+}

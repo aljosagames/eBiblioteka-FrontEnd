@@ -23,9 +23,6 @@ $(document).ready(function () {
     id: usersCookie,
   };
 
-  console.log(typeof usersCookie);
-  console.log(cookie)
-
   let headers = new Headers();
   headers.append("authorization", cookie);
   headers.append("Content-Type", "application/json");
@@ -34,8 +31,21 @@ $(document).ready(function () {
   fetch("http://localhost:8080/api/user/getOne", {
     method: "post",
     headers: headers,
-    dody: data,
+    body: data,
   })
-    .then((response) => console.log(response))
-    .then((data) => {});
+    .then((response) => response.json())
+    .then((data) => {
+      let userName = document.querySelector(".userName");
+      let userEmail = document.querySelector(".userEmail");
+      let btnDelete = document.querySelector("#deleteUser");
+      userName.textContent = data.name;
+      userEmail.textContent = data.email;
+      btnDelete.setAttribute("data-user-id", data._id);
+    });
+
+  $("#deleteUser").click(function () {
+    let user = new Users();
+    user.userId = usersCookie;
+    user.delete(cookie);
+  });
 });
