@@ -232,28 +232,34 @@ $(document).ready(function () {
     headers: {
       authorization: cookie,
     },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      users = data.map((user) => {
-        const card = userCardTemplate.content.cloneNode(true).children[0];
-        const userName = card.querySelector("[data-UserName]");
-        const userEmail = card.querySelector("[data-UserEmail]");
-        const btnIdSee = card.querySelector("[data-user-id-see]");
-        const btnIdGive = card.querySelector("[data-user-id-give]");
-        userName.textContent = user.name;
-        userEmail.textContent = user.email;
-        btnIdSee.setAttribute("data-user-id-see", user._id);
-        btnIdGive.setAttribute("data-user-id-give", user._id);
-        userCardContainer.append(card);
-        return {
-          name: user.name,
-          email: user.email,
-          id: user._id,
-          element: card,
-        };
+  }).then((response) => {
+    if (response.status === 410) {
+      let cookie = new Cookies();
+      cookie.deleteCookie();
+      window.location.href = "index.html";
+    } else {
+      response.json().then((data) => {
+        users = data.map((user) => {
+          const card = userCardTemplate.content.cloneNode(true).children[0];
+          const userName = card.querySelector("[data-UserName]");
+          const userEmail = card.querySelector("[data-UserEmail]");
+          const btnIdSee = card.querySelector("[data-user-id-see]");
+          const btnIdGive = card.querySelector("[data-user-id-give]");
+          userName.textContent = user.name;
+          userEmail.textContent = user.email;
+          btnIdSee.setAttribute("data-user-id-see", user._id);
+          btnIdGive.setAttribute("data-user-id-give", user._id);
+          userCardContainer.append(card);
+          return {
+            name: user.name,
+            email: user.email,
+            id: user._id,
+            element: card,
+          };
+        });
       });
-    });
+    }
+  });
 });
 
 function openUser(el) {
