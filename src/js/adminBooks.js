@@ -227,26 +227,32 @@ $(document).ready(function () {
     headers: {
       authorization: cookie,
     },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      books = data.map((book) => {
-        const card = bookCardTemplate.content.cloneNode(true).children[0];
-        const bookName = card.querySelector("[data-BookName]");
-        const autorName = card.querySelector("[data-AutorName]");
-        const barCode = card.querySelector("[data-BarCode]");
-        bookName.textContent = book.name;
-        autorName.textContent = book.author;
-        barCode.textContent = book._id;
-        bookCardContainer.append(card);
-        return {
-          name: book.name,
-          autor: book.author,
-          barCode: book._id,
-          element: card,
-        };
+  }).then((response) => {
+    if (response.status === 410) {
+      let cookie = new Cookies();
+      cookie.deleteCookie();
+      window.location.href = "index.html";
+    } else {
+      response.json().then((data) => {
+        books = data.map((book) => {
+          const card = bookCardTemplate.content.cloneNode(true).children[0];
+          const bookName = card.querySelector("[data-BookName]");
+          const autorName = card.querySelector("[data-AutorName]");
+          const barCode = card.querySelector("[data-BarCode]");
+          bookName.textContent = book.name;
+          autorName.textContent = book.author;
+          barCode.textContent = book._id;
+          bookCardContainer.append(card);
+          return {
+            name: book.name,
+            autor: book.author,
+            barCode: book._id,
+            element: card,
+          };
+        });
       });
-    });
+    }
+  });
 });
 
 // *Delete book
