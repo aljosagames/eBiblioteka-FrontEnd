@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>eBiblioteka</title>
+  </head>
+
+  <body>
+    <!-- Header 
+    ==================== -->
+    <header class="main-header">
+      <div class="container flex">
+        <div class="logo">
+          <a href="adminPage.html">eBiblioteka</a>
+        </div>
+
+        <nav class="main-nav">
+          <ul class="unstyled-list flex first-ul">
+            <li><a href="adminPage.html">Korisnici</a></li>
+            <li>
+              <a href="" class="btn-books"
+                >Knjige<i class="fa-solid fa-angle-down iBooks"></i
+              ></a>
+              <ul class="unstyled-list second-ul ulBooks hidden">
+                <li><a href="" id="addBookOpen">Dodaj</a></li>
+                <li><a href="adminBooks.html">Lista</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="" class="btn-acc"
+                >Nalog<i class="fa-solid fa-angle-down iAcc"></i
+              ></a>
+              <ul class="unstyled-list second-ul ulAcc hidden">
+                <li><a href="" id="changePasswordOpen">Pregled</a></li>
+                <li><a href="" id="logOut">Odjava</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="nav-toggle">
+          <div class="hamburger"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Books section 
+      ==================== -->
+    <section class="books-list">
+      <div class="container">
+        <div class="books-list-title main-title">
+          <h2>Lista knjiga</h2>
+        </div>
+
+        <div class="search">
+          <input type="text" data-search />
+        </div>
+      </div>
+
+      <div class="books-cards cards" data-books-cards></div>
+      <template data-books-template>
+        <div class="books-card card">
+          <h3 data-BookName></h3>
+          <h4 data-AutorName></h4>
+          <h4 data-BarCode></h4>
+          <a class="btn btn-ghost" data-button onclick="addBookToUser(this)"
+            >Dodaj
+          </a>
+        </div>
+      </template>
+    </section>
+
+    <!-- Add book section 
+      ==================== -->
+    <section class="add-book-section form-section-main hidden">
+      <form action="/" class="form add-book-form" id="add-book-form">
+        <div class="header-close">
+          <h2>Dodaj knjigu</h2>
+          <a class="close-btn" id="addBookClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Ime knjige" id="addBook-BookName" />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Ime i prezime autora"
+            id="addBook-AutorName"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Kolicina" id="addBook-Count" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Dodaj</button>
+      </form>
+    </section>
+
+    <!-- Change password 
+        ==================== -->
+    <section class="change-password-section form-section-main hidden">
+      <form
+        action="/"
+        class="form change-password-form"
+        id="change-password-form"
+      >
+        <div class="header-close">
+          <h2>Promeni sifru</h2>
+          <a class="close-btn" id="changePasswordClose">X</a>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Sifra"
+            id="changePassword-password"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Ponovi sifru"
+            id="changePassword-repeat-password"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Promeni</button>
+      </form>
+    </section>
+
+    <!-- jQuery 
+        ==================== -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.3.min.js"
+      integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- JavaScript 
+      ==================== -->
+    <script src="js/Cookies.js"></script>
+    <script src="js/Users.js"></script>
+    <script src="js/Books.js"></script>
+    <script src="js/adminUsersBooks.js"></script>
+  </body>
+</html>
