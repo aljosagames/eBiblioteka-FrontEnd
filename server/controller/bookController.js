@@ -55,10 +55,6 @@ export const removeBook = async (req, res) => {
     let book = await Book.findOne({"_id": req.body.id})
     if(book){
         book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
-        if(book.bookCount <= 1){
-            deleteBook(req, res)
-            return
-        }
         return res.sendStatus(201)
     }
     return res.sendStatus(404)
