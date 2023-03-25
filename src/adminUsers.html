@@ -23,7 +23,7 @@
 
         <nav class="main-nav">
           <ul class="unstyled-list flex first-ul">
-            <li><a href="">Korisnici</a></li>
+            <li><a href="adminPage.html">Korisnici</a></li>
             <li>
               <a href="" class="btn-books"
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
@@ -62,20 +62,87 @@
         </div>
       </div>
 
-      <div class="books-cards cards" data-books-cards>
+      <div class="books-cards cards" data-books-cards></div>
+      <template data-book-template>
         <div class="books-card card">
-          <h3 data-BookName>Test</h3>
-          <h4 data-AutorName>Test</h4>
+          <h3 data-BookName></h3>
+          <h4 data-AutorName></h4>
           <a class="btn btn-red" data-button>Izbrisi</a>
         </div>
-      </div>
+      </template>
 
       <div class="container text-align-center">
-        <a class="btn btn-secondary">Dodaj</a>
+        <a
+          class="btn btn-secondary margin-right"
+          onclick="giveBookOpen(this)"
+          id="addBookToUser"
+          data-user-id-give=""
+          >Dodaj
+        </a>
         <a class="btn btn-red classic" id="deleteUser" data-user-id=""
-          >Izbrisi</a
-        >
+          >Izbrisi
+        </a>
       </div>
+    </section>
+
+    <!-- Add book section 
+    ==================== -->
+    <section class="add-book-section form-section-main hidden">
+      <form action="/" class="form add-book-form" id="add-book-form">
+        <div class="header-close">
+          <h2>Dodaj knjigu</h2>
+          <a class="close-btn" id="addBookClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Ime knjige" id="addBook-BookName" />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Ime i prezime autora"
+            id="addBook-AutorName"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Kolicina" id="addBook-Count" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Dodaj</button>
+      </form>
+    </section>
+
+    <!-- Change password 
+    ==================== -->
+    <section class="change-password-section form-section-main hidden">
+      <form
+        action="/"
+        class="form change-password-form"
+        id="change-password-form"
+      >
+        <div class="header-close">
+          <h2>Promeni sifru</h2>
+          <a class="close-btn" id="changePasswordClose">X</a>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Sifra"
+            id="changePassword-password"
+          />
+          <div class="error"></div>
+        </div>
+        <div class="input-control">
+          <input
+            type="password"
+            placeholder="Ponovi sifru"
+            id="changePassword-repeat-password"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Promeni</button>
+      </form>
     </section>
 
     <!-- jQuery 

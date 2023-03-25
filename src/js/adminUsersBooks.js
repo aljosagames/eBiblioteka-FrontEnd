@@ -38,8 +38,8 @@ $(document).ready(function () {
     $(".ulAcc").toggleClass("hidden");
   });
 
-  // ?Add book section toggle
-  //?========================
+  // Add book section toggle
+  //========================
   $("#addBookOpen").click(function () {
     event.preventDefault();
     $(".add-book-section").removeClass("hidden");
@@ -49,8 +49,8 @@ $(document).ready(function () {
     $(".add-book-section").addClass("hidden");
   });
 
-  // ?Change password section toggle
-  //?========================
+  // Change password section toggle
+  //========================
   $("#changePasswordOpen").click(function () {
     event.preventDefault();
     $(".change-password-section").removeClass("hidden");
@@ -60,48 +60,13 @@ $(document).ready(function () {
     $(".change-password-section").addClass("hidden");
   });
 
-  // ?Log out
+  // ?Loug out
   //?========================
   $("#logOut").click(function (el) {
     event.preventDefault();
     let cookie = new Cookies();
     cookie.deleteCookie();
     window.location.href = "index.html";
-  });
-
-  // *Get User
-  //*========================
-  let data = {
-    id: usersCookie,
-  };
-
-  let headers = new Headers();
-  headers.append("authorization", cookie);
-  headers.append("Content-Type", "application/json");
-
-  data = JSON.stringify(data);
-  fetch("http://localhost:8080/api/user/getOne", {
-    method: "post",
-    headers: headers,
-    body: data,
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      let userName = document.querySelector(".userName");
-      let userEmail = document.querySelector(".userEmail");
-      let btnDelete = document.querySelector("#deleteUser");
-      let btnGiveBook = document.querySelector("#addBookToUser");
-      userName.textContent = data.name;
-      userEmail.textContent = data.email;
-      btnDelete.setAttribute("data-user-id", data._id);
-      btnGiveBook.setAttribute("data-user-id-give", data._id);
-    });
-
-  $("#deleteUser").click(function () {
-    let user = new Users();
-    user.userId = usersCookie;
-    user.delete(cookie);
   });
 
   //Validators
@@ -240,10 +205,61 @@ $(document).ready(function () {
       setSucces(changePasswordRepeat, validatorChangePassword, 1);
     }
   };
+
+  // *Books list and Search
+  // *========================
+  const bookCardTemplate = document.querySelector("[data-books-template]");
+  const bookCardContainer = document.querySelector("[data-books-cards]");
+  const searchInput = document.querySelector("[data-search]");
+  let books = [];
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase();
+    books.forEach((book) => {
+      const isVisible =
+        book.name.toLowerCase().includes(value) ||
+        book.autor.toLowerCase().includes(value) ||
+        book.barCode.toLowerCase().includes(value);
+      book.element.classList.toggle("hidden", !isVisible);
+    });
+  });
+
+  fetch("http://localhost:8080/api/book/", {
+    method: "post",
+    headers: {
+      authorization: cookie,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      books = data.map((book) => {
+        const card = bookCardTemplate.content.cloneNode(true).children[0];
+        const bookName = card.querySelector("[data-BookName]");
+        const autorName = card.querySelector("[data-AutorName]");
+        const barCode = card.querySelector("[data-BarCode]");
+        bookName.textContent = book.name;
+        autorName.textContent = book.author;
+        barCode.textContent = book._id;
+        bookCardContainer.append(card);
+        return {
+          name: book.name,
+          autor: book.author,
+          barCode: book._id,
+          element: card,
+        };
+      });
+    });
 });
 
-// ?Give book section toggle
-//?========================
-function giveBookOpen(el) {
-  window.location.href = "adminUsersBooks.html";
+function addBookToUser(el) {
+  const parent = el.parentElement;
+  const barCode = parent.querySelector("[data-BarCode]").innerText;
+  let cookies = new Cookies();
+  let cookie = cookies.getCookie();
+  let usersCookie = cookies.getUsersCookie();
+  let user = new Users();
+  user.barCode = barCode;
+  user.userId = usersCookie;
+  user.cookie = cookie;
+  user.addBookToUser();
 }

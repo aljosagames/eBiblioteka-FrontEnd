@@ -237,14 +237,27 @@ $(document).ready(function () {
         const barCode = card.querySelector("[data-BarCode]");
         bookName.textContent = book.name;
         autorName.textContent = book.author;
-        barCode.textContent = 123;
+        barCode.textContent = book._id;
         bookCardContainer.append(card);
         return {
           name: book.name,
           autor: book.author,
-          barCode: "123",
+          barCode: book._id,
           element: card,
         };
       });
     });
 });
+
+// *Delete book
+// *========================
+function deleteBook(el) {
+  const parent = el.parentElement;
+  const barCode = parent.querySelector("[data-BarCode]").innerText;
+  let cookie = new Cookies();
+  cookie = cookie.getCookie();
+  let book = new Books();
+  book.barCode = barCode;
+  book.cookie = cookie;
+  book.delete();
+}

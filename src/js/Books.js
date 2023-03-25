@@ -35,4 +35,27 @@ class Books {
       })
       .then((data) => {});
   }
+
+  //* Obrisi knjigu
+  delete() {
+    let data = {
+      id: this.barCode,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/book/delete", {
+      method: "delete",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
 }

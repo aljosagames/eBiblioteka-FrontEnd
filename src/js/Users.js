@@ -3,6 +3,8 @@ class Users {
   username = "";
   email = "";
   password = "";
+  cookie = "";
+  barCode = "";
   apiUrl = "http://localhost:8080/api";
 
   // *Napravi korisnika
@@ -95,8 +97,33 @@ class Users {
       method: "delete",
       headers: headers,
       body: data,
-    }).then((response) => console.log(response.status));
+    }).then((response) => {
+      if (response.status === 201) {
+        let cookie = new Cookies();
+        cookie.deleteCookieUser();
+        window.location.href = "adminPage.html";
+      }
+    });
 
-    // !DODAJ DA SE COOKIE BRISE I PROVERA DA LI GA IMA
+    //!PROVERA DA LI GA IMA
+  }
+
+  addBookToUser() {
+    let data = {
+      id: this.barCode,
+      userId: this.userId,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/addBook", {
+      method: "patch",
+      headers: headers,
+      body: data,
+    }).then((response) => console.log(response));
   }
 }

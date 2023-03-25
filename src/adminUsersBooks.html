@@ -23,7 +23,7 @@
 
         <nav class="main-nav">
           <ul class="unstyled-list flex first-ul">
-            <li><a href="">Korisnici</a></li>
+            <li><a href="adminPage.html">Korisnici</a></li>
             <li>
               <a href="" class="btn-books"
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
@@ -52,54 +52,34 @@
       </div>
     </header>
 
-    <!-- User section 
-    ==================== -->
-
-    <section class="acc-list">
+    <!-- Books section 
+      ==================== -->
+    <section class="books-list">
       <div class="container">
-        <div class="acc-list-title main-title">
-          <h2>Lista ucenika</h2>
+        <div class="books-list-title main-title">
+          <h2>Lista knjiga</h2>
         </div>
 
         <div class="search">
           <input type="text" data-search />
-          <i class="fa-solid fa-filter filter filterBtn" id="filterBtn"></i>
-
-          <div class="filterList hidden">
-            <ul class="unstyled-list">
-              <li>
-                <i class="fa-solid fa-check hide" id="reservedL"></i>Rezervisane
-                <i class="fa-solid fa-book"></i>
-              </li>
-              <li>
-                <i class="fa-solid fa-check hide" id="haveL"></i>Uzete
-                <i class="fa-solid fa-book-open"></i>
-              </li>
-            </ul>
-          </div>
         </div>
       </div>
 
-      <div class="acc-cards cards" data-users-cards></div>
-      <template data-users-template>
-        <div class="acc-card card">
-          <h3 data-UserName></h3>
-          <h4 data-UserEmail></h4>
-          <a class="btn btn-ghost" data-user-id-see="" onclick="openUser(this)"
-            >Pregled</a
-          >
-          <a
-            class="btn btn-ghost giveBookOpen"
-            data-user-id-give=""
-            onclick="giveBookOpen(this)"
-            >Dodaj</a
-          >
+      <div class="books-cards cards" data-books-cards></div>
+      <template data-books-template>
+        <div class="books-card card">
+          <h3 data-BookName></h3>
+          <h4 data-AutorName></h4>
+          <h4 data-BarCode></h4>
+          <a class="btn btn-ghost" data-button onclick="addBookToUser(this)"
+            >Dodaj
+          </a>
         </div>
       </template>
     </section>
 
     <!-- Add book section 
-    ==================== -->
+      ==================== -->
     <section class="add-book-section form-section-main hidden">
       <form action="/" class="form add-book-form" id="add-book-form">
         <div class="header-close">
@@ -127,7 +107,7 @@
     </section>
 
     <!-- Change password 
-    ==================== -->
+        ==================== -->
     <section class="change-password-section form-section-main hidden">
       <form
         action="/"
@@ -159,7 +139,7 @@
     </section>
 
     <!-- jQuery 
-    ==================== -->
+        ==================== -->
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -167,9 +147,10 @@
     ></script>
 
     <!-- JavaScript 
-    ==================== -->
+      ==================== -->
     <script src="js/Cookies.js"></script>
+    <script src="js/Users.js"></script>
     <script src="js/Books.js"></script>
-    <script src="js/adminPage.js"></script>
+    <script src="js/adminUsersBooks.js"></script>
   </body>
 </html>
