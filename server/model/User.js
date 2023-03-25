@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
         default: false
     },
     books:{
-        type: [[String, Date]],
+        type: [Array, Date],
         default: []
     },
     createdAt: {

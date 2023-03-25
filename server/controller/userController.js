@@ -135,7 +135,7 @@ export const addBookToUser = async (req, res) => {
     }
     try {
         for(let i = 0;i < user.books.length;i++){
-            if(user.books[i].includes(book._id)){
+            if(user.books[i][0]._id == book._id){
                 return res.sendStatus(403)
             }
         }
@@ -145,7 +145,7 @@ export const addBookToUser = async (req, res) => {
 
     const time = new Date()
     time.setDate(time.getDate())
-    user = await User.findOneAndUpdate({"_id": req.body.userId}, {$push: {books: [book._id, time]}})
+    user = await User.findOneAndUpdate({"_id": req.body.userId}, {$push: {books: [book, time]}})
     return removeBook(req, res)
 }
 
@@ -168,18 +168,17 @@ export const removeBookFromUser = async (req, res) => {
     let toRemove = []
     try {
         for(let i = 0;i < user.books.length;i++){
-            if(user.books[i].includes(book._id)){
+            if(user.books[i][0]._id == book._id){
                 flag = false
                 toRemove = user.books[i]
             }
         }
         if(flag){
-            return res.sendStatus(404)
+            throw Error
         }
     } catch (error) {
-        
+        return res.sendStatus(404)
     }
-
     user = await User.findOneAndUpdate({"_id": req.body.userId}, {$pull: {books: toRemove}})
     return addBook(req, res)
 }
