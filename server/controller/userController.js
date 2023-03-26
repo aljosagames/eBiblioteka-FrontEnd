@@ -82,21 +82,44 @@ export const deleteUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     let user;
     try {
-        if(req.body.email != null){
-            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"email": req.body.email}})
-        }else if(req.body.name != null){
-            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"name": req.body.name}})
-        }else if(req.body.password != null){
-            user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"password": req.body.password}})
-        }else{
-            return req.sendStatus(400)
+        user = await User.findOne({"_id": req.body.id})
+        if(user || req.body.password == null){
+            throw Error
+        }
+        if(!await bcrypt.compare(req.body.password, user.password)){
+            return res.sendStatus(403)
         }
     } catch (error) {
-        return res.status(404)        
+        return res.sendStatus(404)
     }
+    let code = Math.floor((Math.random() * 999999) + 100000);
+    const newCode = new Code({code:code, email:req.body.email})
+    await newCode.save()
+    emailVerif(code, req.body.email)
+    return res.sendStatus(201)
+}
 
+export const changePasswordVerify = async (req, res) => {
+    try {
+        let code = await Code.findOne({"code": req.body.code})
+        if(code.email != req.body.email){
+            throw Error
+        }
+        code = await Code.findOneAndDelete({"code": req.body.code})
+        if(!code){
+            throw Error
+        }
+    } catch (error) {
+        return res.sendStatus(403)        
+    }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10) 
+    let user = await User.findOne({"_id": req.body.id})
+    if(!user){
+        return res.sendStatus(404)
+    }
+    user = await User.findOneAndUpdate({"_id": req.body.id}, {$set: {"password": hashedPassword}})
     if(user){
-        return res.sendStatus(200)
+        return res.sendStatus(201)
     }
     return res.sendStatus(404)
 }
