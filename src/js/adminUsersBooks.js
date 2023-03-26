@@ -6,6 +6,22 @@ $(document).ready(function () {
   let usersCookie = cookies.getUsersCookie();
   if (cookie === "") {
     window.location.href = "/";
+  } else {
+    fetch("http://localhost:8080/api/user/isAdmin", {
+      method: "post",
+      headers: {
+        authorization: cookie,
+      },
+    }).then((response) => {
+      if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
+      } else if (response.status === 403) {
+        window.location.href = "userBooksHave.html";
+      } else if (response.status === 200) {
+      }
+    });
   }
   function preventBack() {
     if (cookie === "") {

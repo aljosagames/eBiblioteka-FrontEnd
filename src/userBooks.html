@@ -18,18 +18,17 @@
     <header class="main-header">
       <div class="container flex">
         <div class="logo">
-          <a href="">eBiblioteka</a>
+          <a href="userBooksHave.html">eBiblioteka</a>
         </div>
 
         <nav class="main-nav">
           <ul class="unstyled-list flex first-ul">
-            <li><a href="">Pocetna</a></li>
             <li>
               <a href="" class="btn-books"
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
               ></a>
               <ul class="unstyled-list second-ul ulBooks hidden">
-                <li><a href="">Uzete</a></li>
+                <li><a href="userBooksHave.html">Uzete</a></li>
                 <li><a href="userBooks.html">Lista</a></li>
               </ul>
             </li>
@@ -40,7 +39,7 @@
               ></a>
               <ul class="unstyled-list second-ul ulAcc hidden">
                 <li><a href="" id="changePasswordOpen">Pregled</a></li>
-                <li><a href="">Odjava</a></li>
+                <li><a href="" id="logOut">Odjava</a></li>
               </ul>
             </li>
           </ul>
@@ -70,8 +69,7 @@
         <div class="books-card card">
           <h3 data-BookName></h3>
           <h4 data-AutorName></h4>
-          <h4 data-BarCode></h4>
-          <a class="btn btn-red" data-button>Izbrisi</a>
+          <h4 data-BookCount class="margin-none"></h4>
         </div>
       </template>
     </section>

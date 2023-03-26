@@ -70,10 +70,12 @@
         <div class="books-card card">
           <h3 data-BookName></h3>
           <h4 data-AutorName></h4>
+          <h4 data-BookCount></h4>
           <h4 data-BarCode></h4>
           <a class="btn btn-red" data-button onclick="deleteBook(this)"
             >Izbrisi
           </a>
+          <a class="btn btn-ghost plus-btn" onclick="addMoreBooks(this)">+</a>
         </div>
       </template>
     </section>
@@ -135,6 +137,26 @@
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Promeni</button>
+      </form>
+    </section>
+
+    <!-- Add more books 
+      ==================== -->
+    <section class="add-more-books form-section-main hidden">
+      <form
+        action="/"
+        class="form add-more-books-form"
+        id="add-more-books-form"
+      >
+        <div class="header-close">
+          <h2>Dodaj jos knjiga</h2>
+          <a class="close-btn" id="addMoreBooksClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Broj knjiga" id="bookAddCount" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary" data-addMoreBook-id="">Dodaj</button>
       </form>
     </section>
 

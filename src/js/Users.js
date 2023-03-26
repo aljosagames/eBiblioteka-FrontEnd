@@ -48,13 +48,26 @@ class Users {
         "Content-Type": "application/json",
       },
       body: data,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        let cookie = new Cookies();
-        cookie.create(data);
-        window.location.href = "adminPage.html";
-      });
+    }).then((response) => {
+      if (response.status === 401) {
+        alert("Sifra je pogresno odkucana");
+      } else if (response.status === 404) {
+        alert("Email je pogresnko odkucan");
+      } else {
+        response.json().then((data) => {
+          if (data.admin === true) {
+            let cookie = new Cookies();
+            cookie.create(data);
+            window.location.href = "adminPage.html";
+          } else {
+            let cookie = new Cookies();
+            cookie.create(data);
+            cookie.createUsers(data.user._id);
+            window.location.href = "userBooksHave.html";
+          }
+        });
+      }
+    });
   }
 
   verify(verCode) {
@@ -78,7 +91,7 @@ class Users {
       .then((data) => {
         let cookie = new Cookies();
         cookie.create(data);
-        window.location.href = "adminPage.html";
+        window.location.href = "userBooks.html";
       });
   }
 

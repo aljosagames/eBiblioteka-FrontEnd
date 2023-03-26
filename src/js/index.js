@@ -4,7 +4,22 @@ $(document).ready(function () {
   let cookie = new Cookies();
   cookie = cookie.getCookie();
   if (cookie !== "") {
-    window.location.href = "adminPage.html";
+    fetch("http://localhost:8080/api/user/isAdmin", {
+      method: "post",
+      headers: {
+        authorization: cookie,
+      },
+    }).then((response) => {
+      if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
+      } else if (response.status === 403) {
+        window.location.href = "userBooksHave.html";
+      } else if (response.status === 200) {
+        window.location.href = "adminPage.html";
+      }
+    });
   }
   function preventBack() {
     window.history.forward();

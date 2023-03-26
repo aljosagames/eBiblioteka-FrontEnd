@@ -1,11 +1,38 @@
 $(document).ready(function () {
+  // ?Cookie
+  //?========================
   let cookie = new Cookies();
   cookie = cookie.getCookie();
   if (cookie === "") {
-    window.location.href = "index.html";
+    window.location.href = "/";
+  } else {
+    fetch("http://localhost:8080/api/user/isAdmin", {
+      method: "post",
+      headers: {
+        authorization: cookie,
+      },
+    }).then((response) => {
+      if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
+      } else if (response.status === 403) {
+      } else if (response.status === 200) {
+        window.location.href = "adminPage.html";
+      }
+    });
   }
-  // hamburger menu toggle
-  //========================
+  function preventBack() {
+    if (cookie === "") {
+      window.history.forward();
+    }
+  }
+  setTimeout(preventBack(), 0);
+  window.onunload = function () {
+    null;
+  };
+  // ?hamburger menu toggle
+  //?========================
   $(".nav-toggle").click(function () {
     $(".main-nav").toggleClass("is-open");
     $(".hamburger").toggleClass("is-open");
@@ -34,6 +61,15 @@ $(document).ready(function () {
 
   $("#changePasswordClose").click(function () {
     $(".change-password-section").addClass("hidden");
+  });
+
+  // ?Log out
+  //?========================
+  $("#logOut").click(function (el) {
+    event.preventDefault();
+    let cookie = new Cookies();
+    cookie.deleteCookie();
+    window.location.href = "index.html";
   });
 
   //Validators
@@ -136,8 +172,7 @@ $(document).ready(function () {
     books.forEach((book) => {
       const isVisible =
         book.name.toLowerCase().includes(value) ||
-        book.autor.toLowerCase().includes(value) ||
-        book.barCode.toLowerCase().includes(value);
+        book.autor.toLowerCase().includes(value);
       book.element.classList.toggle("hidden", !isVisible);
     });
   });
@@ -154,15 +189,14 @@ $(document).ready(function () {
         const card = bookCardTemplate.content.cloneNode(true).children[0];
         const bookName = card.querySelector("[data-BookName]");
         const autorName = card.querySelector("[data-AutorName]");
-        const barCode = card.querySelector("[data-BarCode]");
-        bookName.textContent = book.content;
-        autorName.textContent = book.name;
-        barCode.textContent = 123;
+        const bookCount = card.querySelector("[data-BookCount]");
+        bookName.textContent = book.name;
+        autorName.textContent = book.author;
+        bookCount.textContent = "Broj knjiga: " + book.bookCount;
         bookCardContainer.append(card);
         return {
-          name: book.content,
-          autor: book.name,
-          barCode: "123",
+          name: book.name,
+          autor: book.author,
           element: card,
         };
       });

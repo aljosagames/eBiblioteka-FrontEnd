@@ -1,8 +1,9 @@
 $(document).ready(function () {
   // ?Cookie
   //?========================
-  let cookie = new Cookies();
-  cookie = cookie.getCookie();
+  let cookies = new Cookies();
+  let cookie = cookies.getCookie();
+  let usersCookie = cookies.getUsersCookie();
   if (cookie === "") {
     window.location.href = "/";
   } else {
@@ -17,8 +18,8 @@ $(document).ready(function () {
         cookie.deleteCookie();
         window.location.href = "index.html";
       } else if (response.status === 403) {
-        window.location.href = "userBooksHave.html";
       } else if (response.status === 200) {
+        window.location.href = "adminPage.html";
       }
     });
   }
@@ -52,24 +53,8 @@ $(document).ready(function () {
     $(".ulAcc").toggleClass("hidden");
   });
 
-  // ?Filter toggle
-  //?========================
-  $("#filterBtn").click(function () {
-    $(".filterList").toggleClass("hidden");
-  });
-  // ?Add book section toggle
-  //?========================
-  $("#addBookOpen").click(function () {
-    event.preventDefault();
-    $(".add-book-section").removeClass("hidden");
-  });
-
-  $("#addBookClose").click(function () {
-    $(".add-book-section").addClass("hidden");
-  });
-
-  // ?Change password section toggle
-  //?========================
+  // Change password section toggle
+  //========================
   $("#changePasswordOpen").click(function () {
     event.preventDefault();
     $(".change-password-section").removeClass("hidden");
@@ -117,29 +102,6 @@ $(document).ready(function () {
     inputControl.classList.remove("error");
     validator[name] = true;
   };
-  //Const Add Book
-  //========================
-  const formAddBook = document.querySelector("#add-book-form");
-  const bookName = document.querySelector("#addBook-BookName");
-  const bookAutor = document.querySelector("#addBook-AutorName");
-  const count = document.querySelector("#addBook-Count");
-  let validatorAddBook = [false, false, false];
-
-  //Validator Add Book
-  //========================
-  formAddBook.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    validateInputsAddBook();
-    if (request(validatorAddBook) === true) {
-      let book = new Books();
-      book.name = bookName.value;
-      book.author = bookAutor.value;
-      book.count = count.value;
-      book.cookie = cookie;
-      book.create();
-    }
-  });
 
   //Const Change Password
   //========================
@@ -160,32 +122,6 @@ $(document).ready(function () {
       location.reload();
     }
   });
-
-  //Inputs Add Book
-  //========================
-  const validateInputsAddBook = () => {
-    const nameValue = bookName.value.trim();
-    const autorValue = bookAutor.value.trim();
-    const countValue = count.value.trim();
-
-    if (nameValue === "") {
-      setError(bookName, "Unesite ime knjige", validatorAddBook, 0);
-    } else {
-      setSucces(bookName, validatorAddBook, 0);
-    }
-
-    if (autorValue === "") {
-      setError(bookAutor, "Unesite ime i prezime autora", validatorAddBook, 1);
-    } else {
-      setSucces(bookAutor, validatorAddBook, 1);
-    }
-
-    if (countValue === "") {
-      setError(count, "Unesite barKod", validatorAddBook, 2);
-    } else {
-      setSucces(count, validatorAddBook, 2);
-    }
-  };
 
   //Inputs Change Password
   //========================
@@ -225,60 +161,52 @@ $(document).ready(function () {
     }
   };
 
-  // *Users list and search
+  // *Books list
   // *========================
-  const userCardTemplate = document.querySelector("[data-users-template]");
-  const userCardContainer = document.querySelector("[data-users-cards]");
-  const searchInput = document.querySelector("[data-search]");
-  let users = [];
+  const bookCardTemplate = document.querySelector("[data-books-template]");
+  const bookCardContainer = document.querySelector("[data-books-cards]");
 
-  searchInput.addEventListener("input", (e) => {
-    const value = e.target.value.toLowerCase();
-    users.forEach((user) => {
-      const isVisible =
-        user.name.toLowerCase().includes(value) ||
-        user.email.toLowerCase().includes(value) ||
-        user.id.toLowerCase().includes(value);
-      user.element.classList.toggle("hidden", !isVisible);
-    });
-  });
+  let data = {
+    id: usersCookie,
+  };
 
-  fetch("http://localhost:8080/api/user/", {
+  let headers = new Headers();
+  headers.append("authorization", cookie);
+  headers.append("Content-Type", "application/json");
+
+  data = JSON.stringify(data);
+
+  fetch("http://localhost:8080/api/user/getOne", {
     method: "post",
-    headers: {
-      authorization: cookie,
-    },
+    headers: headers,
+    body: data,
   }).then((response) => {
     if (response.status === 410) {
       let cookie = new Cookies();
       cookie.deleteCookie();
       window.location.href = "index.html";
-    } else {
+    } else if (response.status === 200) {
       response.json().then((data) => {
-        users = data.map((user) => {
-          const card = userCardTemplate.content.cloneNode(true).children[0];
-          const userName = card.querySelector("[data-UserName]");
-          const userEmail = card.querySelector("[data-UserEmail]");
-          const btnIdSee = card.querySelector("[data-user-id-see]");
-          userName.textContent = user.name;
-          userEmail.textContent = user.email;
-          btnIdSee.setAttribute("data-user-id-see", user._id);
-          userCardContainer.append(card);
-          return {
-            name: user.name,
-            email: user.email,
-            id: user._id,
-            element: card,
-          };
+        data.books.forEach((book) => {
+          const card = bookCardTemplate.content.cloneNode(true).children[0];
+          const bookName = card.querySelector("[data-BookName]");
+          const autorName = card.querySelector("[data-AutorName]");
+          const expireCard = card.querySelector("[data-expire]");
+          let bookInfo = book[0];
+          let expire = book[1];
+          expire = expire.substring(0, 10);
+          let date = expire.split("-");
+          date = new Date(date[0], date[1] - 1, date[2]).getTime();
+          expire = new Date(date + 14 * 24 * 60 * 60 * 1000).toLocaleString(
+            "en-GB"
+          );
+          date = new Date(date).toLocaleString("en-GB");
+          bookName.textContent = bookInfo.name;
+          autorName.textContent = bookInfo.author;
+          expireCard.textContent = expire.substring(0, 10);
+          bookCardContainer.append(card);
         });
       });
     }
   });
 });
-
-function openUser(el) {
-  let userId = el.getAttribute("data-user-id-see");
-  let cookie = new Cookies();
-  cookie.createUsers(userId);
-  window.location.href = "adminUsers.html";
-}
