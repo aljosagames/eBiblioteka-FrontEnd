@@ -31,7 +31,7 @@ export const loginUser = async (req, res) => {
         return res.sendStatus(401)
     }
     const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"})
-    return res.status(201).json({accessToken: accessToken, admin: user.admin})
+    return res.status(201).json({accessToken: accessToken, admin: user.admin, user: user})
 }
 
 export const registerUser = async (req, res) => {
