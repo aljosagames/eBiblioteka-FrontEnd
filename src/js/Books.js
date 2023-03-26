@@ -109,4 +109,27 @@ class Books {
       }
     });
   }
+
+  removeMoreBooks() {
+    let data = {
+      id: this.barCode,
+      count: this.count,
+    };
+
+    let headers = new Headers();
+    headers.append("Authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/book/remove", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
 }

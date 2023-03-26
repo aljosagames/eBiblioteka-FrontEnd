@@ -76,6 +76,7 @@
             >Izbrisi
           </a>
           <a class="btn btn-ghost plus-btn" onclick="addMoreBooks(this)">+</a>
+          <a class="btn btn-ghost" onclick="removeMoreBooks(this)">-</a>
         </div>
       </template>
     </section>
@@ -157,6 +158,28 @@
           <div class="error"></div>
         </div>
         <button class="btn btn-primary" data-addMoreBook-id="">Dodaj</button>
+      </form>
+    </section>
+
+    <!-- Add more books 
+      ==================== -->
+    <section class="remove-more-books form-section-main hidden">
+      <form
+        action="/"
+        class="form remove-more-books-form"
+        id="remove-more-books-form"
+      >
+        <div class="header-close">
+          <h2>Obrisi knjige</h2>
+          <a class="close-btn" id="removeMoreBooksClose">X</a>
+        </div>
+        <div class="input-control">
+          <input type="text" placeholder="Broj knjiga" id="bookRemoveCount" />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary" data-removeMoreBook-id="">
+          Izbrisi
+        </button>
       </form>
     </section>
 

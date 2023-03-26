@@ -2,6 +2,7 @@ $(document).ready(function () {
   // ?Cookie
   //?========================
   let cookie = new Cookies();
+  let adminCookie = cookie.getAdmin();
   cookie = cookie.getCookie();
   if (cookie === "") {
     window.location.href = "/";
@@ -141,7 +142,7 @@ $(document).ready(function () {
     }
   });
 
-  //Const Change Password
+  // *Const Change Password
   //========================
   const formChangePassord = document.querySelector("#change-password-form");
   const changePassword = document.querySelector("#changePassword-password");
@@ -150,14 +151,18 @@ $(document).ready(function () {
   );
   let validatorChangePassword = [false, false];
 
-  //Validator Change Password
+  // *Validator Change Password
   //========================
   formChangePassord.addEventListener("submit", (e) => {
     e.preventDefault();
 
     validateInputsChangePassword();
     if (request(validatorChangePassword) === true) {
-      location.reload();
+      let user = new Users();
+      user.cookie = cookie;
+      user.userId = adminCookie;
+      user.password = changePasswordRepeat.value;
+      user.updatePassword();
     }
   });
 
@@ -195,7 +200,7 @@ $(document).ready(function () {
 
     if (passwordValue === "") {
       setError(changePassword, "Unesite sifru", validatorChangePassword, 0);
-    } else if (passwordValue.length < 8) {
+    } else if (passwordValue.length < 3) {
       setError(
         changePassword,
         "Sifra mora da imam minimum 8 karaktera",
@@ -213,10 +218,10 @@ $(document).ready(function () {
         validatorChangePassword,
         1
       );
-    } else if (passwordRepeatValue !== passwordValue) {
+    } else if (passwordRepeatValue.length < 3) {
       setError(
         changePasswordRepeat,
-        "Sifre se ne poklapaju",
+        "Sifra mora da imam minimum 8 karaktera",
         validatorChangePassword,
         1
       );

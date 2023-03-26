@@ -158,6 +158,28 @@ $(document).ready(function () {
     }
   });
 
+  // * Const Remove More books
+  //*========================
+  const formRemoveMoreBooks = document.querySelector("#remove-more-books-form");
+  const removeBookCount = document.querySelector("#bookRemoveCount");
+  let validatorRemoveMoreBooks = [false];
+
+  // *Validator Remove More books
+  //*========================
+  formRemoveMoreBooks.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    validateInputsRemoveMoreBooks();
+    if (request(validatorRemoveMoreBooks) === true) {
+      let barCode = document.querySelector("[data-removeMoreBook-id]");
+      let books = new Books();
+      books.count = parseInt(removeBookCount.value);
+      books.cookie = cookie;
+      books.barCode = barCode.getAttribute("data-removeMoreBook-id");
+      books.removeMoreBooks();
+    }
+  });
+
   //*Const Change Password
   //*========================
   const formChangePassord = document.querySelector("#change-password-form");
@@ -216,6 +238,31 @@ $(document).ready(function () {
       setError(bookCount, "Unos mora da bude broj", validatorAddMoreBooks, 0);
     } else {
       setSucces(bookCount, validatorAddMoreBooks, 0);
+    }
+  };
+
+  //*Inputs Remove More Books
+  //*========================
+  const validateInputsRemoveMoreBooks = () => {
+    const removeBookCountValue = removeBookCount.value.trim();
+    let number = parseInt(removeBookCountValue);
+
+    if (removeBookCountValue === "") {
+      setError(
+        removeBookCount,
+        "Unesite broj knjiga",
+        validatorRemoveMoreBooks,
+        0
+      );
+    } else if (Number.isNaN(number) === true) {
+      setError(
+        removeBookCount,
+        "Unos mora da bude broj",
+        validatorRemoveMoreBooks,
+        0
+      );
+    } else {
+      setSucces(removeBookCount, validatorRemoveMoreBooks, 0);
     }
   };
 
@@ -338,4 +385,21 @@ function addMoreBooks(el) {
   const addMoreBookBtn = document.querySelector("[data-addMoreBook-id]");
   addMoreBookBtn.setAttribute("data-addMoreBook-id", bookId);
   $(".add-more-books").removeClass("hidden");
+}
+
+// *Remove more books
+// *========================
+$("#removeMoreBooksClose").click(function () {
+  event.preventDefault();
+  $(".remove-more-books").addClass("hidden");
+  const removeMoreBookBtn = document.querySelector("[data-removeMoreBook-id]");
+  removeMoreBookBtn.setAttribute("data-removeMoreBook-id", "");
+});
+
+function removeMoreBooks(el) {
+  const parent = el.parentElement;
+  const bookId = parent.querySelector("[data-BarCode]").innerText;
+  const removeMoreBookBtn = document.querySelector("[data-removeMoreBook-id]");
+  removeMoreBookBtn.setAttribute("data-removeMoreBook-id", bookId);
+  $(".remove-more-books").removeClass("hidden");
 }

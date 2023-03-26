@@ -58,6 +58,7 @@ class Users {
           if (data.admin === true) {
             let cookie = new Cookies();
             cookie.create(data);
+            cookie.createAdmin(data.user._id);
             window.location.href = "adminPage.html";
           } else {
             let cookie = new Cookies();
@@ -173,5 +174,28 @@ class Users {
         location.reload();
       }
     });
+  }
+
+  updatePassword() {
+    let data = {
+      id: this.userId,
+      password: this.password,
+    };
+
+    console.log(this.userId);
+    console.log(this.password);
+    console.log(this.cookie);
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/changePassword", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => console.log(response));
   }
 }
