@@ -203,3 +203,19 @@ export const removeBookFromUser = async (req, res) => {
     await addBook(req, res)
     user = await User.findOneAndUpdate({"_id": req.body.userId}, {$pull: {books: toRemove}})
 }
+
+export const isAdmin = async (req, res) => {
+    let token = req.headers['authorization']
+    if(token == null){
+        return res.sendStatus(401)
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err){
+            return res.sendStatus(410)
+        }
+        if(!user.admin){
+            return res.sendStatus(403)
+        }
+        return res.sendStatus(200)
+    })
+}
