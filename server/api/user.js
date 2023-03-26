@@ -7,7 +7,7 @@ const router = express.Router()
 // GET all users
 router.post('/',  authenticateAdmin, getUsers)
 // GET user
-router.post('/getOne',  authenticateAdmin, getUser)
+router.post('/getOne',  authenticateToken, getUser)
 // AUTHENTICATE user
 router.post('/login', loginUser)
 // CREATE user

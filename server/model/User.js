@@ -21,6 +21,10 @@ const userSchema = mongoose.Schema({
         type: [Array, Date],
         default: []
     },
+    expiredBooks:{
+        type: Number,
+        default: 0        
+    },
     createdAt: {
         type: Date,
         default: new Date()

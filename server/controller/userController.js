@@ -190,8 +190,15 @@ export const removeBookFromUser = async (req, res) => {
                 toRemove = user.books[i]
             }
         }
+        if(toRemove.length == 0){
+            throw Error
+        }
     } catch (error) {   
         return res.sendStatus(404)
+    }
+    const time = new Date()
+    if(toRemove[1].getTime() > time.getTime() + 14*24*60*60*1000){
+        user = await User.findOneAndUpdate({"_id": req.body.userId}, {$inc: {"expiredBooks": 1}})
     }
     await addBook(req, res)
     user = await User.findOneAndUpdate({"_id": req.body.userId}, {$pull: {books: toRemove}})
