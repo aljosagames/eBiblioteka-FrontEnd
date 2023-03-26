@@ -43,8 +43,12 @@ export const addBook = async (req, res) => {
     const book = await Book.findOne({"_id": req.body.id})
     const user = await User.findOne({"_id": req.body.userId})
     if(book){
-        await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+1}})
-        return res.sendStatus(201)
+        try {
+            await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+req.body.count}})
+            return res.sendStatus(201)
+        } catch (error) {
+            return res.sendStatus(404)            
+        }
     }else if(user){
         let toAdd
         for(let i = 0;i < user.books.length;i++){
