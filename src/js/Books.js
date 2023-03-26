@@ -85,4 +85,28 @@ class Books {
     const data_1 = await response.json();
     return data_1;
   }
+
+  //*Add more books
+  addMoreBooks() {
+    let data = {
+      id: this.barCode,
+      count: this.count,
+    };
+
+    let headers = new Headers();
+    headers.append("Authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/book/add", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
 }

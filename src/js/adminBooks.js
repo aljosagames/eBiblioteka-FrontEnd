@@ -5,6 +5,22 @@ $(document).ready(function () {
   cookie = cookie.getCookie();
   if (cookie === "") {
     window.location.href = "/";
+  } else {
+    fetch("http://localhost:8080/api/user/isAdmin", {
+      method: "post",
+      headers: {
+        authorization: cookie,
+      },
+    }).then((response) => {
+      if (response.status === 410) {
+        let cookie = new Cookies();
+        cookie.deleteCookie();
+        window.location.href = "index.html";
+      } else if (response.status === 403) {
+        window.location.href = "userBooksHave.html";
+      } else if (response.status === 200) {
+      }
+    });
   }
   function preventBack() {
     if (cookie === "") {
@@ -120,8 +136,30 @@ $(document).ready(function () {
     }
   });
 
-  //Const Change Password
-  //========================
+  //*Const Add More books
+  //*========================
+  const formAddMoreBooks = document.querySelector("#add-more-books-form");
+  const bookCount = document.querySelector("#bookAddCount");
+  let validatorAddMoreBooks = [false];
+
+  //*Validator Add More Books
+  //*========================
+  formAddMoreBooks.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    validateInputsAddMoreBooks();
+    if (request(validatorAddMoreBooks) === true) {
+      let barCode = document.querySelector("[data-addMoreBook-id]");
+      let books = new Books();
+      books.count = parseInt(bookCount.value);
+      books.cookie = cookie;
+      books.barCode = barCode.getAttribute("data-addMoreBook-id");
+      books.addMoreBooks();
+    }
+  });
+
+  //*Const Change Password
+  //*========================
   const formChangePassord = document.querySelector("#change-password-form");
   const changePassword = document.querySelector("#changePassword-password");
   const changePasswordRepeat = document.querySelector(
@@ -163,6 +201,21 @@ $(document).ready(function () {
       setError(count, "Unesite barKod", validatorAddBook, 2);
     } else {
       setSucces(count, validatorAddBook, 2);
+    }
+  };
+
+  //*Inputs Add More Books
+  //*========================
+  const validateInputsAddMoreBooks = () => {
+    const bookCountValue = bookCount.value.trim();
+    let number = parseInt(bookCountValue);
+
+    if (bookCountValue === "") {
+      setError(bookCount, "Unesite broj knjiga", validatorAddMoreBooks, 0);
+    } else if (Number.isNaN(number) === true) {
+      setError(bookCount, "Unos mora da bude broj", validatorAddMoreBooks, 0);
+    } else {
+      setSucces(bookCount, validatorAddMoreBooks, 0);
     }
   };
 
@@ -238,9 +291,11 @@ $(document).ready(function () {
           const card = bookCardTemplate.content.cloneNode(true).children[0];
           const bookName = card.querySelector("[data-BookName]");
           const autorName = card.querySelector("[data-AutorName]");
+          const bookCount = card.querySelector("[data-BookCount]");
           const barCode = card.querySelector("[data-BarCode]");
           bookName.textContent = book.name;
           autorName.textContent = book.author;
+          bookCount.textContent = "Broj knjiga: " + book.bookCount;
           barCode.textContent = book._id;
           bookCardContainer.append(card);
           return {
@@ -266,4 +321,21 @@ function deleteBook(el) {
   book.barCode = barCode;
   book.cookie = cookie;
   book.delete();
+}
+
+// *Add more books
+// *========================
+$("#addMoreBooksClose").click(function () {
+  event.preventDefault();
+  $(".add-more-books").addClass("hidden");
+  const addMoreBookBtn = document.querySelector("[data-addMoreBook-id]");
+  addMoreBookBtn.setAttribute("data-addMoreBook-id", "");
+});
+
+function addMoreBooks(el) {
+  const parent = el.parentElement;
+  const bookId = parent.querySelector("[data-BarCode]").innerText;
+  const addMoreBookBtn = document.querySelector("[data-addMoreBook-id]");
+  addMoreBookBtn.setAttribute("data-addMoreBook-id", bookId);
+  $(".add-more-books").removeClass("hidden");
 }

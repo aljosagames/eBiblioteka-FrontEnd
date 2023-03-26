@@ -18,19 +18,18 @@
     <header class="main-header">
       <div class="container flex">
         <div class="logo">
-          <a href="adminPage.html">eBiblioteka</a>
+          <a href="userBooksHave.html">eBiblioteka</a>
         </div>
 
         <nav class="main-nav">
           <ul class="unstyled-list flex first-ul">
-            <li><a href="">Korisnici</a></li>
             <li>
               <a href="" class="btn-books"
                 >Knjige<i class="fa-solid fa-angle-down iBooks"></i
               ></a>
               <ul class="unstyled-list second-ul ulBooks hidden">
-                <li><a href="" id="addBookOpen">Dodaj</a></li>
-                <li><a href="adminBooks.html">Lista</a></li>
+                <li><a href="userBooksHave.html">Uzete</a></li>
+                <li><a href="userBooks.html">Lista</a></li>
               </ul>
             </li>
 
@@ -52,76 +51,27 @@
       </div>
     </header>
 
-    <!-- User section 
+    <!-- Books section 
     ==================== -->
-
-    <section class="acc-list">
+    <section class="books-list">
       <div class="container">
-        <div class="acc-list-title main-title">
-          <h2>Lista ucenika</h2>
-        </div>
-
-        <div class="search">
-          <input type="text" data-search />
-          <i class="fa-solid fa-filter filter filterBtn" id="filterBtn"></i>
-
-          <div class="filterList hidden">
-            <ul class="unstyled-list">
-              <li>
-                <i class="fa-solid fa-check hide" id="reservedL"></i>Rezervisane
-                <i class="fa-solid fa-book"></i>
-              </li>
-              <li>
-                <i class="fa-solid fa-check hide" id="haveL"></i>Uzete
-                <i class="fa-solid fa-book-open"></i>
-              </li>
-            </ul>
-          </div>
+        <div class="books-list-title main-title">
+          <h2>Lista uzetih knjiga</h2>
         </div>
       </div>
 
-      <div class="acc-cards cards" data-users-cards></div>
-      <template data-users-template>
-        <div class="acc-card card">
-          <h3 data-UserName></h3>
-          <h4 data-UserEmail></h4>
-          <a class="btn btn-ghost" data-user-id-see="" onclick="openUser(this)"
-            >Pregled</a
-          >
+      <div class="books-cards cards" data-books-cards></div>
+      <template data-books-template>
+        <div class="books-card card">
+          <h3 data-BookName></h3>
+          <h4 data-AutorName></h4>
+          <h4 data-expire class="margin-none"></h4>
         </div>
       </template>
     </section>
 
-    <!-- Add book section 
-    ==================== -->
-    <section class="add-book-section form-section-main hidden">
-      <form action="/" class="form add-book-form" id="add-book-form">
-        <div class="header-close">
-          <h2>Dodaj knjigu</h2>
-          <a class="close-btn" id="addBookClose">X</a>
-        </div>
-        <div class="input-control">
-          <input type="text" placeholder="Ime knjige" id="addBook-BookName" />
-          <div class="error"></div>
-        </div>
-        <div class="input-control">
-          <input
-            type="text"
-            placeholder="Ime i prezime autora"
-            id="addBook-AutorName"
-          />
-          <div class="error"></div>
-        </div>
-        <div class="input-control">
-          <input type="text" placeholder="Kolicina" id="addBook-Count" />
-          <div class="error"></div>
-        </div>
-        <button class="btn btn-primary">Dodaj</button>
-      </form>
-    </section>
-
     <!-- Change password 
-    ==================== -->
+        ==================== -->
     <section class="change-password-section form-section-main hidden">
       <form
         action="/"
@@ -153,7 +103,7 @@
     </section>
 
     <!-- jQuery 
-    ==================== -->
+          ==================== -->
     <script
       src="https://code.jquery.com/jquery-3.6.3.min.js"
       integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
@@ -161,9 +111,8 @@
     ></script>
 
     <!-- JavaScript 
-    ==================== -->
+      ==================== -->
     <script src="js/Cookies.js"></script>
-    <script src="js/Books.js"></script>
-    <script src="js/adminPage.js"></script>
+    <script src="js/userBooksHave.js"></script>
   </body>
 </html>

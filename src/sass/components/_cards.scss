@@ -25,6 +25,10 @@
       &:last-of-type {
         margin-bottom: 1em;
       }
+
+      &.margin-none {
+        margin-bottom: 0;
+      }
     }
 
     button {
