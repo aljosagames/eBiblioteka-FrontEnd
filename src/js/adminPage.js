@@ -143,13 +143,16 @@ $(document).ready(function () {
   });
 
   // *Const Change Password
-  //========================
+  // *========================
   const formChangePassord = document.querySelector("#change-password-form");
   const changePassword = document.querySelector("#changePassword-password");
   const changePasswordRepeat = document.querySelector(
     "#changePassword-repeat-password"
   );
   let validatorChangePassword = [false, false];
+  const verForm = document.querySelector("#verification-form");
+  const verCode = document.querySelector("#verificationCode");
+  let verTest = [false];
 
   // *Validator Change Password
   //*========================
@@ -165,8 +168,28 @@ $(document).ready(function () {
       user.userId = adminCookie;
       user.password = oldPassword;
       user.updatePassword();
+
+      verForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        inputsVer();
+        if (request(verTest) === true) {
+          user.password = changedPassword;
+          user.barCode = verCode.value;
+          user.verifyUpdatePassword();
+        }
+      });
     }
   });
+
+  const inputsVer = () => {
+    const verCodeValue = verCode.value.trim();
+    if (verCodeValue === "") {
+      setError(verCode, "Unesite verifikacioni kod", verTest, 0);
+    } else {
+      setSucces(verCode, verTest, 0);
+    }
+  };
 
   //Inputs Add Book
   //========================

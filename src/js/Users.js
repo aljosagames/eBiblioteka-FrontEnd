@@ -200,6 +200,31 @@ class Users {
     });
   }
 
+  verifyUpdatePassword() {
+    let data = {
+      code: this.barCode,
+      password: this.password,
+    };
+
+    console.log(data);
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/changePasswordVerify", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
+
   makeAdmin() {
     let data = {
       id: this.userId,
