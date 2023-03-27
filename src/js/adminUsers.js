@@ -114,10 +114,12 @@ $(document).ready(function () {
         let userEmail = document.querySelector(".userEmail");
         let btnDelete = document.querySelector("#deleteUser");
         let btnGiveBook = document.querySelector("#addBookToUser");
+        let adminBtn = document.querySelector("#makeAdmin");
         userName.textContent = data.name;
         userEmail.textContent = data.email;
         btnDelete.setAttribute("data-user-id", data._id);
         btnGiveBook.setAttribute("data-user-id-give", data._id);
+        adminBtn.setAttribute("data-user-id-admin", data._id);
         data.books.forEach((book) => {
           const card = bookCardTemplate.content.cloneNode(true).children[0];
           const bookName = card.querySelector("[data-BookName]");
@@ -285,6 +287,38 @@ $(document).ready(function () {
       setSucces(changePasswordRepeat, validatorChangePassword, 1);
     }
   };
+});
+
+// ?Make admin section toggle
+//?========================
+$("#makeAdmin").click(function () {
+  $(".make-admin-section").removeClass("hidden");
+});
+
+$("#makeAdminClose").click(function () {
+  $(".make-admin-section").addClass("hidden");
+});
+
+$("#allowAdmin").click(function () {
+  let user = new Users();
+  let cookie = new Cookies();
+  let id = cookie.getUsersCookie();
+  let admin = cookie.getCookie();
+
+  user.userId = id;
+  user.cookie = admin;
+  user.makeAdmin();
+});
+
+$("#deniedAdmin").click(function () {
+  let user = new Users();
+  let cookie = new Cookies();
+  let id = cookie.getUsersCookie();
+  let admin = cookie.getCookie();
+
+  user.userId = id;
+  user.cookie = admin;
+  user.removeAdmin();
 });
 
 // ?Give book section toggle

@@ -192,6 +192,55 @@ class Users {
       method: "put",
       headers: headers,
       body: data,
-    }).then((response) => console.log(response));
+    }).then((response) => {
+      if (response.status === 201) {
+        $(".change-password-section").addClass("hidden");
+        $(".verification").removeClass("hidden");
+      }
+    });
+  }
+
+  makeAdmin() {
+    let data = {
+      id: this.userId,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/makeAdmin", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
+
+  removeAdmin() {
+    let data = {
+      id: this.userId,
+    };
+
+    let headers = new Headers();
+    headers.append("authorization", this.cookie);
+    headers.append("Content-Type", "application/json");
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/removeAdmin", {
+      method: "put",
+      headers: headers,
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
   }
 }

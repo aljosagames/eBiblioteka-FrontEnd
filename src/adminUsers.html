@@ -78,15 +78,24 @@
         </div>
       </template>
 
-      <div class="container text-align-center">
+      <div class="container text-align-center flex button-container">
         <a
-          class="btn btn-secondary margin-right"
+          class="btn btn-secondary margin-auto"
           onclick="giveBookOpen(this)"
           id="addBookToUser"
           data-user-id-give=""
           >Dodaj
         </a>
-        <a class="btn btn-red classic" id="deleteUser" data-user-id=""
+        <a
+          class="btn btn-secondary margin-auto"
+          id="makeAdmin"
+          data-user-id-admin=""
+          >Admin
+        </a>
+        <a
+          class="btn btn-red classic margin-auto"
+          id="deleteUser"
+          data-user-id=""
           >Izbrisi
         </a>
       </div>
@@ -149,6 +158,22 @@
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Promeni</button>
+      </form>
+    </section>
+
+    <!-- Make Admin 
+    ==================== -->
+    <section class="make-admin-section form-section-main hidden">
+      <form action="/" class="form">
+        <div class="header-close">
+          <h2>Napravi na admina</h2>
+          <a class="close-btn" id="makeAdminClose">X</a>
+        </div>
+
+        <div class="wrapper">
+          <a class="btn btn-primary" id="allowAdmin">Napravi</a>
+          <a class="btn btn-primary" id="deniedAdmin">Oduzmi</a>
+        </div>
       </form>
     </section>
 

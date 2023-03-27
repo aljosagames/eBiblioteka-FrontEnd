@@ -92,3 +92,8 @@
   margin-left: 0.5em;
   font-weight: $fw-black;
 }
+
+.button-container {
+  flex-direction: row;
+  gap: 0.5em;
+}

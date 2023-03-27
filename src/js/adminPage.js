@@ -159,12 +159,12 @@ $(document).ready(function () {
     validateInputsChangePassword();
     if (request(validatorChangePassword) === true) {
       let user = new Users();
+      let oldPassword = changePassword.value;
+      let changedPassword = changePasswordRepeat.value;
       user.cookie = cookie;
       user.userId = adminCookie;
-      user.password = changePassword.value;
+      user.password = oldPassword;
       user.updatePassword();
-      $(".change-password-section").addClass("hidden");
-      $(".verification").removeClass("hidden");
     }
   });
 
