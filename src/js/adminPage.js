@@ -152,7 +152,7 @@ $(document).ready(function () {
   let validatorChangePassword = [false, false];
 
   // *Validator Change Password
-
+  //*========================
   formChangePassord.addEventListener("submit", (e) => {
     e.preventDefault();
 
@@ -161,8 +161,10 @@ $(document).ready(function () {
       let user = new Users();
       user.cookie = cookie;
       user.userId = adminCookie;
-      user.password = changePasswordRepeat.value;
+      user.password = changePassword.value;
       user.updatePassword();
+      $(".change-password-section").addClass("hidden");
+      $(".verification").removeClass("hidden");
     }
   });
 

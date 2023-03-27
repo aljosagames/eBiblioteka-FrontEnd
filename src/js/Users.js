@@ -182,10 +182,6 @@ class Users {
       password: this.password,
     };
 
-    console.log(this.userId);
-    console.log(this.password);
-    console.log(this.cookie);
-
     let headers = new Headers();
     headers.append("authorization", this.cookie);
     headers.append("Content-Type", "application/json");
