@@ -102,14 +102,12 @@ export const updateUser = async (req, res) => {
 export const changePasswordVerify = async (req, res) => {
     try {
         let code = await Code.findOne({"code": req.body.code})
-        if(code.email != req.body.email){
-            throw Error
-        }
-        code = await Code.findOneAndDelete({"code": req.body.code})
+        code = await Code.findOneAndDelete({"code": parseInt(req.body.code)})
         if(!code){
             throw Error
         }
     } catch (error) {
+        console.log(error);
         return res.sendStatus(403)
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 
