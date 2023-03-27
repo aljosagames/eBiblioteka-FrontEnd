@@ -152,7 +152,7 @@ $(document).ready(function () {
   let validatorChangePassword = [false, false];
 
   // *Validator Change Password
-  //========================
+  //*========================
   formChangePassord.addEventListener("submit", (e) => {
     e.preventDefault();
 
