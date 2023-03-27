@@ -127,7 +127,9 @@ class Books {
       headers: headers,
       body: data,
     }).then((response) => {
-      if (response.status === 201) {
+      if (response.status === 400) {
+        alert("Unos nije validan");
+      } else if (response.status === 201) {
         location.reload();
       }
     });

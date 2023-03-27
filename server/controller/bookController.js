@@ -80,6 +80,9 @@ export const removeBook = async (req, res) => {
         if(req.body.count == null){
             book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
         }else{
+            if(book.bookCount < req.body.count){
+                return res.sendStatus(400)
+            }
             book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-req.body.count}})
         }
         if(book.bookCount <= 1){
