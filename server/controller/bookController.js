@@ -77,7 +77,11 @@ export const addBook = async (req, res) => {
 export const removeBook = async (req, res) => {
     let book = await Book.findOne({"_id": req.body.id})
     if(book){
-        book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
+        if(req.body.count == null){
+            book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-1}})
+        }else{
+            book = await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount-req.body.count}})
+        }
         if(book.bookCount <= 1){
             deleteBook(req, res)
         }else{

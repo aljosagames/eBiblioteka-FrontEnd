@@ -83,7 +83,7 @@ export const updateUser = async (req, res) => {
     let user;
     try {
         user = await User.findOne({"_id": req.body.id})
-        if(user || req.body.password == null){
+        if(!user || req.body.password == null){
             throw Error
         }
         if(!await bcrypt.compare(req.body.password, user.password)){
@@ -93,9 +93,9 @@ export const updateUser = async (req, res) => {
         return res.sendStatus(404)
     }
     let code = Math.floor((Math.random() * 999999) + 100000);
-    const newCode = new Code({code:code, email:req.body.email})
+    const newCode = new Code({code:code, email:user.email})
     await newCode.save()
-    emailVerif(code, req.body.email)
+    emailVerif(code, user.email)
     return res.sendStatus(201)
 }
 
@@ -110,7 +110,7 @@ export const changePasswordVerify = async (req, res) => {
             throw Error
         }
     } catch (error) {
-        return res.sendStatus(403)        
+        return res.sendStatus(403)
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 
     let user = await User.findOne({"_id": req.body.id})
