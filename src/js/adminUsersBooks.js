@@ -256,9 +256,11 @@ $(document).ready(function () {
           const card = bookCardTemplate.content.cloneNode(true).children[0];
           const bookName = card.querySelector("[data-BookName]");
           const autorName = card.querySelector("[data-AutorName]");
+          const bookCount = card.querySelector("[data-BookCount]");
           const barCode = card.querySelector("[data-BarCode]");
           bookName.textContent = book.name;
           autorName.textContent = book.author;
+          bookCount.textContent = "Broj knjiga: " + book.bookCount;
           barCode.textContent = book._id;
           bookCardContainer.append(card);
           return {
