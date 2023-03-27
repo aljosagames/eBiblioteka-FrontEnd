@@ -202,11 +202,10 @@ class Users {
 
   verifyUpdatePassword() {
     let data = {
+      id: this.userId,
       code: this.barCode,
       password: this.password,
     };
-
-    console.log(data);
 
     let headers = new Headers();
     headers.append("authorization", this.cookie);
