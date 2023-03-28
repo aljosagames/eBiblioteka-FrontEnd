@@ -127,6 +127,8 @@ $(document).ready(function () {
     const emailValue = email.value.trim();
     const passwordValue = password.value.trim();
     const password2Value = password2.value.trim();
+    let index = emailValue.indexOf("@");
+    let boraEmail = emailValue.substring(index, emailValue.length);
 
     if (usernameValue === "") {
       setError(username, "Unesite ime i prezime", formTest, 0);
@@ -136,7 +138,10 @@ $(document).ready(function () {
 
     if (emailValue === "") {
       setError(email, "Email je potreban", formTest, 1);
-    } else if (!isValidEmail(emailValue)) {
+    } else if (
+      !isValidEmail(emailValue) ||
+      boraEmail !== "@borastankovic.edu.rs"
+    ) {
       setError(email, "Unesite validnu email adresu", formTest, 1);
     } else {
       setSucces(email, formTest, 1);

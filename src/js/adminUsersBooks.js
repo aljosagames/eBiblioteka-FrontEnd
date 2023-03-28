@@ -4,7 +4,7 @@ $(document).ready(function () {
   let cookies = new Cookies();
   let cookie = cookies.getCookie();
   let usersCookie = cookies.getUsersCookie();
-  let adminCookie = cookie.getAdmin();
+  let adminCookie = cookies.getAdmin();
   if (cookie === "") {
     window.location.href = "/";
   } else {

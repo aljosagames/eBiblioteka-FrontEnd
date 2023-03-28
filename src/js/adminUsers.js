@@ -2,7 +2,7 @@ $(document).ready(function () {
   // ?Cookie
   //?========================
   let cookies = new Cookies();
-  let adminCookie = cookie.getAdmin();
+  let adminCookie = cookies.getAdmin();
   let cookie = cookies.getCookie();
   let usersCookie = cookies.getUsersCookie();
   if (cookie === "") {

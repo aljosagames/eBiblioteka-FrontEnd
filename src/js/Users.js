@@ -92,7 +92,7 @@ class Users {
       .then((data) => {
         let cookie = new Cookies();
         cookie.create(data);
-        window.location.href = "userBooks.html";
+        window.location.href = "userBooksHave.html";
       });
   }
 
