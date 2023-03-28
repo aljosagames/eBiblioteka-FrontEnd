@@ -364,3 +364,25 @@ function deleteBookFromUser(el) {
   user.userId = usersCookie;
   user.deleteBookFromUser();
 }
+
+// *Hide show password
+//*========================
+function hidePassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.nextElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "password";
+}
+
+function showPassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.previousElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "text";
+}

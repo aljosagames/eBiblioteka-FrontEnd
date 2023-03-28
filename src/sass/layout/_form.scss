@@ -109,6 +109,21 @@
   }
 }
 
-.eye {
-  position: absolute;
+.relative {
+  position: relative;
+
+  .eye {
+    position: absolute;
+    right: 0;
+    top: 1em;
+    bottom: 50%;
+  }
+
+  i {
+    cursor: pointer;
+  }
+
+  i[data-hidden="true"] {
+    display: none;
+  }
 }

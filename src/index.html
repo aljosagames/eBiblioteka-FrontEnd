@@ -26,11 +26,19 @@
           <input type="text" placeholder="Email" id="login-email" />
           <div class="error"></div>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input type="password" placeholder="Password" id="login-password" />
           <span class="eye">
-            <i class="fa-solid fa-eye"></i>
-            <i class="fa-sharp fa-solid fa-eye-slash"></i>
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
           </span>
           <div class="error"></div>
         </div>
@@ -65,20 +73,44 @@
           <input type="text" placeholder="Email" id="register-email" />
           <div class="error"></div>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
             placeholder="Password"
             id="register-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
             placeholder="Repeat password"
             id="register-repeat-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Register</button>
