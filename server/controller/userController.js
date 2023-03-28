@@ -102,9 +102,9 @@ export const updateUser = async (req, res) => {
 export const forgotPass = async (req, res) => {
     try {
         let code = Math.floor((Math.random() * 999999) + 100000);
-        const newCode = new Code({code:code, email:user.email})
+        const newCode = new Code({code:code, email:req.body.email})
         await newCode.save()
-        emailVerif(code, user.email)
+        emailVerif(code, req.body.email)
         return res.sendStatus(201)
     } catch (error) {
         return res.sendStatus(404)
