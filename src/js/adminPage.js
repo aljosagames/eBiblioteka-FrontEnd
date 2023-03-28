@@ -239,7 +239,7 @@ $(document).ready(function () {
     if (passwordRepeatValue === "") {
       setError(
         changePasswordRepeat,
-        "Molim vas potvrdite sifru",
+        "Unesite sifru",
         validatorChangePassword,
         1
       );

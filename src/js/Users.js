@@ -267,4 +267,46 @@ class Users {
       }
     });
   }
+
+  forgetPassword() {
+    let data = {
+      email: this.email,
+    };
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/forgotPass", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        $(".verification").removeClass("hidden");
+        $(".change-password-section").addClass("hidden");
+      }
+    });
+  }
+
+  verifyForgetPassword() {
+    let data = {
+      code: this.barCode,
+      password: this.password,
+    };
+
+    data = JSON.stringify(data);
+
+    fetch(this.apiUrl + "/user/changePasswordVerify", {
+      method: "put",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    }).then((response) => {
+      if (response.status === 201) {
+        location.reload();
+      }
+    });
+  }
 }

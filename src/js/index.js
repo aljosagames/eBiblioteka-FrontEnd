@@ -41,6 +41,19 @@ $(document).ready(function () {
     $(".register").addClass("hidden");
   });
 
+  // ?Change password section toggle
+  //?========================
+  $("#changePasswordOpen").click(function () {
+    event.preventDefault();
+    $(".login").addClass("hidden");
+    $(".change-password-section").removeClass("hidden");
+  });
+
+  $("#changePasswordClose").click(function () {
+    $(".login").removeClass("hidden");
+    $(".change-password-section").addClass("hidden");
+  });
+
   // *Validator Register
   // *=====================
   const form = document.querySelector("#register-form");
@@ -190,6 +203,80 @@ $(document).ready(function () {
       setError(passwordLogin, "Unesite sifru", validatorLogin, 1);
     } else {
       setSucces(passwordLogin, validatorLogin, 1);
+    }
+  };
+
+  // *Const Change Password
+  // *========================
+  const formChangePassord = document.querySelector("#change-password-form");
+  const changePassword = document.querySelector("#changePassword-email");
+  const changePasswordRepeat = document.querySelector(
+    "#changePassword-repeat-password"
+  );
+  let validatorChangePassword = [false, false];
+
+  // *Validator Change Password
+  //*========================
+  formChangePassord.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    validateInputsChangePassword();
+    if (request(validatorChangePassword) === true) {
+      let user = new Users();
+      let email = changePassword.value;
+      let changedPassword = changePasswordRepeat.value;
+
+      user.password = email;
+      user.forgetPassword();
+
+      verForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        inputsVer();
+        if (request(verTest) === true) {
+          user.password = changedPassword;
+          user.barCode = verCode.value;
+          user.verifyForgetPassword();
+        }
+      });
+    }
+  });
+
+  //*Inputs Change Password
+  //*========================
+  const validateInputsChangePassword = () => {
+    const emailValue = changePassword.value.trim();
+    const passwordRepeatValue = changePasswordRepeat.value.trim();
+
+    if (emailValue === "") {
+      setError(changePassword, "Unesite email", validatorChangePassword, 0);
+    } else if (!isValidEmail(emailValue)) {
+      setError(
+        changePassword,
+        "Unesite validnu email adresu",
+        validatorChangePassword,
+        0
+      );
+    } else {
+      setSucces(changePassword, validatorChangePassword, 0);
+    }
+
+    if (passwordRepeatValue === "") {
+      setError(
+        changePasswordRepeat,
+        "Unesite sifru",
+        validatorChangePassword,
+        1
+      );
+    } else if (passwordRepeatValue.length < 3) {
+      setError(
+        changePasswordRepeat,
+        "Sifra mora da imam minimum 8 karaktera",
+        validatorChangePassword,
+        1
+      );
+    } else {
+      setSucces(changePasswordRepeat, validatorChangePassword, 1);
     }
   };
 });
