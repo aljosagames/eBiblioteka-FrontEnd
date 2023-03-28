@@ -78,24 +78,23 @@
         </div>
       </template>
 
-      <div class="container text-align-center flex button-container">
+      <div class="container flex button-container">
         <a
-          class="btn btn-secondary margin-auto"
+          class="btn btn-secondary"
           onclick="giveBookOpen(this)"
           id="addBookToUser"
           data-user-id-give=""
           >Dodaj
         </a>
         <a
-          class="btn btn-secondary margin-auto"
+          class="btn btn-secondary"
           id="makeAdmin"
           data-user-id-admin=""
-          >Admin
+          data-admin=""
+          onclick="adminSwitch(this)"
+        >
         </a>
-        <a
-          class="btn btn-red classic margin-auto"
-          id="deleteUser"
-          data-user-id=""
+        <a class="btn btn-red classic" id="deleteUser" data-user-id=""
           >Izbrisi
         </a>
       </div>
@@ -144,7 +143,7 @@
         <div class="input-control">
           <input
             type="password"
-            placeholder="Sifra"
+            placeholder="Stara sifra"
             id="changePassword-password"
           />
           <div class="error"></div>
@@ -152,7 +151,7 @@
         <div class="input-control">
           <input
             type="password"
-            placeholder="Ponovi sifru"
+            placeholder="Nova sifra"
             id="changePassword-repeat-password"
           />
           <div class="error"></div>
@@ -161,19 +160,22 @@
       </form>
     </section>
 
-    <!-- Make Admin 
+    <!-- Verification-section 
     ==================== -->
-    <section class="make-admin-section form-section-main hidden">
-      <form action="/" class="form">
+    <section class="verification form-section-main hidden">
+      <form action="/" class="form verification-form" id="verification-form">
         <div class="header-close">
-          <h2>Napravi na admina</h2>
-          <a class="close-btn" id="makeAdminClose">X</a>
+          <h2>Verifikacija</h2>
         </div>
-
-        <div class="wrapper">
-          <a class="btn btn-primary" id="allowAdmin">Napravi</a>
-          <a class="btn btn-primary" id="deniedAdmin">Oduzmi</a>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Verifikacioni kod"
+            id="verificationCode"
+          />
+          <div class="error"></div>
         </div>
+        <button class="btn btn-primary">Verifikuj</button>
       </form>
     </section>
 

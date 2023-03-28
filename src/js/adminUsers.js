@@ -2,6 +2,7 @@ $(document).ready(function () {
   // ?Cookie
   //?========================
   let cookies = new Cookies();
+  let adminCookie = cookie.getAdmin();
   let cookie = cookies.getCookie();
   let usersCookie = cookies.getUsersCookie();
   if (cookie === "") {
@@ -115,7 +116,15 @@ $(document).ready(function () {
         let btnDelete = document.querySelector("#deleteUser");
         let btnGiveBook = document.querySelector("#addBookToUser");
         let adminBtn = document.querySelector("#makeAdmin");
-        userName.textContent = data.name;
+        if (data.admin === true) {
+          userName.innerHTML = data.name + '<i class="fa-solid fa-user"></i>';
+          adminBtn.innerText = "Ukloni admina";
+          adminBtn.setAttribute("data-admin", true);
+        } else {
+          userName.innerHTML = data.name;
+          adminBtn.innerText = "Napravi admina";
+          adminBtn.setAttribute("data-admin", false);
+        }
         userEmail.textContent = data.email;
         btnDelete.setAttribute("data-user-id", data._id);
         btnGiveBook.setAttribute("data-user-id-give", data._id);
@@ -204,25 +213,54 @@ $(document).ready(function () {
     }
   });
 
-  //Const Change Password
-  //========================
+  // *Const Change Password
+  // *========================
   const formChangePassord = document.querySelector("#change-password-form");
   const changePassword = document.querySelector("#changePassword-password");
   const changePasswordRepeat = document.querySelector(
     "#changePassword-repeat-password"
   );
   let validatorChangePassword = [false, false];
+  const verForm = document.querySelector("#verification-form");
+  const verCode = document.querySelector("#verificationCode");
+  let verTest = [false];
 
-  //Validator Change Password
-  //========================
+  // *Validator Change Password
+  //*========================
   formChangePassord.addEventListener("submit", (e) => {
     e.preventDefault();
 
     validateInputsChangePassword();
     if (request(validatorChangePassword) === true) {
-      location.reload();
+      let user = new Users();
+      let oldPassword = changePassword.value;
+      let changedPassword = changePasswordRepeat.value;
+      user.cookie = cookie;
+      user.userId = adminCookie;
+      user.password = oldPassword;
+      user.updatePassword();
+
+      verForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        inputsVer();
+        if (request(verTest) === true) {
+          user.password = changedPassword;
+          user.barCode = verCode.value;
+          user.verifyUpdatePassword();
+        }
+      });
     }
   });
+
+  const inputsVer = () => {
+    const verCodeValue = verCode.value.trim();
+    if (verCodeValue === "") {
+      setError(verCode, "Unesite verifikacioni kod", verTest, 0);
+    } else {
+      setSucces(verCode, verTest, 0);
+    }
+  };
 
   //Inputs Add Book
   //========================
@@ -258,7 +296,7 @@ $(document).ready(function () {
 
     if (passwordValue === "") {
       setError(changePassword, "Unesite sifru", validatorChangePassword, 0);
-    } else if (passwordValue.length < 8) {
+    } else if (passwordValue.length < 3) {
       setError(
         changePassword,
         "Sifra mora da imam minimum 8 karaktera",
@@ -276,10 +314,10 @@ $(document).ready(function () {
         validatorChangePassword,
         1
       );
-    } else if (passwordRepeatValue !== passwordValue) {
+    } else if (passwordRepeatValue.length < 3) {
       setError(
         changePasswordRepeat,
-        "Sifre se ne poklapaju",
+        "Sifra mora da imam minimum 8 karaktera",
         validatorChangePassword,
         1
       );
@@ -291,35 +329,21 @@ $(document).ready(function () {
 
 // ?Make admin section toggle
 //?========================
-$("#makeAdmin").click(function () {
-  $(".make-admin-section").removeClass("hidden");
-});
-
-$("#makeAdminClose").click(function () {
-  $(".make-admin-section").addClass("hidden");
-});
-
-$("#allowAdmin").click(function () {
+function adminSwitch(el) {
+  let adminTest = el.getAttribute("data-admin");
   let user = new Users();
   let cookie = new Cookies();
   let id = cookie.getUsersCookie();
   let admin = cookie.getCookie();
-
   user.userId = id;
   user.cookie = admin;
-  user.makeAdmin();
-});
 
-$("#deniedAdmin").click(function () {
-  let user = new Users();
-  let cookie = new Cookies();
-  let id = cookie.getUsersCookie();
-  let admin = cookie.getCookie();
-
-  user.userId = id;
-  user.cookie = admin;
-  user.removeAdmin();
-});
+  if (adminTest === "true") {
+    user.removeAdmin();
+  } else {
+    user.makeAdmin();
+  }
+}
 
 // ?Give book section toggle
 //?========================
