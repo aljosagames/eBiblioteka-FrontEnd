@@ -273,6 +273,8 @@ class Users {
       email: this.email,
     };
 
+    console.log(data);
+
     data = JSON.stringify(data);
 
     fetch(this.apiUrl + "/user/forgotPass", {
@@ -291,13 +293,16 @@ class Users {
 
   verifyForgetPassword() {
     let data = {
+      email: this.email,
       code: this.barCode,
       password: this.password,
     };
 
+    console.log(data);
+
     data = JSON.stringify(data);
 
-    fetch(this.apiUrl + "/user/changePasswordVerify", {
+    fetch(this.apiUrl + "/user/forgotPasswordVerify", {
       method: "put",
       headers: {
         "Content-Type": "application/json",

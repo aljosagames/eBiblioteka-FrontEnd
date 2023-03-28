@@ -226,7 +226,7 @@ $(document).ready(function () {
       let email = changePassword.value;
       let changedPassword = changePasswordRepeat.value;
 
-      user.password = email;
+      user.email = email;
       user.forgetPassword();
 
       verForm.addEventListener("submit", (e) => {
