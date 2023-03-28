@@ -99,6 +99,18 @@ export const updateUser = async (req, res) => {
     return res.sendStatus(201)
 }
 
+export const forgotPass = async (req, res) => {
+    try {
+        let code = Math.floor((Math.random() * 999999) + 100000);
+        const newCode = new Code({code:code, email:user.email})
+        await newCode.save()
+        emailVerif(code, user.email)
+        return res.sendStatus(201)
+    } catch (error) {
+        return res.sendStatus(404)
+    }
+}
+
 export const changePasswordVerify = async (req, res) => {
     try {
         let code = await Code.findOne({"code": req.body.code})
@@ -107,7 +119,6 @@ export const changePasswordVerify = async (req, res) => {
             throw Error
         }
     } catch (error) {
-        console.log(error);
         return res.sendStatus(403)
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 10) 

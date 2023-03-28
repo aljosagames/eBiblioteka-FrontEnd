@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, isAdmin, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin, removeAdmin, changePasswordVerify } from "../controller/userController.js"
+import { loginUser, deleteUser, updateUser, isAdmin, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin, removeAdmin, changePasswordVerify, forgotPass } from "../controller/userController.js"
 import { authenticateAdmin, authenticateToken } from "../middleware.js"
 
 const router = express.Router()
@@ -16,12 +16,14 @@ router.post('/register', registerUser)
 router.post('/verify', verifyUser)
 // TESTS if user is admin
 router.post('/isAdmin', isAdmin)
+// SENDS code for verification email
+router.put('/forgotPass', forgotPass)
 // DELETE user
 router.delete('/delete', authenticateAdmin, deleteUser)
 // MODIFY user
 router.put('/changePassword', authenticateToken, updateUser)
 // VERIFY user password
-router.put('/changePasswordVerify', authenticateToken, changePasswordVerify)
+router.put('/changePasswordVerify', changePasswordVerify)
 // ADD book to user
 router.put('/addBook', authenticateAdmin, addBookToUser)
 // ADD book to user
