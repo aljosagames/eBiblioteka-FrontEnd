@@ -111,6 +111,28 @@ export const forgotPass = async (req, res) => {
     }
 }
 
+export const forgotPassVerify = async (req, res) => {
+    try {
+        let code = await Code.findOne({"code": req.body.code})
+        code = await Code.findOneAndDelete({"code": parseInt(req.body.code)})
+        if(!code){
+            throw Error
+        }
+    } catch (error) {
+        return res.sendStatus(403)
+    }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10) 
+    let user = await User.findOne({"email": req.body.email})
+    if(!user){
+        return res.sendStatus(404)
+    }
+    user = await User.findOneAndUpdate({"email": req.body.email}, {$set: {"password": hashedPassword}})
+    if(user){
+        return res.sendStatus(201)
+    }
+    return res.sendStatus(404)
+}
+
 export const changePasswordVerify = async (req, res) => {
     try {
         let code = await Code.findOne({"code": req.body.code})
