@@ -71,7 +71,7 @@
     </section>
 
     <!-- Change password 
-        ==================== -->
+    ==================== -->
     <section class="change-password-section form-section-main hidden">
       <form
         action="/"
@@ -82,23 +82,66 @@
           <h2>Promeni sifru</h2>
           <a class="close-btn" id="changePasswordClose">X</a>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
-            placeholder="Sifra"
+            placeholder="Stara sifra"
             id="changePassword-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
-            placeholder="Ponovi sifru"
+            placeholder="Nova sifra"
             id="changePassword-repeat-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Promeni</button>
+      </form>
+    </section>
+
+    <!-- Verification-section 
+    ==================== -->
+    <section class="verification form-section-main hidden">
+      <form action="/" class="form verification-form" id="verification-form">
+        <div class="header-close">
+          <h2>Verifikacija</h2>
+        </div>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Verifikacioni kod"
+            id="verificationCode"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Verifikuj</button>
       </form>
     </section>
 
@@ -113,6 +156,7 @@
     <!-- JavaScript 
       ==================== -->
     <script src="js/Cookies.js"></script>
+    <script src="js/Users.js"></script>
     <script src="js/userBooksHave.js"></script>
   </body>
 </html>
