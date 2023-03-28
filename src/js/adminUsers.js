@@ -140,10 +140,13 @@ $(document).ready(function () {
           expire = expire.substring(0, 10);
           let date = expire.split("-");
           date = new Date(date[0], date[1] - 1, date[2]).getTime();
-          expire = new Date(date + 14 * 24 * 60 * 60 * 1000).toLocaleString(
-            "en-GB"
-          );
-          date = new Date(date).toLocaleString("en-GB");
+          expire = new Date(date + 14 * 24 * 60 * 60 * 1000);
+          date = new Date(date);
+          let today = new Date();
+          if (expire < today) {
+            card.classList.add("expired");
+          }
+          expire = expire.toLocaleString("en-GB");
           bookName.textContent = bookInfo.name;
           autorName.textContent = bookInfo.author;
           expireCard.textContent = expire.substring(0, 10);
