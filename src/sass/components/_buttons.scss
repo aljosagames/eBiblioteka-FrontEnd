@@ -95,5 +95,14 @@
 
 .button-container {
   flex-direction: row;
-  gap: 0.5em;
+  justify-content: space-evenly;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 0.5em;
+
+    a {
+      margin: 0 auto;
+    }
+  }
 }

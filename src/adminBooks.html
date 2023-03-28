@@ -110,7 +110,7 @@
     </section>
 
     <!-- Change password 
-      ==================== -->
+    ==================== -->
     <section class="change-password-section form-section-main hidden">
       <form
         action="/"
@@ -124,7 +124,7 @@
         <div class="input-control">
           <input
             type="password"
-            placeholder="Sifra"
+            placeholder="Stara sifra"
             id="changePassword-password"
           />
           <div class="error"></div>
@@ -132,12 +132,31 @@
         <div class="input-control">
           <input
             type="password"
-            placeholder="Ponovi sifru"
+            placeholder="Nova sifra"
             id="changePassword-repeat-password"
           />
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Promeni</button>
+      </form>
+    </section>
+
+    <!-- Verification-section 
+    ==================== -->
+    <section class="verification form-section-main hidden">
+      <form action="/" class="form verification-form" id="verification-form">
+        <div class="header-close">
+          <h2>Verifikacija</h2>
+        </div>
+        <div class="input-control">
+          <input
+            type="text"
+            placeholder="Verifikacioni kod"
+            id="verificationCode"
+          />
+          <div class="error"></div>
+        </div>
+        <button class="btn btn-primary">Verifikuj</button>
       </form>
     </section>
 
@@ -195,6 +214,7 @@
     ==================== -->
     <script src="js/Cookies.js"></script>
     <script src="js/Books.js"></script>
+    <script src="js/Users.js"></script>
     <script src="js/adminBooks.js"></script>
   </body>
 </html>
