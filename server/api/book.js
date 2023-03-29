@@ -1,5 +1,5 @@
 import express from "express"
-import { getBooks, getBook, addBook, createBook, deleteBook, removeBook } from "../controller/bookController.js"
+import { getBooks, getBook, addBook, createBook, deleteBook, removeBook, expired } from "../controller/bookController.js"
 import { authenticateToken, authenticateAdmin } from "../middleware.js"
 
 const router = express.Router()
@@ -16,5 +16,7 @@ router.delete('/delete', authenticateAdmin, deleteBook)
 router.put('/remove', authenticateAdmin, removeBook)
 // ADD one book
 router.put('/add', authenticateAdmin, addBook)
+// EXPIRED books
+router.put('/expired', authenticateAdmin, expired)
 
 export default router

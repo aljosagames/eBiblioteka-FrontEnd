@@ -31,16 +31,3 @@ export const authenticateAdmin = (req, res, next) => {
         next()
     })
 }
-
-export const isExpired = async () => {
-    const user = await User.find({})
-    const time = new Date()
-    for(let i = 0;i<user.length;i++){
-        for(let j = 0;j<user[i].books.length;j++){
-            const expDate = new Date(user[i].books[j][1])
-            if(expDate < time){
-                console.log(user[i].books[j]);
-            }
-        }
-    }
-}

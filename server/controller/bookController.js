@@ -94,3 +94,18 @@ export const removeBook = async (req, res) => {
         return res.sendStatus(404)
     }
 }
+
+export const expired = async (req, res) => {
+    const user = await User.find({})
+    const time = new Date()
+    let expired = [] 
+    for(let i = 0;i<user.length;i++){
+        for(let j = 0;j<user[i].books.length;j++){
+            const expDate = new Date(user[i].books[j][1])
+            if(expDate < time){
+                expired.push(user[i].books[j])
+            }
+        }
+    }
+    res.status(200).json(expired)
+}
