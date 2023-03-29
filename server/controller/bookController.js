@@ -103,7 +103,7 @@ export const expired = async (req, res) => {
         for(let j = 0;j<user[i].books.length;j++){
             const expDate = new Date(user[i].books[j][1])
             if(expDate < time){
-                expired.push(user[i].books[j])
+                expired.push(user[i])
             }
         }
     }
