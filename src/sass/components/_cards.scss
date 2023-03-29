@@ -5,6 +5,11 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
   }
+
+  .expired {
+    border: 10px solid red;
+  }
+
   .card {
     background: $white;
     padding: 1em 1em 1.5em;

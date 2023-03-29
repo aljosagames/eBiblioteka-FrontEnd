@@ -132,20 +132,44 @@
           <h2>Promeni sifru</h2>
           <a class="close-btn" id="changePasswordClose">X</a>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
             placeholder="Stara sifra"
             id="changePassword-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
-        <div class="input-control">
+        <div class="input-control relative">
           <input
             type="password"
             placeholder="Nova sifra"
             id="changePassword-repeat-password"
           />
+          <span class="eye">
+            <i
+              class="fa-solid fa-eye"
+              data-hidden="true"
+              onclick="hidePassword(this)"
+            ></i>
+            <i
+              class="fa-sharp fa-solid fa-eye-slash"
+              data-hidden="false"
+              onclick="showPassword(this)"
+            ></i>
+          </span>
           <div class="error"></div>
         </div>
         <button class="btn btn-primary">Promeni</button>

@@ -433,3 +433,25 @@ function removeMoreBooks(el) {
   removeMoreBookBtn.setAttribute("data-removeMoreBook-id", bookId);
   $(".remove-more-books").removeClass("hidden");
 }
+
+// *Hide show password
+//*========================
+function hidePassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.nextElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "password";
+}
+
+function showPassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.previousElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "text";
+}

@@ -1,8 +1,9 @@
 $(document).ready(function () {
   // ?Cookie
   //?========================
-  let cookie = new Cookies();
-  cookie = cookie.getCookie();
+  let cookies = new Cookies();
+  let cookie = cookies.getCookie();
+  let usersCookie = cookies.getUsersCookie();
   if (cookie === "") {
     window.location.href = "/";
   } else {
@@ -102,35 +103,64 @@ $(document).ready(function () {
     validator[name] = true;
   };
 
-  //Const Change Password
-  //========================
+  // *Const Change Password
+  // *========================
   const formChangePassord = document.querySelector("#change-password-form");
   const changePassword = document.querySelector("#changePassword-password");
   const changePasswordRepeat = document.querySelector(
     "#changePassword-repeat-password"
   );
   let validatorChangePassword = [false, false];
+  const verForm = document.querySelector("#verification-form");
+  const verCode = document.querySelector("#verificationCode");
+  let verTest = [false];
 
-  //Validator Change Password
-  //========================
+  // *Validator Change Password
+  //*========================
   formChangePassord.addEventListener("submit", (e) => {
     e.preventDefault();
 
     validateInputsChangePassword();
     if (request(validatorChangePassword) === true) {
-      location.reload();
+      let user = new Users();
+      let oldPassword = changePassword.value;
+      let changedPassword = changePasswordRepeat.value;
+      user.cookie = cookie;
+      user.userId = usersCookie;
+      user.password = oldPassword;
+      user.updatePassword();
+
+      verForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        inputsVer();
+        if (request(verTest) === true) {
+          user.password = changedPassword;
+          user.barCode = verCode.value;
+          user.verifyUpdatePassword();
+        }
+      });
     }
   });
 
-  //Inputs Change Password
-  //========================
+  const inputsVer = () => {
+    const verCodeValue = verCode.value.trim();
+    if (verCodeValue === "") {
+      setError(verCode, "Unesite verifikacioni kod", verTest, 0);
+    } else {
+      setSucces(verCode, verTest, 0);
+    }
+  };
+
+  //*Inputs Change Password
+  //*========================
   const validateInputsChangePassword = () => {
     const passwordValue = changePassword.value.trim();
     const passwordRepeatValue = changePasswordRepeat.value.trim();
 
     if (passwordValue === "") {
       setError(changePassword, "Unesite sifru", validatorChangePassword, 0);
-    } else if (passwordValue.length < 8) {
+    } else if (passwordValue.length < 3) {
       setError(
         changePassword,
         "Sifra mora da imam minimum 8 karaktera",
@@ -148,10 +178,10 @@ $(document).ready(function () {
         validatorChangePassword,
         1
       );
-    } else if (passwordRepeatValue !== passwordValue) {
+    } else if (passwordRepeatValue.length < 3) {
       setError(
         changePasswordRepeat,
-        "Sifre se ne poklapaju",
+        "Sifra mora da imam minimum 8 karaktera",
         validatorChangePassword,
         1
       );
@@ -202,3 +232,25 @@ $(document).ready(function () {
       });
     });
 });
+
+// *Hide show password
+//*========================
+function hidePassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.nextElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "password";
+}
+
+function showPassword(el) {
+  let parentSpan = el.parentElement;
+  let parentDiv = parentSpan.parentElement;
+  let input = parentDiv.querySelector("input");
+  let eye = el.previousElementSibling;
+  eye.setAttribute("data-hidden", "false");
+  el.setAttribute("data-hidden", "true");
+  input.type = "text";
+}
