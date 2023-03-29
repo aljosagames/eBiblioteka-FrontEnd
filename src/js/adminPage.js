@@ -290,7 +290,13 @@ $(document).ready(function () {
           const userName = card.querySelector("[data-UserName]");
           const userEmail = card.querySelector("[data-UserEmail]");
           const btnIdSee = card.querySelector("[data-user-id-see]");
-          userName.textContent = user.name;
+          if (user.books.length > 0) {
+            userName.innerHTML =
+              user.name + ' <i class="fa-solid fa-book"></i>';
+          } else {
+            userName.textContent = user.name;
+            card.classList.add("dontHaveBooks");
+          }
           userEmail.textContent = user.email;
           btnIdSee.setAttribute("data-user-id-see", user._id);
           userCardContainer.append(card);
@@ -304,6 +310,17 @@ $(document).ready(function () {
       });
     }
   });
+
+  fetch("http://localhost:8080/api/book/expired", {
+    method: "put",
+    headers: {
+      authorization: cookie,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
 });
 
 function openUser(el) {
@@ -334,3 +351,11 @@ function showPassword(el) {
   el.setAttribute("data-hidden", "true");
   input.type = "text";
 }
+
+$("#takenBooks").click(function () {
+  $("#haveCheck").toggleClass("hidden");
+  let users = document.querySelectorAll(".dontHaveBooks");
+  users.forEach((user) => {
+    user.classList.toggle("hidden-books");
+  });
+});
