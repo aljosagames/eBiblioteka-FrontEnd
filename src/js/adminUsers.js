@@ -117,7 +117,8 @@ $(document).ready(function () {
         let btnGiveBook = document.querySelector("#addBookToUser");
         let adminBtn = document.querySelector("#makeAdmin");
         if (data.admin === true) {
-          userName.innerHTML = data.name + '<i class="fa-solid fa-user"></i>';
+          userName.innerHTML =
+            data.name + ' <i class="fa-solid fa-user user-icon"></i>';
           adminBtn.innerText = "Ukloni admina";
           adminBtn.setAttribute("data-admin", true);
         } else {

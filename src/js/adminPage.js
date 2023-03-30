@@ -318,7 +318,9 @@ $(document).ready(function () {
     },
   })
     .then((response) => response.json())
-    .then((data) => {});
+    .then((data) => {
+      console.log(data);
+    });
 });
 
 function openUser(el) {
