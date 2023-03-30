@@ -6,6 +6,7 @@ import Book from "../model/Book.js"
 import { addBook, removeBook } from "./bookController.js"
 import { emailVerif } from "../emailVerification.js"
 import Code from "../model/Code.js"
+import moment from "moment/moment.js"
 dotenv.config()
 
 export const getUsers = async (req, res) => {
@@ -249,4 +250,44 @@ export const isAdmin = async (req, res) => {
         }
         return res.sendStatus(200)
     })
+}
+
+export const reserveBook = async (req, res) => {
+    try {
+        const book = await Book.findOne({"_id": req.body.bookId})
+        const user = await User.findOne({"_id": req.body.id})
+        
+        if(!(book && user)){
+            throw Error
+        }
+        
+        for(let i = 0;i < user.reservedBooks.length;i++){
+            if(user.reservedBooks[i][0]._id == req.body.bookId){
+                return res.sendStatus(403)
+            }
+        }
+        
+        const time = moment().add(2, 'days').format()
+        await User.findOneAndUpdate({"_id": req.body.id}, {$push: {reservedBooks: [book,time]}})
+        removeBook(req, res)
+    } catch (error) {
+        res.sendStatus(404)
+    }
+}
+
+export const isExpiredReservedBook = async (req, res) => {
+    const user = await User.find({})
+    const time = new Date()
+    for(let i = 0;i<user.length;i++){
+        for(let j = 0;j<user[i].reservedBooks.length;j++){
+            const expDate = new Date(user[i].reservedBooks[j][1])
+            if(expDate < time){
+                req.body.id = user[i].reservedBooks[j][0]._id
+                req.body.book = user[i].reservedBooks[j][0]
+                await User.findOneAndUpdate({"_id": user[i]._id}, {$pull: {reservedBooks: user[i].reservedBooks[j]}})
+                addBook(req, res)
+            }
+        }
+    }
+    res.sendStatus(201)
 }

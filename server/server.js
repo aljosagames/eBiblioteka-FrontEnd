@@ -2,19 +2,24 @@ import express from 'express'
 import mongoose from 'mongoose'
 import userRoute from './api/user.js'
 import bookRoute from './api/book.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
 import dotenv from 'dotenv'
 import cors from "cors"
 dotenv.config()
 const app = express()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename)
 
 // Middleware for parsing body
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
-// Checking if book is expired
-
 // CORS
 app.use(cors())
+
+// Static files
+app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // Route for user API
 app.use('/api/user', userRoute)

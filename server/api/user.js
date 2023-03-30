@@ -1,5 +1,5 @@
 import express from "express"
-import { loginUser, deleteUser, updateUser, isAdmin, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin, removeAdmin, changePasswordVerify, forgotPass, forgotPassVerify } from "../controller/userController.js"
+import { loginUser, deleteUser, updateUser, isAdmin, registerUser, getUsers, getUser, addBookToUser, removeBookFromUser, verifyUser, makeAdmin, removeAdmin, changePasswordVerify, forgotPass, forgotPassVerify, reserveBook, isExpiredReservedBook } from "../controller/userController.js"
 import { authenticateAdmin, authenticateToken } from "../middleware.js"
 
 const router = express.Router()
@@ -34,5 +34,9 @@ router.put('/removeBook', authenticateAdmin, removeBookFromUser)
 router.put('/makeAdmin', authenticateAdmin, makeAdmin)
 // REMOVE user admin
 router.put('/removeAdmin', authenticateAdmin, removeAdmin)
+// RESERVE book
+router.put('/reserveBook', authenticateToken, reserveBook)
+// EXPIRED reserve book
+router.put('/expiredReserveBook', authenticateAdmin, isExpiredReservedBook)
 
 export default router
