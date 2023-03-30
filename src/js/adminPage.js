@@ -255,6 +255,21 @@ $(document).ready(function () {
     }
   };
 
+  let usersTesting = new Array();
+  fetch("http://localhost:8080/api/book/expired", {
+    method: "put",
+    headers: {
+      authorization: cookie,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((user) => {
+        let name = user.user._id;
+        usersTesting[name] = true;
+      });
+    });
+
   // *Users list and search
   // *========================
   const userCardTemplate = document.querySelector("[data-users-template]");
@@ -290,12 +305,15 @@ $(document).ready(function () {
           const userName = card.querySelector("[data-UserName]");
           const userEmail = card.querySelector("[data-UserEmail]");
           const btnIdSee = card.querySelector("[data-user-id-see]");
+          userName.innerHTML = user.name;
           if (user.books.length > 0) {
-            userName.innerHTML =
-              user.name + ' <i class="fa-solid fa-book"></i>';
+            userName.innerHTML += ' <i class="fa-solid fa-book"></i>';
           } else {
             userName.textContent = user.name;
             card.classList.add("dontHaveBooks");
+          }
+          if (usersTesting[user._id] === true) {
+            userName.innerHTML += ' <i class="fa-regular fa-circle-xmark"></i>';
           }
           userEmail.textContent = user.email;
           btnIdSee.setAttribute("data-user-id-see", user._id);
@@ -310,17 +328,6 @@ $(document).ready(function () {
       });
     }
   });
-
-  fetch("http://localhost:8080/api/book/expired", {
-    method: "put",
-    headers: {
-      authorization: cookie,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
 });
 
 function openUser(el) {
