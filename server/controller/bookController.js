@@ -35,11 +35,20 @@ export const createBook = async (req, res) => {
     }
 }
 
-export const deleteBook = async (req, res) => {
+export const permaDeleteBook = async (req, res) => {
     if(req.body.bookId == null){
         const book = await Book.findOneAndDelete({"_id": req.body.id})
     }else{
         const book = await Book.findOneAndDelete({"_id": req.body.bookId})
+    }
+    return res.sendStatus(201) 
+}
+
+export const deleteBook = async (req, res) => {
+    if(req.body.bookId == null){
+        await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {visibility: false}, $set: {bookCount: 0}})
+    }else{
+        await Book.findOneAndUpdate({"_id": req.body.bookId}, {$set: {visibility: false}, $set: {bookCount: 0}})
     }
     return res.sendStatus(201) 
 }
@@ -110,10 +119,9 @@ export const removeBook = async (req, res) => {
             book = await Book.findOneAndUpdate({"_id": id}, {$set: {bookCount: book.bookCount-req.body.count}})
         }
         if(book.bookCount <= 1){
-            deleteBook(req, res)
-        }else{
-            return res.sendStatus(201)
+            await Book.findByIdAndUpdate({"_id": id}, {$set: {visibility: false}})
         }
+        return res.sendStatus(201)
     }else{
         return res.sendStatus(404)
     }

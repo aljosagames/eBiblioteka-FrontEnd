@@ -13,6 +13,10 @@ const bookSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    visibility:{
+        type: Boolean,
+        default: true
+    },
     _id:{
         type: String,
         required: true

@@ -1,5 +1,5 @@
 import express from "express"
-import { getBooks, getBook, addBook, createBook, deleteBook, removeBook, expired } from "../controller/bookController.js"
+import { getBooks, getBook, addBook, createBook, deleteBook, removeBook, expired, permaDeleteBook } from "../controller/bookController.js"
 import { authenticateToken, authenticateAdmin } from "../middleware.js"
 
 const router = express.Router()
@@ -12,6 +12,8 @@ router.post('/getOne', authenticateToken, getBook)
 router.post('/create', authenticateAdmin, createBook)
 // DELETE book
 router.delete('/delete', authenticateAdmin, deleteBook)
+// PERMA DELETE book
+router.delete('/permaDelete', authenticateAdmin, permaDeleteBook)
 // REMOVE one book
 router.put('/remove', authenticateAdmin, removeBook)
 // ADD one book
