@@ -374,3 +374,10 @@ $("#takenBooks").click(function () {
 
 //*Taken books filter
 //*========================
+$("#expiredBooks").click(function () {
+  $("#expiredCheck").toggleClass("hidden");
+  let users = document.querySelectorAll(".dontHaveExpired");
+  users.forEach((user) => {
+    user.classList.toggle("hidden-expired");
+  });
+});
