@@ -365,11 +365,15 @@ $(document).ready(function () {
     } else {
       response.json().then((data) => {
         books = data.map((book) => {
+          console.log(book);
           const card = bookCardTemplate.content.cloneNode(true).children[0];
           const bookName = card.querySelector("[data-BookName]");
           const autorName = card.querySelector("[data-AutorName]");
           const bookCount = card.querySelector("[data-BookCount]");
           const barCode = card.querySelector("[data-BarCode]");
+          if (book.visibility === false) {
+            card.classList.add("zero-books");
+          }
           bookName.textContent = book.name;
           autorName.textContent = book.author;
           bookCount.textContent = "Broj knjiga: " + book.bookCount;

@@ -32,7 +32,7 @@
 }
 
 .btn-ghost {
-  background: $white;
+  background: transparent;
   border: 5px solid $dark;
 
   &:hover,
@@ -54,7 +54,7 @@
 }
 
 .btn-red {
-  background-color: $white;
+  background-color: transparent;
   border: 5px solid red;
 
   &:hover,
