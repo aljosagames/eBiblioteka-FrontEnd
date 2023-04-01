@@ -8,7 +8,7 @@ $(document).ready(function () {
   if (cookie === "") {
     window.location.href = "/";
   } else {
-    fetch("http://localhost:8080/api/user/isAdmin", {
+    fetch("http://35.196.171.95/api/user/isAdmin", {
       method: "post",
       headers: {
         authorization: cookie,
@@ -270,7 +270,7 @@ $(document).ready(function () {
     });
   });
 
-  fetch("http://localhost:8080/api/book/", {
+  fetch("http://35.196.171.95/api/book/", {
     method: "post",
     headers: {
       authorization: cookie,

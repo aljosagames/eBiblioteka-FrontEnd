@@ -8,7 +8,7 @@ $(document).ready(function () {
   if (cookie === "") {
     window.location.href = "/";
   } else {
-    fetch("http://localhost:8080/api/user/isAdmin", {
+    fetch("http://35.196.171.95/api/user/isAdmin", {
       method: "post",
       headers: {
         authorization: cookie,
@@ -100,7 +100,7 @@ $(document).ready(function () {
   headers.append("Content-Type", "application/json");
 
   data = JSON.stringify(data);
-  fetch("http://localhost:8080/api/user/getOne", {
+  fetch("http://35.196.171.95/api/user/getOne", {
     method: "post",
     headers: headers,
     body: data,

@@ -7,7 +7,7 @@ $(document).ready(async function () {
   if (cookie === "") {
     window.location.href = "/";
   } else {
-    fetch("http://localhost:8080/api/user/isAdmin", {
+    fetch("http://35.196.171.95/api/user/isAdmin", {
       method: "post",
       headers: {
         authorization: cookie,
@@ -274,7 +274,7 @@ $(document).ready(async function () {
   });
 
   async function getUsers() {
-    let response = await fetch("http://localhost:8080/api/user/", {
+    let response = await fetch("http://35.196.171.95/api/user/", {
       method: "post",
       headers: {
         authorization: cookie,
@@ -315,7 +315,7 @@ $(document).ready(async function () {
   await getUsers();
 
   async function expiredUser() {
-    const response = await fetch("http://localhost:8080/api/book/expired", {
+    const response = await fetch("http://35.196.171.95/api/book/expired", {
       method: "put",
       headers: {
         authorization: cookie,
