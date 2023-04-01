@@ -220,6 +220,9 @@ $(document).ready(function () {
         const bookName = card.querySelector("[data-BookName]");
         const autorName = card.querySelector("[data-AutorName]");
         const bookCount = card.querySelector("[data-BookCount]");
+        if (book.visibility === false) {
+          card.classList.add("hidden-card");
+        }
         bookName.textContent = book.name;
         autorName.textContent = book.author;
         bookCount.textContent = "Broj knjiga: " + book.bookCount;
