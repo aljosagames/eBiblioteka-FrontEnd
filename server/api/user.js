@@ -35,8 +35,8 @@ router.put('/makeAdmin', authenticateAdmin, makeAdmin)
 // REMOVE user admin
 router.put('/removeAdmin', authenticateAdmin, removeAdmin)
 // RESERVE book
-router.put('/reserveBook', authenticateToken, reserveBook)
+// router.put('/reserveBook', authenticateToken, reserveBook)
 // EXPIRED reserve book
-router.put('/expiredReserveBook', authenticateAdmin, isExpiredReservedBook)
+// router.put('/expiredReserveBook', authenticateAdmin, isExpiredReservedBook)
 
 export default router

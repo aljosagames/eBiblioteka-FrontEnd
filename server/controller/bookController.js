@@ -35,33 +35,24 @@ export const createBook = async (req, res) => {
     }
 }
 
-export const permaDeleteBook = async (req, res) => {
-    if(req.body.bookId == null){
-        const book = await Book.findOneAndDelete({"_id": req.body.id})
-    }else{
-        const book = await Book.findOneAndDelete({"_id": req.body.bookId})
-    }
-    return res.sendStatus(201) 
-}
-
 export const deleteBook = async (req, res) => {
     if(req.body.bookId == null){
-        await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {visibility: false}, $set: {bookCount: 0}})
+        await Book.findOneAndDelete({"_id": req.body.id})
     }else{
-        await Book.findOneAndUpdate({"_id": req.body.bookId}, {$set: {visibility: false}, $set: {bookCount: 0}})
+        await Book.findOneAndDelete({"_id": req.body.bookId})
     }
     return res.sendStatus(201) 
 }
 
 export const addBook = async (req, res) => {
-    const book = await Book.findOne({"_id": req.body.id})
+    let book = await Book.findOne({"_id": req.body.id})
     const user = await User.findOne({"_id": req.body.userId})
     if(book){
         try {
             if(req.body.count == null){
-                await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+1}})
+                await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+1, visibility: true}})
             }else{
-                await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+req.body.count}})
+                await Book.findOneAndUpdate({"_id": req.body.id}, {$set: {bookCount: book.bookCount+req.body.count, visibility: true}})
             }
             return res.sendStatus(201)
         } catch (error) {
@@ -118,8 +109,8 @@ export const removeBook = async (req, res) => {
             }
             book = await Book.findOneAndUpdate({"_id": id}, {$set: {bookCount: book.bookCount-req.body.count}})
         }
-        if(book.bookCount <= 1){
-            await Book.findByIdAndUpdate({"_id": id}, {$set: {visibility: false}})
+        if(book.bookCount-req.body.count <= 1){
+            book = await Book.findByIdAndUpdate({"_id": id}, {$set: {visibility: false}})
         }
         return res.sendStatus(201)
     }else{
@@ -136,7 +127,6 @@ export const expired = async (req, res) => {
             let expDate = new Date(user[i].books[j][1]).getTime()
             expDate = new Date(expDate+14*24*60*60*1000)
             if(expDate < time){
-                // console.log(user[i].books[j]);
                 expired.push({"user": user[i], "books": user[i].books[j]})
             }
         }
