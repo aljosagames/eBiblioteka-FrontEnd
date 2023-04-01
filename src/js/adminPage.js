@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(async function () {
   // ?Cookie
   //?========================
   let cookie = new Cookies();
@@ -255,21 +255,6 @@ $(document).ready(function () {
     }
   };
 
-  let usersTesting = new Array();
-  fetch("http://localhost:8080/api/book/expired", {
-    method: "put",
-    headers: {
-      authorization: cookie,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((user) => {
-        let name = user.user._id;
-        usersTesting[name] = true;
-      });
-    });
-
   // *Users list and search
   // *========================
   const userCardTemplate = document.querySelector("[data-users-template]");
@@ -288,46 +273,64 @@ $(document).ready(function () {
     });
   });
 
-  fetch("http://localhost:8080/api/user/", {
-    method: "post",
-    headers: {
-      authorization: cookie,
-    },
-  }).then((response) => {
+  async function getUsers() {
+    let response = await fetch("http://localhost:8080/api/user/", {
+      method: "post",
+      headers: {
+        authorization: cookie,
+      },
+    });
     if (response.status === 410) {
       let cookie = new Cookies();
       cookie.deleteCookie();
       window.location.href = "index.html";
     } else {
-      response.json().then((data) => {
-        users = data.map((user) => {
-          const card = userCardTemplate.content.cloneNode(true).children[0];
-          const userName = card.querySelector("[data-UserName]");
-          const userEmail = card.querySelector("[data-UserEmail]");
-          const btnIdSee = card.querySelector("[data-user-id-see]");
-          userName.innerHTML = user.name;
-          if (user.books.length > 0) {
-            userName.innerHTML += ' <i class="fa-solid fa-book"></i>';
-          } else {
-            userName.textContent = user.name;
-            card.classList.add("dontHaveBooks");
-          }
-          if (usersTesting[user._id] === true) {
-            userName.innerHTML += ' <i class="fa-regular fa-circle-xmark"></i>';
-          }
-          userEmail.textContent = user.email;
-          btnIdSee.setAttribute("data-user-id-see", user._id);
-          userCardContainer.append(card);
-          return {
-            name: user.name,
-            email: user.email,
-            id: user._id,
-            element: card,
-          };
-        });
+      let data = await response.json();
+      users = data.map((user) => {
+        const card = userCardTemplate.content.cloneNode(true).children[0];
+        const userName = card.querySelector("[data-UserName]");
+        const userEmail = card.querySelector("[data-UserEmail]");
+        const btnIdSee = card.querySelector("[data-user-id-see]");
+        userName.innerHTML = user.name;
+        if (user.books.length > 0) {
+          userName.innerHTML += ' <i class="fa-solid fa-book"></i>';
+        } else {
+          userName.textContent = user.name;
+          card.classList.add("dontHaveBooks");
+        }
+        card.classList.add("dontHaveExpired");
+        card.setAttribute("id", user._id);
+        userEmail.textContent = user.email;
+        btnIdSee.setAttribute("data-user-id-see", user._id);
+        userCardContainer.append(card);
+        return {
+          name: user.name,
+          email: user.email,
+          id: user._id,
+          element: card,
+        };
       });
     }
-  });
+  }
+  await getUsers();
+
+  async function expiredUser() {
+    const response = await fetch("http://localhost:8080/api/book/expired", {
+      method: "put",
+      headers: {
+        authorization: cookie,
+      },
+    });
+    const data_1 = await response.json();
+    data_1.forEach((user) => {
+      let name = user.user._id;
+      let card = document.getElementById(name);
+      let userName = card.querySelector("h3");
+      userName.innerHTML += ' <i class="fa-regular fa-circle-xmark"></i>';
+      card.classList.remove("dontHaveExpired");
+    });
+  }
+  await expiredUser();
 });
 
 function openUser(el) {
@@ -359,10 +362,22 @@ function showPassword(el) {
   input.type = "text";
 }
 
+//*Taken books filter
+//*========================
 $("#takenBooks").click(function () {
   $("#haveCheck").toggleClass("hidden");
   let users = document.querySelectorAll(".dontHaveBooks");
   users.forEach((user) => {
     user.classList.toggle("hidden-books");
+  });
+});
+
+//*Taken books filter
+//*========================
+$("#expiredBooks").click(function () {
+  $("#expiredCheck").toggleClass("hidden");
+  let users = document.querySelectorAll(".dontHaveExpired");
+  users.forEach((user) => {
+    user.classList.toggle("hidden-expired");
   });
 });

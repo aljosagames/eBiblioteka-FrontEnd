@@ -51,6 +51,10 @@
   display: none;
 }
 
+.hidden-expired {
+  display: none;
+}
+
 .input-control {
   &.error input {
     border-bottom: 5px solid rgb(206, 26, 26);
