@@ -109,7 +109,7 @@ export const removeBook = async (req, res) => {
             }
             book = await Book.findOneAndUpdate({"_id": id}, {$set: {bookCount: book.bookCount-req.body.count}})
         }
-        if(book.bookCount-req.body.count <= 1){
+        if(book.bookCount-req.body.count < 1){
             book = await Book.findByIdAndUpdate({"_id": id}, {$set: {visibility: false}})
         }
         return res.sendStatus(201)
