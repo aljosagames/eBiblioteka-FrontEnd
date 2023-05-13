@@ -5,7 +5,7 @@ class Users {
   password = "";
   cookie = "";
   barCode = "";
-  apiUrl = "http://35.196.171.95/api";
+  apiUrl = "http://34.139.10.111/api";
 
   // *Napravi korisnika
   create() {
